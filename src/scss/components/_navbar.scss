@@ -1,0 +1,60 @@
+@use "../abstracts/colors";
+@use "../utilities/align-center";
+@use "../utilities/flex";
+@use "../utilities/space-between";
+@use "../utilities/container";
+
+.navbar-container {
+  width: 100vw;
+  height: 50px;
+  background-color: colors.$primary;
+  border-bottom: 2px solid white;
+}
+
+nav {
+  width: 100%;
+  height: 100%;
+  font-family: "Noto Sans", sans-serif;
+}
+
+h1 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: white;
+}
+
+ul {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 180px;
+}
+
+li {
+  padding-inline: 0.3rem;
+  height: 100%;
+  cursor: pointer;
+  position: relative;
+
+  &::after {
+    content: "";
+    height: 3px;
+    width: 100%;
+    background-color: white;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  ul {
+    gap: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  ul {
+    display: none;
+  }
+}

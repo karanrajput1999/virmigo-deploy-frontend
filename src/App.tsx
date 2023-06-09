@@ -1,8 +1,8 @@
-import "./App.css"
-import "./styles/App.scss"
+import "./scss/style.scss"
+import Homepage from "./pages/Homepage"
 
 function App() {
-  return <div className="App">Hey it's working!</div>
+  return <Homepage />
 }
 
 export default App
