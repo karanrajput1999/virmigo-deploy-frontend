@@ -1,12 +1,8 @@
 @use "../abstracts/colors";
-@use "../utilities/align-center";
-@use "../utilities/flex";
-@use "../utilities/space-between";
-@use "../utilities/container";
 
 .navbar-container {
   width: 100vw;
-  height: 50px;
+  height: 60px;
   background-color: colors.$primary;
   border-bottom: 2px solid white;
 }
@@ -28,6 +24,7 @@ ul {
   display: flex;
   align-items: center;
   gap: 180px;
+  margin-inline: auto;
 }
 
 li {
@@ -36,15 +33,25 @@ li {
   cursor: pointer;
   position: relative;
 
-  &::after {
-    content: "";
-    height: 3px;
-    width: 100%;
-    background-color: white;
-    position: absolute;
-    left: 0;
-    bottom: 0;
+  &:hover {
+    &::after {
+      content: "";
+      height: 3px;
+      width: 100%;
+      border-radius: 8px 8px 0 0;
+      background-color: white;
+      position: absolute;
+      left: 0;
+      bottom: 1px;
+    }
   }
+}
+
+.hamburger {
+  margin-right: 10px;
+  opacity: 0;
+  visibility: hidden;
+  cursor: pointer;
 }
 
 @media (max-width: 900px) {
@@ -53,8 +60,14 @@ li {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   ul {
     display: none;
+  }
+
+  .hamburger {
+    margin-left: auto;
+    opacity: 1;
+    visibility: visible;
   }
 }
