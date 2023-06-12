@@ -47,11 +47,13 @@ li {
   }
 }
 
-.hamburger {
+.user-menu {
   margin-right: 10px;
-  opacity: 0;
-  visibility: hidden;
+}
+
+#hamburger {
   cursor: pointer;
+  display: none;
 }
 
 @media (max-width: 900px) {
@@ -61,13 +63,42 @@ li {
 }
 
 @media (max-width: 800px) {
+  #navbar {
+    padding-inline: 1rem;
+  }
+
   ul {
+    width: 110px;
+    height: 330px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #5600ac;
+    z-index: 1;
+    flex-direction: column;
+    gap: 0;
+    border-radius: 0 0 0 15px;
+
+    li {
+      height: auto;
+      width: max-content;
+      margin-top: 50px;
+      &:first-child {
+        margin-top: 80px;
+      }
+    }
+  }
+
+  ul.navClose {
     display: none;
   }
 
-  .hamburger {
+  .user-menu {
     margin-left: auto;
-    opacity: 1;
-    visibility: visible;
+  }
+
+  #hamburger {
+    display: flex;
+    z-index: 2;
   }
 }
