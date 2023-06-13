@@ -1,0 +1,124 @@
+@use "../abstracts/colors";
+
+.profile-container {
+  width: 100vw;
+}
+
+.profile-header-container {
+  width: 100%;
+  height: 37rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.099);
+}
+.profile-cover {
+  max-width: 70rem;
+  height: 25rem;
+  background-color: brown;
+  overflow: hidden;
+}
+.profile-user-info {
+  max-width: 70rem;
+  height: 10rem;
+  position: relative;
+}
+
+.profile-user-pic {
+  width: 10rem;
+  height: 10rem;
+  transform: translateY(-3rem) translateX(3rem);
+  //   position: absolute;
+  //   top: -3rem;
+  //   left: 5rem;
+}
+
+.profile-username-container {
+  margin-left: 5rem;
+  line-height: 1.3;
+}
+
+.profile-username {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.profile-addfriend {
+  margin-top: 0.5rem;
+  margin-left: auto;
+  margin-right: 1rem;
+}
+
+.addfriend-btn {
+  padding: 0.3rem 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  background-color: colors.$primary;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.tabs-container {
+  gap: 2rem;
+  span {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+}
+
+.tab {
+  cursor: pointer;
+}
+
+.tab.active {
+  border-bottom: 3px solid #5600ac;
+}
+
+.profile-body-container {
+  width: 100%;
+}
+
+.profile-body-wrapper {
+  width: 70rem;
+  //   background-color: aquamarine;
+}
+
+.profile-info-container {
+  flex: 0.5;
+  //   background-color: brown;
+}
+
+.profile-posts-container {
+  flex: 1;
+  //   background-color: burlywood;
+}
+
+.profile-info-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-bottom: 2px solid gray;
+  padding: 0.5rem 0.5rem;
+}
+
+.profile-info-text {
+  margin-top: 1rem;
+  padding-inline: 0.5rem;
+}
+
+.information-title {
+  font-weight: 700;
+}
+
+.profile-posts-wrapper {
+  margin-top: 2rem;
+}
+
+.profile-posts-title {
+  padding-bottom: 0.7rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border-bottom: 2px solid gray;
+}
+
+.profile-posts-post-container {
+  margin-top: 2rem;
+}

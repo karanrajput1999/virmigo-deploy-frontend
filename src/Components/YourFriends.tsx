@@ -31,7 +31,7 @@ function YourFriends() {
                 <span className="friends-name">Hardik Patel</span>
               </div>
 
-              <button className="flex align-center">
+              <button className="flex align-center unfriend-btn">
                 Unfriend <PersonRemoveIcon style={{ paddingLeft: "5px" }} />
               </button>
             </div>
@@ -41,7 +41,7 @@ function YourFriends() {
                 <span className="friends-name">Anshu</span>
               </div>
 
-              <button className="flex align-center">
+              <button className="flex align-center unfriend-btn">
                 Unfriend <PersonRemoveIcon style={{ paddingLeft: "5px" }} />
               </button>
             </div>
