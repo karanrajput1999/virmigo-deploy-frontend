@@ -7,7 +7,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd"
 function FindNewFriends() {
   return (
     <div className="mx find-new-friends-Container">
-      <Box>
+      <div>
         <Paper
           elevation={2}
           style={{
@@ -55,7 +55,7 @@ function FindNewFriends() {
             </div>
           </div>
         </Paper>
-      </Box>
+      </div>
     </div>
   )
 }

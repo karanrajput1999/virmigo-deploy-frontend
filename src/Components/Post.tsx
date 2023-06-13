@@ -14,7 +14,7 @@ import ModeCommentIcon from "@mui/icons-material/ModeComment"
 function Post() {
   return (
     <div className="flex flex-column align-center post-container">
-      <Box style={{ width: "90%", height: "100%" }}>
+      <div style={{ width: "90%", height: "100%" }}>
         <Paper
           className="container flex content-center flex-column"
           elevation={2}
@@ -75,7 +75,7 @@ function Post() {
             </div>
           </div>
         </Paper>
-      </Box>
+      </div>
 
       {/******************************************************************************************************************/}
       {/************************************************** second post below ********************************************/}

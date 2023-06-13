@@ -13,7 +13,7 @@ function Profile() {
         <div className="mx-auto profile-header-wrapper">
           <div>
             <div className="profile-cover">
-              <img src={userCover} alt="" />
+              <img className="cover-img" src={userCover} alt="" />
             </div>
             <div className="flex profile-user-info">
               <img src={userIcon} alt="" className="profile-user-pic" />
@@ -42,11 +42,16 @@ function Profile() {
           </div>
         </div>
       </div>
+
       <div className="flex content-center profile-body-container">
         <div className="flex profile-body-wrapper">
           <div className="profile-info-container">
-            <Box style={{ marginTop: "2rem" }}>
-              <Paper elevation={2} style={{ height: "20rem", width: "80%" }}>
+            <div style={{ marginTop: "2rem" }}>
+              <Paper
+                elevation={2}
+                className="profile-info-paper"
+                style={{ height: "20rem", width: "300px" }}
+              >
                 <div className="profile-info-title">
                   <span className="profile-info-title-text">Information</span>
                 </div>
@@ -70,7 +75,7 @@ function Profile() {
                   </div>
                 </div>
               </Paper>
-            </Box>
+            </div>
           </div>
 
           <div className="profile-posts-container">

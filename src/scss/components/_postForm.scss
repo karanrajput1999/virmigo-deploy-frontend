@@ -1,3 +1,5 @@
+@use "../abstracts/colors";
+
 .post-form-container {
   width: 100%;
 }
@@ -26,7 +28,14 @@
 }
 
 .post-btn {
+  font-size: 0.9rem;
+  font-weight: 600;
+  background-color: colors.$primary;
+  border: none;
+  border-radius: 5px;
+  color: white;
   padding: 0.5rem;
+  cursor: pointer;
 }
 
 .post-action-section {

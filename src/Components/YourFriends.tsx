@@ -10,7 +10,7 @@ function YourFriends() {
       className="flex content-center mx your-friends-container"
       id="your-friends-container"
     >
-      <Box>
+      <div>
         <Paper
           elevation={4}
           style={{
@@ -47,7 +47,7 @@ function YourFriends() {
             </div>
           </div>
         </Paper>
-      </Box>
+      </div>
     </div>
   )
 }

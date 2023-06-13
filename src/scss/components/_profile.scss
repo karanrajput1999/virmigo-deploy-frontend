@@ -2,18 +2,24 @@
 
 .profile-container {
   width: 100vw;
+  height: auto;
 }
 
 .profile-header-container {
   width: 100%;
-  height: 37rem;
+  // height: 37rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.099);
+  // background-color: red;
 }
 .profile-cover {
   max-width: 70rem;
-  height: 25rem;
-  background-color: brown;
+  height: auto;
+  // height: 25rem;
+  // background-color: brown;
   overflow: hidden;
+}
+.cover-img {
+  height: auto;
 }
 .profile-user-info {
   max-width: 70rem;
@@ -89,13 +95,14 @@
 
 .profile-posts-container {
   flex: 1;
+  margin-left: 1rem;
   //   background-color: burlywood;
 }
 
 .profile-info-title {
   font-size: 1.2rem;
   font-weight: 700;
-  border-bottom: 2px solid gray;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.099);
   padding: 0.5rem 0.5rem;
 }
 
@@ -113,12 +120,66 @@
 }
 
 .profile-posts-title {
-  padding-bottom: 0.7rem;
+  padding-bottom: 0.55rem;
   font-size: 1.5rem;
   font-weight: 700;
-  border-bottom: 2px solid gray;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.099);
 }
 
 .profile-posts-post-container {
   margin-top: 2rem;
+}
+
+@media (max-width: 700px) {
+  .profile-user-pic {
+    width: 10rem;
+    height: 10rem;
+    position: absolute;
+    // top: 50%;
+    left: 50%;
+    transform: translateY(-3rem) translateX(-50%);
+  }
+
+  .profile-username-container,
+  .profile-addfriend {
+    position: absolute;
+    left: 50%;
+    transform: translateY(50%) translateX(-50%);
+  }
+  .profile-username-container {
+    top: 55%;
+    margin: 0;
+    align-items: center;
+  }
+  .profile-addfriend {
+    top: 100%;
+  }
+  .profile-header-container {
+    height: auto !important;
+    padding-bottom: 7rem;
+    position: relative;
+  }
+  .tabs-container {
+    position: absolute;
+    bottom: 0;
+    padding-inline: 0.5rem;
+  }
+
+  .profile-body-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  .profile-posts-container {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 1120px) {
+  .tabs-container {
+    padding-inline: 0.5rem;
+  }
+
+  .profile-info-container {
+    padding-left: 0.5rem;
+  }
 }

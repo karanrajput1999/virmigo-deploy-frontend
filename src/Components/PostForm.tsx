@@ -9,7 +9,7 @@ import GifBoxIcon from "@mui/icons-material/GifBox"
 function PostForm() {
   return (
     <div className="flex content-center post-form-container">
-      <Box style={{ width: "90%", height: "100%" }}>
+      <div style={{ width: "90%", height: "100%" }}>
         <Paper
           className="container flex align-center flex-column"
           elevation={2}
@@ -46,7 +46,7 @@ function PostForm() {
             </div>
           </div>
         </Paper>
-      </Box>
+      </div>
     </div>
   )
 }
