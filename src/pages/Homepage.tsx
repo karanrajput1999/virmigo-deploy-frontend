@@ -3,6 +3,7 @@ import YourFriends from "../Components/YourFriends"
 import Feed from "../Components/Feed"
 import FindNewFriends from "../Components/FindNewFriends"
 import UserProfile from "./UserProfile"
+import FindFriends from "./FindFriends"
 
 function Homepage() {
   return (
@@ -12,7 +13,8 @@ function Homepage() {
         {/* <YourFriends />
         <Feed />
         <FindNewFriends /> */}
-        <UserProfile />
+        {/* <UserProfile /> */}
+        <FindFriends />
       </div>
     </>
   )

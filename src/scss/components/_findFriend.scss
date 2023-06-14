@@ -1,0 +1,83 @@
+@use "../abstracts/colors";
+
+.find-friend-container {
+  width: 100vw;
+  margin-top: 4rem;
+}
+
+.make-friends-container {
+  flex: 0.3;
+  // background-color: brown;
+  padding-inline: 3rem;
+}
+
+.findFriends-container {
+  flex: 0.8;
+  // background-color: cadetblue;
+}
+
+.make-friends-header,
+.findFriends-header {
+  padding: 0.7rem 0.8rem;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.099);
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.make-friends-body {
+  width: 100%;
+}
+.find-new-friend-container,
+.friend-request-container {
+  height: 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.findFriends-searchbar-container {
+  width: 100%;
+  padding: 0.8rem;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.099);
+}
+.findFriends-input {
+  width: 100%;
+  height: 40px;
+  padding-inline: 1rem;
+}
+
+.findFriends-friendlist-container {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding-inline: 1.5rem;
+}
+
+.friend-photo {
+  width: 40px;
+  height: 40px;
+}
+.findFriends-friendName {
+  font-size: 1rem;
+  font-weight: 700;
+  padding-left: 1rem;
+}
+.findFriend-add-btn,
+.findFriend-decline-btn {
+  padding: 0.2rem 0.5rem 0.2rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background-color: colors.$primary;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+.findFriend-decline-btn {
+  background-color: white;
+  color: red;
+  border: 2px solid red;
+}
+
+.friend-requests-btn-container {
+  gap: 1rem;
+}
