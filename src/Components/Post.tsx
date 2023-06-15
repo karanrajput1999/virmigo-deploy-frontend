@@ -24,7 +24,7 @@ function Post() {
             <div className="flex align-center post-user-info">
               <img src={userIcon} className="post-user-icon" alt="user-photo" />
               <div className="flex flex-column post-username-container">
-                <span className="post-username">John Doe</span>
+                <span className="post-username">Anshu Upadhyay</span>
                 <span className="post-time">2 min ago</span>
               </div>
             </div>
@@ -91,7 +91,7 @@ function Post() {
             <div className="flex align-center post-user-info">
               <img src={userIcon} className="post-user-icon" alt="user-photo" />
               <div className="flex flex-column post-username-container">
-                <span className="post-username">John Doe</span>
+                <span className="post-username">Anshu Upadhyay</span>
                 <span className="post-time">2 min ago</span>
               </div>
             </div>

@@ -1,6 +1,19 @@
+@use "../abstracts/colors";
+
 .find-new-friends-Container {
   flex: 1;
   margin-top: 20px;
+}
+
+.find-new-friends-add-btn {
+  font-size: 0.9rem;
+  font-weight: 600;
+  background-color: colors.$primary;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+  cursor: pointer;
 }
 
 @media (max-width: 1250px) {

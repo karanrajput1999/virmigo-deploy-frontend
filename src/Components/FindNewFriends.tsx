@@ -29,7 +29,7 @@ function FindNewFriends() {
                 <span className="friends-name">Himanshu Sharma</span>
               </div>
 
-              <button className="flex align-center">
+              <button className="flex align-center find-new-friends-add-btn">
                 Add <PersonAddIcon style={{ paddingLeft: "5px" }} />
               </button>
             </div>
@@ -39,7 +39,7 @@ function FindNewFriends() {
                 <span className="friends-name">Vinay Pandit</span>
               </div>
 
-              <button className="flex align-center">
+              <button className="flex align-center find-new-friends-add-btn">
                 Add <PersonAddIcon style={{ paddingLeft: "5px" }} />
               </button>
             </div>
@@ -49,7 +49,7 @@ function FindNewFriends() {
                 <span className="friends-name">Sonu Verma</span>
               </div>
 
-              <button className="flex align-center">
+              <button className="flex align-center find-new-friends-add-btn">
                 Add <PersonAddIcon style={{ paddingLeft: "5px" }} />
               </button>
             </div>

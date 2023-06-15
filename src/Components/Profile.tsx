@@ -18,7 +18,7 @@ function Profile() {
             <div className="flex profile-user-info">
               <img src={userIcon} alt="" className="profile-user-pic" />
               <div className="flex flex-column profile-username-container">
-                <span className="profile-username">David Jones</span>
+                <span className="profile-username">Anshu Upadhyay</span>
                 <span className="profile-friends">170 Friends</span>
               </div>
               <div className="profile-addfriend">

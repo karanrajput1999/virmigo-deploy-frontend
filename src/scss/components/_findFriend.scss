@@ -81,3 +81,36 @@
 .friend-requests-btn-container {
   gap: 1rem;
 }
+
+.findFriends-paper {
+  width: 500px;
+  height: 600px;
+  margin-right: 1rem;
+}
+
+@media (max-width: "900px") {
+  .find-friend-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  .findFriends-paper {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .findFriends-paper {
+    width: 350px;
+  }
+  .findFriends-friendlist-container {
+    padding-inline: 0.5rem;
+  }
+
+  .friend-container {
+    flex-direction: column;
+  }
+  .friend-requests-btn-container {
+    margin-top: 0.5rem;
+  }
+}

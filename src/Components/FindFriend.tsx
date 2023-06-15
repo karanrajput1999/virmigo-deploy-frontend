@@ -10,7 +10,13 @@ function FindFriend() {
     <div className="flex find-friend-container">
       <div className="make-friends-container">
         <div className="make-friends-wrapper">
-          <Paper elevation={2} style={{ width: "80%", height: "180px" }}>
+          <Paper
+            elevation={2}
+            style={{
+              width: "280px",
+              height: "180px",
+            }}
+          >
             <div className="make-friends-header">
               <span className="make-friends-title">Make Friends</span>
             </div>
@@ -41,7 +47,7 @@ function FindFriend() {
       </div>
       <div className="findFriends-container">
         <div className="findFriends-container-wrapper">
-          <Paper elevation={2} style={{ width: "50%", height: "600px" }}>
+          <Paper className="findFriends-paper" elevation={2}>
             {/* <SearchFriend /> */}
             <FriendRequests />
           </Paper>
