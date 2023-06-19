@@ -3,7 +3,7 @@ import React from "react"
 function Signup() {
   return (
     <div className="flex flex-column ailgn-center signup-container">
-      <div className="flex content-center signup-title-container">
+      <div className="flex content-center  signup-title-container">
         <span className="signup-title">Virmigo</span>
       </div>
 

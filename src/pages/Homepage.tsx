@@ -5,18 +5,20 @@ import FindNewFriends from "../Components/FindNewFriends"
 import UserProfile from "./UserProfile"
 import FindFriends from "./FindFriends"
 import SignupPage from "./SignupPage"
+import Login from "./LoginPage"
 
 function Homepage() {
   return (
     <>
       <Navbar />
       <div className="flex body-container">
-        {/* <YourFriends />
+        <YourFriends />
         <Feed />
-        <FindNewFriends /> */}
+        <FindNewFriends />
         {/* <UserProfile /> */}
         {/* <FindFriends /> */}
-        <SignupPage />
+        {/* <SignupPage /> */}
+        {/* <Login /> */}
       </div>
     </>
   )

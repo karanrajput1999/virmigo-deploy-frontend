@@ -1,8 +1,8 @@
 @use "../abstracts/colors";
 
-.signup-container {
+.login-container {
   width: 480px;
-  height: 610px;
+  height: 350px;
   border: 1px solid #5600ac;
   border-radius: 10px;
   label {
@@ -24,7 +24,7 @@
   }
 }
 
-.signup-title-container {
+.login-title-container {
   font-size: 2.5rem;
   font-weight: 900;
   color: #5600ac;
@@ -33,35 +33,6 @@
 
 .input-field-container {
   margin-bottom: 1.2rem;
-}
-
-.pic-btn-container {
-  margin-block: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.pic-btn-wrapper {
-  gap: 1rem;
-}
-
-.pic-info-container {
-  width: 300px;
-  font-size: 0.8rem;
-  color: red;
-  font-weight: 600;
-  justify-content: flex-start;
-  margin-bottom: 0.5rem;
-}
-
-.pic-btn {
-  padding: 0.4rem 0.6rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  background-color: colors.$primary;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  cursor: pointer;
 }
 
 .join-btn {
@@ -77,9 +48,9 @@
 }
 
 @media (max-width: 550px) {
-  .signup-container {
+  .login-container {
     width: 320px;
-    height: 530px;
+    height: 320px;
 
     input {
       width: 250px;
@@ -89,19 +60,10 @@
     }
   }
 
-  .pic-info-container {
-    width: 250px;
-  }
-
-  .signup-title-container {
+  .login-title-container {
     font-size: 2.5rem;
     margin-block: 0.5rem;
   }
-
-  .pic-btn-container {
-    margin-bottom: 0rem;
-  }
-
   .input-field-container {
     margin-bottom: 0.8rem;
   }

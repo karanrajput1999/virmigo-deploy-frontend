@@ -1,17 +1,18 @@
-import React from "react"
+import React, { useState } from "react"
 import Paper from "@mui/material/Paper"
 import Box from "@mui/material/Box"
 import userIcon from "../assets/user-icon.png"
-import PermMediaIcon from "@mui/icons-material/PermMedia"
-import SendIcon from "@mui/icons-material/Send"
-import GifBoxIcon from "@mui/icons-material/GifBox"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
 import postImg from "../assets/post-media.jpg"
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt"
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt"
 import ModeCommentIcon from "@mui/icons-material/ModeComment"
+import { IconButton } from "@mui/material"
+import DeleteIcon from "@mui/icons-material/Delete"
 
 function Post() {
+  const [openDelete, setOpenDelete] = useState(false)
+
   return (
     <div className="flex flex-column align-center post-container">
       <div style={{ width: "90%", height: "100%" }}>
@@ -28,8 +29,32 @@ function Post() {
                 <span className="post-time">2 min ago</span>
               </div>
             </div>
-            <div className="post-actions">
-              <MoreVertIcon />
+            <div className="post-actions" style={{ position: "relative" }}>
+              <IconButton onClick={() => setOpenDelete(!openDelete)}>
+                <MoreVertIcon />
+              </IconButton>
+
+              <Paper
+                elevation={4}
+                className="content-center align-center"
+                style={{
+                  width: "100px",
+                  height: "40px",
+                  // backgroundColor: "green",
+                  position: "absolute",
+                  right: "1rem",
+                  top: "2.1rem",
+                  cursor: "pointer",
+                  borderRadius: "3px",
+                  userSelect: "none",
+                  display: openDelete ? "flex" : "none",
+                }}
+              >
+                <div className="flex align-center">
+                  <DeleteIcon style={{ color: "red" }} />{" "}
+                  <span style={{ paddingLeft: ".5rem" }}>Delete</span>
+                </div>
+              </Paper>
             </div>
           </div>
 
