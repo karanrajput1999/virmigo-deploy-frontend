@@ -57,13 +57,14 @@ function Profile() {
                     </button>
                     <Dialog open={open} onClose={handleClose}>
                       <DialogTitle
+                        className="updateProfile-title"
                         style={{
                           fontSize: "2rem",
                           fontWeight: "700",
                           textAlign: "center",
                         }}
                       >
-                        Update your profile details!
+                        Update profile details!
                       </DialogTitle>
                       <DialogContent>
                         {/* <DialogContentText>
