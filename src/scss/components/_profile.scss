@@ -65,6 +65,45 @@
   cursor: pointer;
 }
 
+.editProfile-btn {
+  width: 140px;
+  padding: 0.3rem 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  color: #5600ac;
+  cursor: pointer;
+  border: 2px solid #5600ac;
+}
+
+.updateProfile-btn {
+  width: 170px;
+  padding: 0.3rem 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  background-color: #5600ac;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  border: 2px solid #5600ac;
+}
+
+.cancleUpdateProfile-btn {
+  width: 140px;
+  padding: 0.3rem 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  color: red;
+  cursor: pointer;
+  border: 2px solid red;
+}
+
 .tabs-container {
   gap: 2rem;
   span {

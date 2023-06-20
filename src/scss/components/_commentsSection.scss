@@ -1,0 +1,55 @@
+.comments-section-wrapper {
+  margin-top: 1rem;
+}
+.comments-section-form-container {
+  border-block: 1px solid #e9e9e9;
+  padding-block: 1rem;
+}
+input {
+  outline: none;
+  border-radius: 0.3rem;
+  border: 1px solid #9c9c9c;
+
+  &:focus {
+    border-color: #606060;
+  }
+}
+
+.comment-btn {
+  padding: 0.4rem;
+  margin-top: 0.5rem;
+  background-color: #5600ac;
+  color: white;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+
+.comments-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.comments-wrapper {
+  margin-top: 1rem;
+}
+
+.comment-user-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.user-comment-container {
+  background-color: #ededed;
+  border-radius: 0.5rem;
+  padding: 0.2rem 0.5rem;
+}
+
+.comment-text {
+  line-height: 1.2;
+  font-size: 0.9rem;
+}
+
+.comment {
+  margin-top: 0.8rem;
+}

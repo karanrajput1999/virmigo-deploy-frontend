@@ -5,6 +5,10 @@ import NotificationsIcon from "@mui/icons-material/Notifications"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import MenuIcon from "@mui/icons-material/Menu"
 import CloseIcon from "@mui/icons-material/Close"
+import { IconButton } from "@mui/material"
+import Paper from "@mui/material/Paper"
+import PersonPinIcon from "@mui/icons-material/PersonPin"
+import LogoutIcon from "@mui/icons-material/Logout"
 
 const menuIcon = {
   fontSize: "35px",
@@ -13,6 +17,7 @@ const menuIcon = {
 
 function Navbar() {
   const [navClose, setNavClose] = useState(true)
+  const [openProfileMenu, setOpenProfileMenu] = useState(false)
 
   return (
     <div className="navbar-container">
@@ -32,7 +37,46 @@ function Navbar() {
         </ul>
 
         <div className="user-menu flex align-center">
-          <AccountCircleIcon style={menuIcon} />
+          <IconButton onClick={() => setOpenProfileMenu(!openProfileMenu)}>
+            <AccountCircleIcon style={menuIcon} />
+          </IconButton>
+
+          <Paper
+            elevation={4}
+            className="content-center align-center profile-menu"
+            style={{
+              width: "130px",
+              height: "60px",
+              position: "absolute",
+              right: "2rem",
+              top: "3rem",
+              cursor: "pointer",
+              borderRadius: "3px",
+              userSelect: "none",
+              display: openProfileMenu ? "flex" : "none",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <div
+              className="flex align-center content-center"
+              style={{ width: "70%" }}
+            >
+              <div className="flex align-center " style={{ width: "100%" }}>
+                <AccountCircleIcon style={{ color: "#5600ac" }} />{" "}
+                <span style={{ paddingLeft: ".5rem" }}>Profile</span>
+              </div>
+            </div>
+            <div
+              className="flex align-center  content-center"
+              style={{ width: "70%" }}
+            >
+              <div className="flex align-center " style={{ width: "100%" }}>
+                <LogoutIcon style={{ color: "#5600ac" }} />{" "}
+                <span style={{ paddingLeft: ".5rem" }}>Log out</span>
+              </div>
+            </div>
+          </Paper>
         </div>
         <div
           className="flex align-center"

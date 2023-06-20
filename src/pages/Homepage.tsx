@@ -12,10 +12,10 @@ function Homepage() {
     <>
       <Navbar />
       <div className="flex body-container">
-        <YourFriends />
+        {/* <YourFriends />
         <Feed />
-        <FindNewFriends />
-        {/* <UserProfile /> */}
+        <FindNewFriends /> */}
+        <UserProfile />
         {/* <FindFriends /> */}
         {/* <SignupPage /> */}
         {/* <Login /> */}

@@ -4,14 +4,17 @@ import Box from "@mui/material/Box"
 import userIcon from "../assets/user-icon.png"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
 import postImg from "../assets/post-media.jpg"
+import postImg2 from "../assets/post-media-2.jpg"
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt"
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt"
 import ModeCommentIcon from "@mui/icons-material/ModeComment"
 import { IconButton } from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
+import CommentsSection from "./CommentsSection"
 
 function Post() {
   const [openDelete, setOpenDelete] = useState(false)
+  const [openCommentsSection, setOpenCommentsSection] = useState(false)
 
   return (
     <div className="flex flex-column align-center post-container">
@@ -19,7 +22,7 @@ function Post() {
         <Paper
           className="container flex content-center flex-column"
           elevation={2}
-          style={{ paddingInline: "1.5rem" }}
+          style={{ paddingInline: "1.5rem", paddingBottom: "1rem" }}
         >
           <div className="flex align-center space-between post-user-info-container">
             <div className="flex align-center post-user-info">
@@ -87,30 +90,36 @@ function Post() {
             </div>
 
             <div className="flex align-center space-between post-reaction-container">
-              <div className="like-container">
+              <IconButton className="like-container" style={{ padding: "0" }}>
                 <ThumbUpOffAltIcon
                   style={{ color: "#5600ac", fontSize: "2rem" }}
                 />
-              </div>
-              <div className="comment-container">
+              </IconButton>
+              <IconButton
+                className="comment-container"
+                onClick={() => setOpenCommentsSection(!openCommentsSection)}
+                style={{ padding: "0" }}
+              >
                 <ModeCommentIcon
                   style={{ color: "#5600ac", fontSize: "1.8rem" }}
                 />
-              </div>
+              </IconButton>
             </div>
           </div>
+
+          {/* Comments section */}
+          <CommentsSection openCommentsSection={openCommentsSection} />
         </Paper>
       </div>
 
       {/******************************************************************************************************************/}
       {/************************************************** second post below ********************************************/}
       {/******************************************************************************************************************/}
-
-      <Box style={{ width: "90%", height: "100%" }}>
+      <div style={{ width: "90%", height: "100%" }}>
         <Paper
           className="container flex content-center flex-column"
           elevation={2}
-          style={{ paddingInline: "1.5rem" }}
+          style={{ paddingInline: "1.5rem", paddingBottom: "1rem" }}
         >
           <div className="flex align-center space-between post-user-info-container">
             <div className="flex align-center post-user-info">
@@ -120,19 +129,41 @@ function Post() {
                 <span className="post-time">2 min ago</span>
               </div>
             </div>
-            <div className="post-actions">
-              <MoreVertIcon />
+            <div className="post-actions" style={{ position: "relative" }}>
+              <IconButton onClick={() => setOpenDelete(!openDelete)}>
+                <MoreVertIcon />
+              </IconButton>
+
+              <Paper
+                elevation={4}
+                className="content-center align-center"
+                style={{
+                  width: "100px",
+                  height: "40px",
+                  // backgroundColor: "green",
+                  position: "absolute",
+                  right: "1rem",
+                  top: "2.1rem",
+                  cursor: "pointer",
+                  borderRadius: "3px",
+                  userSelect: "none",
+                  display: openDelete ? "flex" : "none",
+                }}
+              >
+                <div className="flex align-center">
+                  <DeleteIcon style={{ color: "red" }} />{" "}
+                  <span style={{ paddingLeft: ".5rem" }}>Delete</span>
+                </div>
+              </Paper>
             </div>
           </div>
 
           <div className="post-caption-container">
-            <span className="post-caption">
-              This is some text is that is going to be caption
-            </span>
+            <span className="post-caption">This is some less text post</span>
           </div>
 
           <div className="post-media-container">
-            <img src={postImg} alt="" />
+            <img src={postImg2} alt="" />
           </div>
 
           <div className=" post-interaction-container">
@@ -149,20 +180,27 @@ function Post() {
             </div>
 
             <div className="flex align-center space-between post-reaction-container">
-              <div className="like-container">
+              <IconButton className="like-container" style={{ padding: "0" }}>
                 <ThumbUpOffAltIcon
                   style={{ color: "#5600ac", fontSize: "2rem" }}
                 />
-              </div>
-              <div className="comment-container">
+              </IconButton>
+              <IconButton
+                className="comment-container"
+                onClick={() => setOpenCommentsSection(!openCommentsSection)}
+                style={{ padding: "0" }}
+              >
                 <ModeCommentIcon
                   style={{ color: "#5600ac", fontSize: "1.8rem" }}
                 />
-              </div>
+              </IconButton>
             </div>
           </div>
+
+          {/* Comments section */}
+          <CommentsSection openCommentsSection={openCommentsSection} />
         </Paper>
-      </Box>
+      </div>
     </div>
   )
 }

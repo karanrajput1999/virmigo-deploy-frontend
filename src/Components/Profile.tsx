@@ -1,12 +1,34 @@
-import React from "react"
+import React, { useState } from "react"
 import userIcon from "../assets/user-icon.png"
 import userCover from "../assets/profile-cover.jpg"
 import PersonAddIcon from "@mui/icons-material/PersonAdd"
 import Paper from "@mui/material/Paper"
-import Box from "@mui/material/Box"
 import Post from "./Post"
+import EditIcon from "@mui/icons-material/Edit"
+// partition
+import Button from "@mui/material/Button"
+import TextField from "@mui/material/TextField"
+import Dialog from "@mui/material/Dialog"
+import DialogActions from "@mui/material/DialogActions"
+import DialogContent from "@mui/material/DialogContent"
+import DialogContentText from "@mui/material/DialogContentText"
+import DialogTitle from "@mui/material/DialogTitle"
+import CloseIcon from "@mui/icons-material/Close"
+import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 
 function Profile() {
+  const isAdmin = true
+
+  const [open, setOpen] = React.useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   return (
     <div className="profile-container">
       <div className="flex content-center flex-column profile-header-container">
@@ -22,12 +44,94 @@ function Profile() {
                 <span className="profile-friends">170 Friends</span>
               </div>
               <div className="profile-addfriend">
-                <button className="flex align-center content-center addfriend-btn">
-                  Add Friend
-                  <PersonAddIcon
-                    style={{ paddingLeft: "5px", fontSize: "2rem" }}
-                  />
-                </button>
+                {isAdmin ? (
+                  <>
+                    <button
+                      className="flex align-center content-center editProfile-btn"
+                      onClick={handleClickOpen}
+                    >
+                      Edit Profile
+                      <EditIcon
+                        style={{ paddingLeft: "5px", fontSize: "2rem" }}
+                      />
+                    </button>
+                    <Dialog open={open} onClose={handleClose}>
+                      <DialogTitle
+                        style={{
+                          fontSize: "2rem",
+                          fontWeight: "700",
+                          textAlign: "center",
+                        }}
+                      >
+                        Update your profile details!
+                      </DialogTitle>
+                      <DialogContent>
+                        {/* <DialogContentText>
+                          To subscribe to this website, please enter your email
+                          address here. We will send updates occasionally.
+                        </DialogContentText> */}
+                        <TextField
+                          autoFocus
+                          margin="dense"
+                          id="name"
+                          label="Name"
+                          type="text"
+                          fullWidth
+                          size="small"
+                          variant="outlined"
+                        />
+                        <TextField
+                          margin="dense"
+                          id="email"
+                          label="Email Address"
+                          type="email"
+                          fullWidth
+                          size="small"
+                          variant="outlined"
+                        />
+                        <TextField
+                          margin="dense"
+                          id="bio"
+                          label="Bio"
+                          type="text"
+                          fullWidth
+                          size="small"
+                          variant="outlined"
+                        />
+                        <TextField
+                          margin="dense"
+                          id="name"
+                          label="State / Country"
+                          type="text"
+                          fullWidth
+                          size="small"
+                          variant="outlined"
+                        />
+                      </DialogContent>
+                      <DialogActions>
+                        <button className="flex align-center content-center updateProfile-btn">
+                          Update Profile
+                          <CheckCircleIcon
+                            style={{ paddingLeft: "5px", fontSize: "2rem" }}
+                          />
+                        </button>
+                        <button className="flex align-center content-center cancleUpdateProfile-btn">
+                          Cancel
+                          <CloseIcon
+                            style={{ paddingLeft: "5px", fontSize: "2rem" }}
+                          />
+                        </button>
+                      </DialogActions>
+                    </Dialog>
+                  </>
+                ) : (
+                  <button className="flex align-center content-center addfriend-btn">
+                    Add Friend
+                    <PersonAddIcon
+                      style={{ paddingLeft: "5px", fontSize: "2rem" }}
+                    />
+                  </button>
+                )}
               </div>
             </div>
           </div>

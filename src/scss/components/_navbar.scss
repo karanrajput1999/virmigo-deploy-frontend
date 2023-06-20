@@ -56,6 +56,10 @@ li {
   display: none;
 }
 
+.profile-menu {
+  z-index: 1;
+}
+
 @media (max-width: 900px) {
   ul {
     gap: 150px;
