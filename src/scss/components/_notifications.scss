@@ -1,0 +1,31 @@
+.notifications-container {
+  width: 100vw;
+  height: calc(100vh - 60px);
+}
+.notifications-title-container {
+  padding: 0.5rem 1rem;
+
+  border-bottom: 1px solid #e9e9e9;
+  .notification-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+}
+
+.notification-container {
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #e9e9e9;
+  .notification-user {
+    font-weight: 700;
+  }
+}
+
+.notification-user-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 0.3rem;
+}
+
+.notification-text {
+  font-weight: 500;
+}

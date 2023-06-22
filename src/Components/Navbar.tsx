@@ -48,7 +48,9 @@ function Navbar() {
             </Link>
           </li>
           <li className="flex align-center">
-            <NotificationsIcon style={menuIcon} />
+            <Link to="/notifications">
+              <NotificationsIcon style={menuIcon} />
+            </Link>
           </li>
         </ul>
         <div className="user-menu flex align-center">
