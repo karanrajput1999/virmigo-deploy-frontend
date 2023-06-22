@@ -110,13 +110,19 @@ function Profile() {
                         />
                       </DialogContent>
                       <DialogActions>
-                        <button className="flex align-center content-center updateProfile-btn">
+                        <button
+                          className="flex align-center content-center updateProfile-btn"
+                          onClick={handleClose}
+                        >
                           Update Profile
                           <CheckCircleIcon
                             style={{ paddingLeft: "5px", fontSize: "2rem" }}
                           />
                         </button>
-                        <button className="flex align-center content-center cancleUpdateProfile-btn">
+                        <button
+                          className="flex align-center content-center cancleUpdateProfile-btn"
+                          onClick={handleClose}
+                        >
                           Cancel
                           <CloseIcon
                             style={{ paddingLeft: "5px", fontSize: "2rem" }}

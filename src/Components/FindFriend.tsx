@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Paper } from "@mui/material"
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
@@ -6,6 +6,8 @@ import SearchFriend from "./SearchFriend"
 import FriendRequests from "./FriendRequests"
 
 function FindFriend() {
+  const [openFriendRequestTab, setOpenFriendRequestTab] = useState(false)
+
   return (
     <div className="flex find-friend-container">
       <div className="make-friends-container">
@@ -21,7 +23,10 @@ function FindFriend() {
               <span className="make-friends-title">Make Friends</span>
             </div>
             <div className="make-friends-body">
-              <div className="flex align-center find-new-friend-container">
+              <div
+                className="flex align-center find-new-friend-container"
+                onClick={() => setOpenFriendRequestTab(false)}
+              >
                 <PeopleAltIcon
                   style={{
                     marginInline: "0.8rem",
@@ -31,7 +36,10 @@ function FindFriend() {
                 />
                 <span className="make-friends-tab-title">Find Friends</span>
               </div>
-              <div className="flex align-center friend-request-container">
+              <div
+                className="flex align-center friend-request-container"
+                onClick={() => setOpenFriendRequestTab(true)}
+              >
                 <AccountCircleIcon
                   style={{
                     marginInline: "0.8rem",
@@ -48,8 +56,8 @@ function FindFriend() {
       <div className="findFriends-container">
         <div className="findFriends-container-wrapper">
           <Paper className="findFriends-paper" elevation={2}>
-            {/* <SearchFriend /> */}
-            <FriendRequests />
+            <SearchFriend visible={openFriendRequestTab} />
+            <FriendRequests visible={openFriendRequestTab} />
           </Paper>
         </div>
       </div>

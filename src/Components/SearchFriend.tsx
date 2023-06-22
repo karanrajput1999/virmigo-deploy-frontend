@@ -3,9 +3,13 @@ import userIcon from "../assets/user-icon.png"
 import PersonAddIcon from "@mui/icons-material/PersonAdd"
 import { Paper } from "@mui/material"
 
-function SearchFriend() {
+type openFriendRequests = {
+  visible: boolean
+}
+
+function SearchFriend({ visible }: openFriendRequests) {
   return (
-    <>
+    <div style={{ display: visible ? "none" : "block" }}>
       {" "}
       <div className="findFriends-header">
         <span className="findFriends-title">Find Friends</span>
@@ -29,7 +33,7 @@ function SearchFriend() {
           </button>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

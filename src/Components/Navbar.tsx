@@ -9,6 +9,7 @@ import { IconButton } from "@mui/material"
 import Paper from "@mui/material/Paper"
 import PersonPinIcon from "@mui/icons-material/PersonPin"
 import LogoutIcon from "@mui/icons-material/Logout"
+import { Link } from "react-router-dom"
 
 const menuIcon = {
   fontSize: "35px",
@@ -22,20 +23,34 @@ function Navbar() {
   return (
     <div className="navbar-container">
       <nav className="flex space-between align-center container" id="navbar">
-        <h1 className="logo">Virmigo</h1>
+        {" "}
+        <h1 className="logo">
+          {" "}
+          <Link
+            to="/"
+            className="flex align-center "
+            style={{ width: "100%", color: "white" }}
+          >
+            {" "}
+            Virmigo{" "}
+          </Link>
+        </h1>
         {/* removed from ul className="flex align-center" */}
         <ul className={`${navClose ? "navClose" : ""}`}>
           <li className="flex align-center">
-            <CottageIcon style={menuIcon} />
+            <Link to="/">
+              <CottageIcon style={menuIcon} />
+            </Link>
           </li>
           <li className="flex align-center">
-            <PeopleAltIcon style={menuIcon} />
+            <Link to="/findfriends">
+              <PeopleAltIcon style={menuIcon} />
+            </Link>
           </li>
           <li className="flex align-center">
             <NotificationsIcon style={menuIcon} />
           </li>
         </ul>
-
         <div className="user-menu flex align-center">
           <IconButton onClick={() => setOpenProfileMenu(!openProfileMenu)}>
             <AccountCircleIcon style={menuIcon} />
@@ -46,7 +61,7 @@ function Navbar() {
             className="content-center align-center profile-menu"
             style={{
               width: "130px",
-              height: "60px",
+              height: "65px",
               position: "absolute",
               right: "2rem",
               top: "3rem",
@@ -62,19 +77,31 @@ function Navbar() {
               className="flex align-center content-center"
               style={{ width: "70%" }}
             >
-              <div className="flex align-center " style={{ width: "100%" }}>
+              <Link
+                to="/user/someone"
+                className="flex align-center "
+                style={{ width: "100%" }}
+              >
+                {/* <div className="flex align-center " style={{ width: "100%" }}> */}
                 <AccountCircleIcon style={{ color: "#5600ac" }} />{" "}
                 <span style={{ paddingLeft: ".5rem" }}>Profile</span>
-              </div>
+                {/* </div> */}
+              </Link>
             </div>
             <div
               className="flex align-center  content-center"
               style={{ width: "70%" }}
             >
-              <div className="flex align-center " style={{ width: "100%" }}>
+              <Link
+                to="/login"
+                className="flex align-center "
+                style={{ width: "100%" }}
+              >
+                {/* <div className="flex align-center " style={{ width: "100%" }}> */}
                 <LogoutIcon style={{ color: "#5600ac" }} />{" "}
                 <span style={{ paddingLeft: ".5rem" }}>Log out</span>
-              </div>
+              </Link>
+              {/* </div> */}
             </div>
           </Paper>
         </div>

@@ -5,9 +5,13 @@ import CheckIcon from "@mui/icons-material/Check"
 import CloseIcon from "@mui/icons-material/Close"
 import { Paper } from "@mui/material"
 
-function FriendRequests() {
+type openFriendRequests = {
+  visible: boolean
+}
+
+function FriendRequests({ visible }: openFriendRequests) {
   return (
-    <>
+    <div style={{ display: visible ? "block" : "none" }}>
       <div className="findFriends-header">
         <span className="findFriends-title">Friend Requests</span>
       </div>
@@ -31,7 +35,7 @@ function FriendRequests() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
