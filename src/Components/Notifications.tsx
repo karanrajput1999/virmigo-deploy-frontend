@@ -5,9 +5,9 @@ import userIcon from "../assets/user-icon.png"
 
 function Notifications() {
   return (
-    <div className="flex content-center align-center notifications-container">
+    <div className="flex align-center content-center notifications-container">
       <div className="notifications-wrapper">
-        <Paper elevation={2} style={{ width: "550px", height: "700px" }}>
+        <Paper className="notification-paper" elevation={2}>
           <div className="flex align-center notifications-title-container">
             <span className="flex align-center notification-title">
               Notifications{" "}
@@ -21,7 +21,7 @@ function Notifications() {
             </span>
           </div>
           {/******************************  first notification ************************/}
-          <div className="notification-container">
+          <div className="flex align-center notification-container">
             <span className="flex align-center notification-text">
               <span className="flex align-center notification-user">
                 <img

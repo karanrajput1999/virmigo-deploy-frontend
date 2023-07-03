@@ -2,7 +2,7 @@
 
 .signup-container {
   width: 480px;
-  height: 610px;
+  min-height: 610px;
   border: 1px solid #5600ac;
   border-radius: 10px;
   label {
@@ -33,6 +33,13 @@
 
 .input-field-container {
   margin-bottom: 1.2rem;
+  // background-color: red;
+}
+
+.error-container {
+  color: red;
+  font-size: 0.9rem;
+  padding-top: 0.5rem;
 }
 
 .pic-btn-container {

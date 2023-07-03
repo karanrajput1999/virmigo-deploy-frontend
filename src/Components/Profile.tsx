@@ -5,6 +5,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd"
 import Paper from "@mui/material/Paper"
 import Post from "./Post"
 import EditIcon from "@mui/icons-material/Edit"
+import PersonRemoveIcon from "@mui/icons-material/PersonRemove"
 // partition
 import Button from "@mui/material/Button"
 import TextField from "@mui/material/TextField"
@@ -18,8 +19,8 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 
 function Profile() {
   const isAdmin = true
-
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
+  const [postTabVisible, setPostTabVisible] = useState(true)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -144,10 +145,21 @@ function Profile() {
           </div>
 
           <div className="flex tabs-container">
-            <div className="tab post-tab active">
+            <div
+              className={`tab post-tab ${postTabVisible ? "active" : ""}`}
+              onClick={() => {
+                setPostTabVisible(true)
+              }}
+            >
               <span>Posts</span>
             </div>
-            <div className="tab friends-tab">
+
+            <div
+              className={`tab friends-tab ${postTabVisible ? "" : "active"}`}
+              onClick={() => {
+                setPostTabVisible(false)
+              }}
+            >
               <span>Friends</span>
             </div>
           </div>
@@ -155,7 +167,12 @@ function Profile() {
       </div>
 
       <div className="flex content-center profile-body-container">
-        <div className="flex profile-body-wrapper">
+        <div
+          className="flex profile-body-wrapper"
+          style={{
+            display: postTabVisible ? "flex" : "none",
+          }}
+        >
           <div className="profile-info-container">
             <div style={{ marginTop: "2rem" }}>
               <Paper
@@ -196,6 +213,70 @@ function Profile() {
               </div>
               <div className="profile-posts-post-container">
                 <Post />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/********************************************* second wrapper *************************************/}
+        <div
+          className="flex profile-body-wrapper"
+          style={{
+            display: postTabVisible ? "none" : "flex",
+          }}
+        >
+          <div className="profile-info-container">
+            <div style={{ marginTop: "2rem" }}>
+              <div className="flex flex-column profile-body-friends-container">
+                {/* first friend */}
+                <div className="flex align-center profile-body-friend">
+                  <img
+                    src={userIcon}
+                    alt="friend"
+                    className="profile-body-icon"
+                  />
+                  <span className="profile-body-friend-name">
+                    Anshu Upadhyay
+                  </span>
+                </div>
+                {/* second friend */}
+                <div className="flex align-center profile-body-friend">
+                  <img
+                    src={userIcon}
+                    alt="friend"
+                    className="profile-body-icon"
+                  />
+                  <span className="profile-body-friend-name">Vinay Pandit</span>
+                </div>
+                {/* third friend */}
+                <div className="flex align-center profile-body-friend">
+                  <img
+                    src={userIcon}
+                    alt="friend"
+                    className="profile-body-icon"
+                  />
+                  <span className="profile-body-friend-name">Hardik Patel</span>
+                </div>
+                {/* fourth friend */}
+                <div className="flex align-center profile-body-friend">
+                  <img
+                    src={userIcon}
+                    alt="friend"
+                    className="profile-body-icon"
+                  />
+                  <span className="profile-body-friend-name">Sonu Verma</span>
+                </div>
+                {/* fifth friend */}
+                <div className="flex align-center profile-body-friend">
+                  <img
+                    src={userIcon}
+                    alt="friend"
+                    className="profile-body-icon"
+                  />
+                  <span className="profile-body-friend-name">
+                    Himanshu Sharma
+                  </span>
+                </div>
               </div>
             </div>
           </div>

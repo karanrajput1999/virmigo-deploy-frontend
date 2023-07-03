@@ -9,6 +9,8 @@ function PostForm() {
   const [previewImg, setPreviewImg] = useState<string>("")
 
   function previewPost(e: ChangeEvent<HTMLInputElement>): void {
+    console.log("change function called")
+
     const previewPic = e.target.files?.[0]
     if (previewPic) {
       const reader = new FileReader()
@@ -38,8 +40,15 @@ function PostForm() {
             />
           </div>
 
+          {/* preview post image */}
           {previewImg && (
             <div className="post-preview">
+              <button
+                style={{ float: "right" }}
+                onClick={() => setPreviewImg("")}
+              >
+                Delete photo
+              </button>
               <img src={previewImg} alt="preview image" />
             </div>
           )}

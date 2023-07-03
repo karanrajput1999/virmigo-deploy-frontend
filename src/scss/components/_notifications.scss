@@ -1,6 +1,6 @@
 .notifications-container {
   width: 100vw;
-  height: calc(100vh - 60px);
+  margin-top: 2rem;
 }
 .notifications-title-container {
   padding: 0.5rem 1rem;
@@ -11,10 +11,15 @@
     font-weight: 700;
   }
 }
+.notification-paper {
+  width: 480px;
+  height: 700px;
+}
 
 .notification-container {
   padding: 0.5rem 1rem;
   border-bottom: 1px solid #e9e9e9;
+
   .notification-user {
     font-weight: 700;
   }
@@ -28,4 +33,24 @@
 
 .notification-text {
   font-weight: 500;
+}
+
+@media (max-width: 500px) {
+  .notification-paper {
+    width: 420px;
+    height: 550px;
+  }
+
+  .notification-text {
+    font-size: 0.9rem;
+  }
+}
+@media (max-width: 450px) {
+  .notification-paper {
+    width: 360px;
+  }
+
+  .notification-text {
+    font-size: 0.8rem;
+  }
 }

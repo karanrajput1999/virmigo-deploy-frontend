@@ -7,13 +7,13 @@ function Login() {
         <span className="login-title">Virmigo</span>
       </div>
 
-      <div className="flex content-center input-field-container">
+      <div className="flex content-center login-input-field-container">
         <div className="flex flex-column">
           <label htmlFor="email">Email</label>
           <input type="text" placeholder="johndoe@gmail.com" />
         </div>
       </div>
-      <div className="flex content-center input-field-container">
+      <div className="flex content-center login-input-field-container">
         <div className="flex flex-column">
           <label htmlFor="password">Password</label>
           <input type="password" placeholder="Type your password..." />

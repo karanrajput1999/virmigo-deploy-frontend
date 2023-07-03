@@ -122,11 +122,13 @@
 
 .profile-body-container {
   width: 100%;
+  overflow-x: auto;
 }
 
 .profile-body-wrapper {
   width: 70rem;
   //   background-color: aquamarine;
+  padding-bottom: 2rem;
 }
 
 .profile-info-container {
@@ -169,6 +171,27 @@
 
 .profile-posts-post-container {
   margin-top: 2rem;
+}
+
+.profile-body-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.profile-body-friend {
+  gap: 0.5rem;
+}
+
+.profile-body-icon {
+  width: 35px;
+  height: 35px;
+}
+.profile-body-friends-container {
+  gap: 0.5rem;
+}
+
+.profile-body-friend-name {
+  font-weight: 600;
 }
 
 @media (max-width: 400px) {
@@ -226,6 +249,7 @@
   }
 
   .profile-body-wrapper {
+    // width: 100vw;
     flex-direction: column;
     align-items: center;
   }
