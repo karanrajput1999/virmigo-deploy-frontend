@@ -86,7 +86,7 @@
 @media (max-width: 550px) {
   .signup-container {
     width: 320px;
-    height: 530px;
+    min-height: 530px;
 
     input {
       width: 250px;

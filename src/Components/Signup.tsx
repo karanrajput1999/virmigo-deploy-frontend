@@ -1,5 +1,5 @@
 import React from "react"
-import { FormikValues, useFormik } from "formik"
+import { useFormik } from "formik"
 import * as Yup from "yup"
 
 interface formValues {
@@ -49,14 +49,13 @@ function Signup() {
         <div className="flex flex-column align-center input-field-container">
           <div className="flex flex-column">
             <label htmlFor="name">Name</label>
+
             <input
               type="text"
               id="name"
+              {...formik.getFieldProps("name")}
               name="name"
               placeholder="John Doe"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.name}
             />
           </div>
           <div className="error-container">
@@ -71,11 +70,9 @@ function Signup() {
             <input
               type="email"
               id="email"
+              {...formik.getFieldProps("email")}
               name="email"
               placeholder="johndoe@gmail.com"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.email}
             />
           </div>
           <div className="error-container">
@@ -90,11 +87,9 @@ function Signup() {
             <input
               type="password"
               id="password"
+              {...formik.getFieldProps("password")}
               name="password"
               placeholder="Type your password..."
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.password}
             />
           </div>
           <div className="error-container">
@@ -109,11 +104,9 @@ function Signup() {
             <input
               type="password"
               id="confirmPassword"
+              {...formik.getFieldProps("confirmPassword")}
               name="confirmPassword"
               placeholder="Confirm your password..."
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.confirmPassword}
             />
           </div>
           <div className="error-container">
