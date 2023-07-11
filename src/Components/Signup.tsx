@@ -1,6 +1,7 @@
 import React from "react"
 import { useFormik } from "formik"
 import * as Yup from "yup"
+import axios from "axios"
 
 interface formValues {
   name: string
@@ -17,8 +18,10 @@ const initialValues = {
 }
 
 const onSubmit = (values: formValues) => {
-  // Handle form submission logic here
   console.log(values)
+  axios
+    .post("http://localhost:3000/signup", values)
+    .then((res) => console.log(res))
 }
 
 const validationSchema = Yup.object({
@@ -36,8 +39,6 @@ function Signup() {
     onSubmit,
     validationSchema,
   })
-
-  console.log("Form errors", formik.errors)
 
   return (
     <div className="flex flex-column ailgn-center signup-container">
