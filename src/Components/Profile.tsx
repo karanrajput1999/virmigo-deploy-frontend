@@ -16,11 +16,14 @@ import DialogContentText from "@mui/material/DialogContentText"
 import DialogTitle from "@mui/material/DialogTitle"
 import CloseIcon from "@mui/icons-material/Close"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"
+import { useSelector } from "react-redux"
 
 function Profile() {
   const isAdmin = true
   const [open, setOpen] = useState(false)
   const [postTabVisible, setPostTabVisible] = useState(true)
+
+  let user = useSelector((state: any) => state.user.adminUser)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -41,7 +44,7 @@ function Profile() {
             <div className="flex profile-user-info">
               <img src={userIcon} alt="" className="profile-user-pic" />
               <div className="flex flex-column profile-username-container">
-                <span className="profile-username">Anshu Upadhyay</span>
+                <span className="profile-username">{user?.name}</span>
                 <span className="profile-friends">170 Friends</span>
               </div>
               <div className="profile-addfriend">

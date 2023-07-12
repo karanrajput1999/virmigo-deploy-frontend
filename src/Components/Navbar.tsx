@@ -10,6 +10,7 @@ import Paper from "@mui/material/Paper"
 import PersonPinIcon from "@mui/icons-material/PersonPin"
 import LogoutIcon from "@mui/icons-material/Logout"
 import { Link } from "react-router-dom"
+import { useSelector } from "react-redux"
 
 const menuIcon = {
   fontSize: "35px",
@@ -19,6 +20,8 @@ const menuIcon = {
 function Navbar() {
   const [navClose, setNavClose] = useState(true)
   const [openProfileMenu, setOpenProfileMenu] = useState(false)
+
+  let user = useSelector((state: any) => state.user.adminUser)
 
   return (
     <div className="navbar-container">
@@ -80,7 +83,7 @@ function Navbar() {
               style={{ width: "70%" }}
             >
               <Link
-                to="/user/someone"
+                to={`/user/${user?._id}`}
                 className="flex align-center "
                 style={{ width: "100%" }}
               >

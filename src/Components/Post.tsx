@@ -11,10 +11,13 @@ import ModeCommentIcon from "@mui/icons-material/ModeComment"
 import { IconButton } from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
 import CommentsSection from "./CommentsSection"
+import { useSelector } from "react-redux"
 
 function Post() {
   const [openDelete, setOpenDelete] = useState(false)
   const [openCommentsSection, setOpenCommentsSection] = useState(false)
+
+  let user = useSelector((state: any) => state.user.adminUser)
 
   return (
     <div className="flex flex-column align-center post-container">
@@ -28,7 +31,9 @@ function Post() {
             <div className="flex align-center post-user-info">
               <img src={userIcon} className="post-user-icon" alt="user-photo" />
               <div className="flex flex-column post-username-container">
-                <span className="post-username">Anshu Upadhyay</span>
+                <span className="post-username">
+                  Anshu Upadhyay : {user?.name}
+                </span>
                 <span className="post-time">2 min ago</span>
               </div>
             </div>

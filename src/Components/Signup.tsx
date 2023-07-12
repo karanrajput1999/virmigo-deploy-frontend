@@ -1,7 +1,10 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import axios from "axios"
+import axios, { AxiosResponse } from "axios"
+import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { getUser } from "../app/features/userSlice"
 
 interface formValues {
   name: string
@@ -17,13 +20,7 @@ const initialValues = {
   confirmPassword: "",
 }
 
-const onSubmit = (values: formValues) => {
-  console.log(values)
-  axios
-    .post("http://localhost:3000/signup", values)
-    .then((res) => console.log(res))
-}
-
+// const onSubmit =
 const validationSchema = Yup.object({
   name: Yup.string().required("Name is required!"),
   email: Yup.string()
@@ -34,9 +31,24 @@ const validationSchema = Yup.object({
 })
 
 function Signup() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
   const formik = useFormik<formValues>({
     initialValues,
-    onSubmit,
+    onSubmit: (values: formValues) => {
+      console.log(values)
+      axios
+        .post("http://localhost:3000/signup", values)
+        .then((res) => {
+          console.log("singup response", res.data)
+
+          dispatch(getUser(res.data))
+
+          navigate("/")
+        })
+        .catch((err) => console.log("error while making signup rqst", err))
+    },
     validationSchema,
   })
 

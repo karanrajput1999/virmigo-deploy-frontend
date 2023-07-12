@@ -1,6 +1,8 @@
 import React from "react"
 import { useFormik } from "formik"
 import * as Yup from "yup"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 interface formValues {
   email: string
@@ -12,10 +14,7 @@ const initialValues = {
   password: "",
 }
 
-const onSubmit = (values: formValues) => {
-  // Handle form submission logic here
-  console.log(values)
-}
+// const onSubmit =
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -25,9 +24,18 @@ const validationSchema = Yup.object({
 })
 
 function Login() {
+  const navigate = useNavigate()
+
   const formik = useFormik<formValues>({
     initialValues,
-    onSubmit,
+    onSubmit: (values: formValues) => {
+      // Handle form submission logic here
+      console.log(values)
+      axios.post("http://localhost:3000/login", values).then((res) => {
+        console.log("login response", res)
+        navigate("/")
+      })
+    },
     validationSchema,
   })
 
@@ -70,11 +78,12 @@ function Login() {
             </div>
           </div>
         </div>
+        <div className="flex content-center join-btn-container">
+          <button type="submit" className="join-btn">
+            Login
+          </button>
+        </div>
       </form>
-
-      <div className="flex content-center join-btn-container">
-        <button className="join-btn">Login</button>
-      </div>
     </div>
   )
 }
