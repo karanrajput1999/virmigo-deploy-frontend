@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import axios, { AxiosResponse } from "axios"
+import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { getUser } from "../app/features/userSlice"
@@ -33,6 +33,22 @@ const validationSchema = Yup.object({
 function Signup() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/signup", { withCredentials: true })
+      .then((res) => {
+        console.log("get reqeust to signup", res)
+
+        if (res.data) {
+          dispatch(getUser(res.data))
+          navigate("/")
+        } else {
+          navigate("/signup")
+        }
+      })
+      .catch((error) => console.log(error))
+  }, [])
 
   const formik = useFormik<formValues>({
     initialValues,

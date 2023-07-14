@@ -11,6 +11,8 @@ import PersonPinIcon from "@mui/icons-material/PersonPin"
 import LogoutIcon from "@mui/icons-material/Logout"
 import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 const menuIcon = {
   fontSize: "35px",
@@ -20,8 +22,21 @@ const menuIcon = {
 function Navbar() {
   const [navClose, setNavClose] = useState(true)
   const [openProfileMenu, setOpenProfileMenu] = useState(false)
+  const navigate = useNavigate()
 
   let user = useSelector((state: any) => state.user.adminUser)
+
+  function logout() {
+    axios
+      .get("http://localhost:3000/logout", { withCredentials: true })
+      .then((res) => {
+        console.log(res)
+        navigate("/login")
+      })
+      .catch((error) => {
+        console.log("error while logging out from frontend", error)
+      })
+  }
 
   return (
     <div className="navbar-container">
@@ -96,16 +111,19 @@ function Navbar() {
             <div
               className="flex align-center  content-center"
               style={{ width: "70%" }}
+              onClick={logout}
             >
-              <Link
-                to="/login"
+              <a
+                // to="/login"
                 className="flex align-center "
                 style={{ width: "100%" }}
               >
                 {/* <div className="flex align-center " style={{ width: "100%" }}> */}
                 <LogoutIcon style={{ color: "#5600ac" }} />{" "}
-                <span style={{ paddingLeft: ".5rem" }}>Log out</span>
-              </Link>
+                <span style={{ paddingLeft: ".5rem", color: "#5600ac" }}>
+                  Log out
+                </span>
+              </a>
               {/* </div> */}
             </div>
           </Paper>

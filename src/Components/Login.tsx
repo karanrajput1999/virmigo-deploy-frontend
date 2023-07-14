@@ -1,8 +1,11 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
+import { getUser } from "../app/features/userSlice"
 
 interface formValues {
   email: string
@@ -25,16 +28,36 @@ const validationSchema = Yup.object({
 
 function Login() {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const user = useSelector((state: any) => state.user.adminUser)
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/login", { withCredentials: true })
+      .then((res) => {
+        console.log("while making get request to login", res.data)
+
+        if (res.data) {
+          dispatch(getUser(res.data))
+          navigate("/")
+        } else {
+          navigate("/login")
+        }
+      })
+      .catch((error) => console.log(error))
+  }, [])
 
   const formik = useFormik<formValues>({
     initialValues,
     onSubmit: (values: formValues) => {
       // Handle form submission logic here
-      console.log(values)
-      axios.post("http://localhost:3000/login", values).then((res) => {
-        console.log("login response", res)
-        navigate("/")
-      })
+      axios
+        .post("http://localhost:3000/login", values, { withCredentials: true })
+        .then((res) => {
+          console.log("login response", res.data)
+          navigate("/")
+        })
     },
     validationSchema,
   })
