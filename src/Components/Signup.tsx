@@ -22,12 +22,20 @@ const initialValues = {
 
 // const onSubmit =
 const validationSchema = Yup.object({
-  name: Yup.string().required("Name is required!"),
+  name: Yup.string()
+    .required("Name is required!")
+    .min(3, "Name must be atleast 3 chars long!")
+    .max(30, "Name can not be more than 30 chars!"),
   email: Yup.string()
     .email("Invalid email format!")
     .required("Email is required!"),
-  password: Yup.string().required("Password is required!"),
-  confirmPassword: Yup.string().required("Confirm Password is required!"),
+  password: Yup.string()
+    .required("Password is required!")
+    .min(4, "Password must be atleast 4 chars long!")
+    .max(20, "Password can not be more than 20 chars!"),
+  confirmPassword: Yup.string()
+    .required("Confirm Password is required!")
+    .oneOf([Yup.ref("password")], "Passwords do not match!"),
 })
 
 function Signup() {

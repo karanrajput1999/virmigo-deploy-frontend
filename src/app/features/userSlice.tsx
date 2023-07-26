@@ -21,6 +21,7 @@ export const userSlice = createSlice({
   reducers: {
     getUser: (state, action: PayloadAction<object>) => {
       state.adminUser = action.payload
+      console.log("get user function was callled", action.payload)
     },
   },
 })

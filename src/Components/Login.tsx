@@ -55,8 +55,12 @@ function Login() {
       axios
         .post("http://localhost:3000/login", values, { withCredentials: true })
         .then((res) => {
-          console.log("login response", res.data)
+          console.log("login post response from frontend", res.data)
+          dispatch(getUser(res.data))
           navigate("/")
+        })
+        .catch((error) => {
+          console.log("error while loging in from frontend", error)
         })
     },
     validationSchema,
