@@ -11,35 +11,27 @@ import ModeCommentIcon from "@mui/icons-material/ModeComment"
 import { IconButton } from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
 import CommentsSection from "./CommentsSection"
-import { useDispatch, useSelector } from "react-redux"
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
-import { getUser } from "../app/features/userSlice"
 
-function Post() {
+interface NewPostType {
+  _id: string
+  description: string
+  image: string | null
+  likes: []
+  comments: []
+  userId: string
+  username: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+interface PostPropType {
+  posts: NewPostType[]
+}
+
+function Post({ posts }: PostPropType) {
   const [openDelete, setOpenDelete] = useState(false)
   const [openCommentsSection, setOpenCommentsSection] = useState(false)
-  const [posts, setPosts] = useState([])
-
-  let user = useSelector((state: any) => state.user.adminUser)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/", { withCredentials: true })
-      .then((res) => {
-        if (res.data) {
-          setPosts(res.data.userWithAllPosts[0].userAllPosts)
-          dispatch(getUser(res.data.userWithAllPosts[0]))
-
-          navigate("/")
-        } else {
-          navigate("/login")
-        }
-      })
-      .catch((error) => console.log(error))
-  }, [])
 
   return (
     <div className="flex flex-column align-center post-container">

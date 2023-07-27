@@ -1,12 +1,81 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Paper } from "@mui/material"
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import SearchFriend from "./SearchFriend"
 import FriendRequests from "./FriendRequests"
+import axios from "axios"
+import { useDispatch, useSelector } from "react-redux"
+import { getUser } from "../app/features/userSlice"
+import { useNavigate } from "react-router-dom"
+
+interface NewPostType {
+  _id: string
+  description: string
+  image: string | null
+  likes: []
+  comments: []
+  userId: string
+  username: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+interface UserType {
+  _id: string
+  name: string
+  email: string
+  profilePic: string | null
+  coverPic: string | null
+  posts: string[]
+  comments: string[]
+  friends: string[]
+  friendRequestsSent: string[]
+  friendRequests: string[]
+  createdAt: string
+  updatedAt: string
+  __v: number
+  userAllPosts: NewPostType[]
+}
 
 function FindFriend() {
   const [openFriendRequestTab, setOpenFriendRequestTab] = useState(false)
+  // const [posts, setPosts] = useState<NewPostType[]>([])
+  const [allUsers, setAllUsers] = useState<UserType[] | null>(null)
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  let user = useSelector((state: any) => state.user.adminUser)
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/findfriends", { withCredentials: true })
+      .then((res) => {
+        if (res.data) {
+          // setPosts(res.data.userWithAllPosts[0].userAllPosts)
+          setAllUsers(res.data.allUsers)
+          dispatch(getUser(res.data.loggedInUser))
+          navigate("/findfriends")
+        } else {
+          navigate("/login")
+        }
+      })
+      .catch((error) => console.log(error))
+  }, [])
+
+  useEffect(() => {
+    console.log("this user is form another useEffect", user)
+
+    // axios
+    //   .post("http://localhost:3000/makefriends", {
+    //     adminUserId: user._id,
+    //   })
+    //   .then((res) => {
+    //     console.log("make friends response", res.data)
+    //   })
+  }, [user])
 
   return (
     <div className="flex find-friend-container">
@@ -56,7 +125,7 @@ function FindFriend() {
       <div className="findFriends-container">
         <div className="findFriends-container-wrapper">
           <Paper className="findFriends-paper" elevation={2}>
-            <SearchFriend visible={openFriendRequestTab} />
+            <SearchFriend visible={openFriendRequestTab} allUsers={allUsers} />
             <FriendRequests visible={openFriendRequestTab} />
           </Paper>
         </div>

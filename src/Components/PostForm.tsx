@@ -10,25 +10,60 @@ import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { getUser } from "../app/features/userSlice"
 
-interface postType {
+interface PostType {
   description: string
+}
+
+interface NewPostType {
+  _id: string
+  description: string
+  image: string | null
+  likes: []
+  comments: []
+  userId: string
+  username: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+interface UserType {
+  _id: string
+  name: string
+  email: string
+  profilePic: string | null
+  coverPic: string | null
+  posts: string[]
+  comments: string[]
+  friends: string[]
+  friendRequestsSent: string[]
+  friendRequests: string[]
+  createdAt: string
+  updatedAt: string
+  __v: number
+  userAllPosts: NewPostType[]
+}
+
+interface PostFormType {
+  user: UserType
+  addNewPost: (post: NewPostType) => void
 }
 
 const initialValues = {
   description: "",
 }
 
-function PostForm() {
+function PostForm({ user, addNewPost }: PostFormType) {
   const [previewImg, setPreviewImg] = useState<string>("")
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  // const dispatch = useDispatch()
+  // const navigate = useNavigate()
 
-  const user = useSelector((state: any) => {
-    return state.user.adminUser
-  })
+  // const user = useSelector((state: any) => {
+  //   return state.user.adminUser
+  // })
 
-  const formik = useFormik<postType>({
+  const formik = useFormik<PostType>({
     initialValues,
     onSubmit: (value: FormikValues) => {
       if (!value.description) {
@@ -36,27 +71,31 @@ function PostForm() {
       }
       console.log("user id while  posting a post", user)
 
-      axios.post("http://localhost:3000/", {
-        ...value,
-        userId: user._id,
-        username: user.name,
-      })
+      axios
+        .post("http://localhost:3000/", {
+          ...value,
+          userId: user._id,
+          username: user.name,
+        })
+        .then((res) => {
+          addNewPost(res.data)
+        })
     },
   })
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/", { withCredentials: true })
-      .then((res) => {
-        if (res.data) {
-          dispatch(getUser(res.data.userWithAllPosts[0]))
-          navigate("/")
-        } else {
-          navigate("/login")
-        }
-      })
-      .catch((error) => console.log(error))
-  }, [])
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:3000/", { withCredentials: true })
+  //     .then((res) => {
+  //       if (res.data) {
+  //         dispatch(getUser(res.data.userWithAllPosts[0]))
+  //         navigate("/")
+  //       } else {
+  //         navigate("/login")
+  //       }
+  //     })
+  //     .catch((error) => console.log(error))
+  // }, [])
 
   // showing image's preview
   function previewPost(e: ChangeEvent<HTMLInputElement>): void {
