@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import userIcon from "../assets/user-icon.png"
 import userCover from "../assets/profile-cover.jpg"
 import PersonAddIcon from "@mui/icons-material/PersonAdd"
@@ -17,13 +17,17 @@ import DialogTitle from "@mui/material/DialogTitle"
 import CloseIcon from "@mui/icons-material/Close"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 import { useSelector } from "react-redux"
+import axios from "axios"
+import { useParams } from "react-router-dom"
 
 function Profile() {
   const isAdmin = true
   const [open, setOpen] = useState(false)
   const [postTabVisible, setPostTabVisible] = useState(true)
+  const [user, setUser] = useState(null)
+  const { userId } = useParams()
 
-  let user = useSelector((state: any) => state.user.adminUser)
+  // let user = useSelector((state: any) => state.user.adminUser)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -32,6 +36,13 @@ function Profile() {
   const handleClose = () => {
     setOpen(false)
   }
+
+  useEffect(() => {
+    axios.get(`http://localhost:3000/user/${userId}`).then((res) => {
+      console.log("got this user through url", res.data)
+      setUser(res.data)
+    })
+  }, [])
 
   return (
     <div className="profile-container">
