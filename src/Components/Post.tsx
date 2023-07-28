@@ -11,6 +11,7 @@ import ModeCommentIcon from "@mui/icons-material/ModeComment"
 import { IconButton } from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
 import CommentsSection from "./CommentsSection"
+import { Link } from "react-router-dom"
 
 interface NewPostType {
   _id: string
@@ -33,6 +34,8 @@ function Post({ posts }: PostPropType) {
   const [openDelete, setOpenDelete] = useState(false)
   const [openCommentsSection, setOpenCommentsSection] = useState(false)
 
+  console.log("yoo this is from posts user routing stuff", posts)
+
   return (
     <div className="flex flex-column align-center post-container">
       {posts &&
@@ -51,7 +54,9 @@ function Post({ posts }: PostPropType) {
                     alt="user-photo"
                   />
                   <div className="flex flex-column post-username-container">
-                    <span className="post-username">{post.username}</span>
+                    <Link className="post-username" to={`/user/${post.userId}`}>
+                      {post.username}
+                    </Link>
                     <span className="post-time">2 min ago</span>
                   </div>
                 </div>
