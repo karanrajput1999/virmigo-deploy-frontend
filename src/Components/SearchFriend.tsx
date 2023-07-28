@@ -2,6 +2,7 @@ import React from "react"
 import userIcon from "../assets/user-icon.png"
 import PersonAddIcon from "@mui/icons-material/PersonAdd"
 import { Paper } from "@mui/material"
+import { Link } from "react-router-dom"
 
 interface NewPostType {
   _id: string
@@ -53,11 +54,12 @@ function SearchFriend({ visible, allUsers }: SearchFriendType) {
         />
       </div>
       <div className="findFriends-friendlist-container">
-        {/* {allUsers &&
+        {allUsers &&
           allUsers.map((user) => (
-            <div
+            <Link
               className="flex align-center space-between friend-container"
               key={user._id}
+              to={`/user/${user._id}`}
             >
               <div className="flex align-center">
                 <img
@@ -73,108 +75,8 @@ function SearchFriend({ visible, allUsers }: SearchFriendType) {
                   style={{ paddingLeft: "5px", fontSize: "1.5rem" }}
                 />
               </button>
-            </div>
-          ))} */}
-        <div className="flex align-center space-between friend-container">
-          <div className="flex align-center">
-            <img src={userIcon} className="friend-photo" alt="friend photo" />
-            <span className="findFriends-friendName">random name</span>
-          </div>
-          <button className="flex align-center findFriend-add-btn">
-            Add Friend{" "}
-            <PersonAddIcon style={{ paddingLeft: "5px", fontSize: "1.5rem" }} />
-          </button>
-        </div>
-        <div className="flex align-center space-between friend-container">
-          <div className="flex align-center">
-            <img src={userIcon} className="friend-photo" alt="friend photo" />
-            <span className="findFriends-friendName">random name</span>
-          </div>
-          <button className="flex align-center findFriend-add-btn">
-            Add Friend{" "}
-            <PersonAddIcon style={{ paddingLeft: "5px", fontSize: "1.5rem" }} />
-          </button>
-        </div>
-        <div className="flex align-center space-between friend-container">
-          <div className="flex align-center">
-            <img src={userIcon} className="friend-photo" alt="friend photo" />
-            <span className="findFriends-friendName">random name</span>
-          </div>
-          <button className="flex align-center findFriend-add-btn">
-            Add Friend{" "}
-            <PersonAddIcon style={{ paddingLeft: "5px", fontSize: "1.5rem" }} />
-          </button>
-        </div>
-        <div className="flex align-center space-between friend-container">
-          <div className="flex align-center">
-            <img src={userIcon} className="friend-photo" alt="friend photo" />
-            <span className="findFriends-friendName">random name</span>
-          </div>
-          <button className="flex align-center findFriend-add-btn">
-            Add Friend{" "}
-            <PersonAddIcon style={{ paddingLeft: "5px", fontSize: "1.5rem" }} />
-          </button>
-        </div>
-        <div className="flex align-center space-between friend-container">
-          <div className="flex align-center">
-            <img src={userIcon} className="friend-photo" alt="friend photo" />
-            <span className="findFriends-friendName">random name</span>
-          </div>
-          <button className="flex align-center findFriend-add-btn">
-            Add Friend{" "}
-            <PersonAddIcon style={{ paddingLeft: "5px", fontSize: "1.5rem" }} />
-          </button>
-        </div>
-        <div className="flex align-center space-between friend-container">
-          <div className="flex align-center">
-            <img src={userIcon} className="friend-photo" alt="friend photo" />
-            <span className="findFriends-friendName">random name</span>
-          </div>
-          <button className="flex align-center findFriend-add-btn">
-            Add Friend{" "}
-            <PersonAddIcon style={{ paddingLeft: "5px", fontSize: "1.5rem" }} />
-          </button>
-        </div>
-        <div className="flex align-center space-between friend-container">
-          <div className="flex align-center">
-            <img src={userIcon} className="friend-photo" alt="friend photo" />
-            <span className="findFriends-friendName">random name</span>
-          </div>
-          <button className="flex align-center findFriend-add-btn">
-            Add Friend{" "}
-            <PersonAddIcon style={{ paddingLeft: "5px", fontSize: "1.5rem" }} />
-          </button>
-        </div>
-        <div className="flex align-center space-between friend-container">
-          <div className="flex align-center">
-            <img src={userIcon} className="friend-photo" alt="friend photo" />
-            <span className="findFriends-friendName">random name</span>
-          </div>
-          <button className="flex align-center findFriend-add-btn">
-            Add Friend{" "}
-            <PersonAddIcon style={{ paddingLeft: "5px", fontSize: "1.5rem" }} />
-          </button>
-        </div>
-        <div className="flex align-center space-between friend-container">
-          <div className="flex align-center">
-            <img src={userIcon} className="friend-photo" alt="friend photo" />
-            <span className="findFriends-friendName">random name</span>
-          </div>
-          <button className="flex align-center findFriend-add-btn">
-            Add Friend{" "}
-            <PersonAddIcon style={{ paddingLeft: "5px", fontSize: "1.5rem" }} />
-          </button>
-        </div>
-        <div className="flex align-center space-between friend-container">
-          <div className="flex align-center">
-            <img src={userIcon} className="friend-photo" alt="friend photo" />
-            <span className="findFriends-friendName">random name</span>
-          </div>
-          <button className="flex align-center findFriend-add-btn">
-            Add Friend{" "}
-            <PersonAddIcon style={{ paddingLeft: "5px", fontSize: "1.5rem" }} />
-          </button>
-        </div>
+            </Link>
+          ))}
       </div>
     </div>
   )

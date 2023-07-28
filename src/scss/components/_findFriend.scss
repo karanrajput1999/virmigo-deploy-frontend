@@ -47,9 +47,12 @@
 }
 
 .findFriends-friendlist-container {
+  height: 475px;
   width: 100%;
-  margin-top: 1.5rem;
+  // padding-block: 0.5rem;
   padding-inline: 1.5rem;
+  // background-color: red;
+  overflow: auto;
 }
 
 .friend-photo {

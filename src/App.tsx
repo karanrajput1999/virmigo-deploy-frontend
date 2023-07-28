@@ -16,7 +16,8 @@ function App() {
       <Route path="/notifications" element={<NotificationsPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
-      <Route path="/user/:username" element={<UserProfile />} />
+      {/* previously -  /user/:username */}
+      <Route path="/user/:userId" element={<UserProfile />} />
     </Routes>
   )
 }
