@@ -1,8 +1,9 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import userIcon from "../assets/user-icon.png"
 import PersonAddIcon from "@mui/icons-material/PersonAdd"
 import { Paper } from "@mui/material"
 import { Link } from "react-router-dom"
+import axios from "axios"
 
 interface NewPostType {
   _id: string
@@ -39,6 +40,19 @@ interface SearchFriendType {
 
 function SearchFriend({ visible, allUsers }: SearchFriendType) {
   console.log("this is users from search friend", allUsers)
+  // const [friendId, setFriendId] = useState(null)
+
+  async function sendFriendRequest(friendId: string) {
+    axios
+      .post(
+        "http://localhost:3000/findfriends",
+        { friendId },
+        { withCredentials: true },
+      )
+      .then((res) => {
+        console.log(res.data)
+      })
+  }
 
   return (
     <div style={{ display: visible ? "none" : "block" }}>
@@ -56,10 +70,9 @@ function SearchFriend({ visible, allUsers }: SearchFriendType) {
       <div className="findFriends-friendlist-container">
         {allUsers &&
           allUsers.map((user) => (
-            <Link
+            <div
               className="flex align-center space-between friend-container"
               key={user._id}
-              to={`/user/${user._id}`}
             >
               <div className="flex align-center">
                 <img
@@ -67,15 +80,23 @@ function SearchFriend({ visible, allUsers }: SearchFriendType) {
                   className="friend-photo"
                   alt="friend photo"
                 />
-                <span className="findFriends-friendName">{user.name}</span>
+                <Link
+                  className="findFriends-friendName"
+                  to={`/user/${user._id}`}
+                >
+                  {user.name}
+                </Link>
               </div>
-              <button className="flex align-center findFriend-add-btn">
+              <button
+                className="flex align-center findFriend-add-btn"
+                onClick={() => sendFriendRequest(user._id)}
+              >
                 Add Friend{" "}
                 <PersonAddIcon
                   style={{ paddingLeft: "5px", fontSize: "1.5rem" }}
                 />
               </button>
-            </Link>
+            </div>
           ))}
       </div>
     </div>
