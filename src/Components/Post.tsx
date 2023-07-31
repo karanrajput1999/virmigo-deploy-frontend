@@ -34,8 +34,6 @@ function Post({ posts }: PostPropType) {
   const [openDelete, setOpenDelete] = useState(false)
   const [openCommentsSection, setOpenCommentsSection] = useState(false)
 
-  console.log("yoo this is from posts user routing stuff", posts)
-
   return (
     <div className="flex flex-column align-center post-container">
       {posts &&

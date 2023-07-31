@@ -30,7 +30,6 @@ function Navbar() {
     axios
       .get("http://localhost:3000/logout", { withCredentials: true })
       .then((res) => {
-        console.log(res)
         navigate("/login")
       })
       .catch((error) => {

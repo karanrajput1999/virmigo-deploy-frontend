@@ -39,7 +39,6 @@ interface SearchFriendType {
 }
 
 function SearchFriend({ visible, allUsers }: SearchFriendType) {
-  console.log("this is users from search friend", allUsers)
   // const [friendId, setFriendId] = useState(null)
 
   async function sendFriendRequest(friendId: string) {

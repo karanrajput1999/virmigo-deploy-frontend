@@ -43,6 +43,9 @@ function FindFriend() {
   const [openFriendRequestTab, setOpenFriendRequestTab] = useState(false)
   // const [posts, setPosts] = useState<NewPostType[]>([])
   const [allUsers, setAllUsers] = useState<UserType[] | null>(null)
+  const [friendRequests, setFriendRequests] = useState<
+    UserType[] | null | undefined
+  >(null)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -56,6 +59,7 @@ function FindFriend() {
         if (res.data) {
           // setPosts(res.data.userWithAllPosts[0].userAllPosts)
           setAllUsers(res.data.allUsers)
+          setFriendRequests(res.data.allFriendRequests)
           dispatch(getUser(res.data.loggedInUser))
           navigate("/findfriends")
         } else {
@@ -65,17 +69,12 @@ function FindFriend() {
       .catch((error) => console.log(error))
   }, [])
 
-  useEffect(() => {
-    console.log("this user is form another useEffect", user)
-
-    // axios
-    //   .post("http://localhost:3000/makefriends", {
-    //     adminUserId: user._id,
-    //   })
-    //   .then((res) => {
-    //     console.log("make friends response", res.data)
-    //   })
-  }, [user])
+  const addFriend = (newFriend: string) => {
+    const remainingFriendRequests = friendRequests?.filter((friendRequest) => {
+      return friendRequest._id !== newFriend
+    })
+    setFriendRequests(remainingFriendRequests)
+  }
 
   return (
     <div className="flex find-friend-container">
@@ -126,7 +125,12 @@ function FindFriend() {
         <div className="findFriends-container-wrapper">
           <Paper className="findFriends-paper" elevation={2}>
             <SearchFriend visible={openFriendRequestTab} allUsers={allUsers} />
-            <FriendRequests visible={openFriendRequestTab} />
+
+            <FriendRequests
+              visible={openFriendRequestTab}
+              friendRequests={friendRequests}
+              addFriend={addFriend}
+            />
           </Paper>
         </div>
       </div>

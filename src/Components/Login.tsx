@@ -36,8 +36,6 @@ function Login() {
     axios
       .get("http://localhost:3000/login", { withCredentials: true })
       .then((res) => {
-        console.log("while making get request to login", res.data)
-
         if (res.data) {
           dispatch(getUser(res.data))
           navigate("/")
@@ -55,7 +53,6 @@ function Login() {
       axios
         .post("http://localhost:3000/login", values, { withCredentials: true })
         .then((res) => {
-          console.log("login post response from frontend", res.data)
           dispatch(getUser(res.data))
           navigate("/")
         })
