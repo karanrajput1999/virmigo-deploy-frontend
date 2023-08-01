@@ -19,11 +19,67 @@ interface NewPostType {
   __v: number
 }
 
-interface FriendReqeustsType {
-  visible: boolean
+interface UserType {
+  _id: string
+  name: string
+  email: string
+  profilePic: string | null
+  coverPic: string | null
+  posts: string[]
+  comments: string[]
+  friends: string[]
+  friendRequestsSent: string[]
+  friendRequests: string[]
+  createdAt: string
+  updatedAt: string
+  __v: number
+  userAllPosts: NewPostType[]
 }
 
-function FriendRequests({ visible }: FriendReqeustsType) {
+interface FriendReqeustsType {
+  visible: boolean
+  friendRequests: UserType[] | null
+  acceptFriendRequest: (senderId: string) => void
+}
+
+function FriendRequests({
+  visible,
+  friendRequests,
+  acceptFriendRequest,
+}: FriendReqeustsType) {
+  console.log("friend requests user inside friend request .tsx", friendRequests)
+
+  function acceptFriendReqeuest(senderId: string) {
+    axios
+      .post(
+        "http://localhost:3000/findfriends",
+        { senderId },
+        { withCredentials: true },
+      )
+      .then((res) => {
+        console.log("accepted friend request", res.data.senderId)
+        acceptFriendRequest(res.data.senderId)
+      })
+      .catch((error) => {
+        console.log("error while accepting friend request", error)
+      })
+  }
+  function declineFriendRequest(rejectSenderId: string) {
+    axios
+      .post(
+        "http://localhost:3000/findfriends",
+        { rejectSenderId },
+        { withCredentials: true },
+      )
+      .then((res) => {
+        console.log("reject friend request", res.data.rejectSenderId)
+        acceptFriendRequest(res.data.rejectSenderId)
+      })
+      .catch((error) => {
+        console.log("error while accepting friend request", error)
+      })
+  }
+
   return (
     <div style={{ display: visible ? "block" : "none" }}>
       <div className="findFriends-header">
@@ -31,23 +87,45 @@ function FriendRequests({ visible }: FriendReqeustsType) {
       </div>
 
       <div className="findFriends-friendlist-container friend-requests-container">
-        <div className="flex align-center space-between friend-container">
-          <div className="flex align-center">
-            <img src={userIcon} className="friend-photo" alt="friend photo" />
-            <span className="findFriends-friendName">someone</span>
-          </div>
+        {friendRequests &&
+          friendRequests.map((friendRequest) => (
+            <div
+              className="flex align-center space-between friend-container"
+              key={friendRequest._id}
+            >
+              <div className="flex align-center">
+                <img
+                  src={userIcon}
+                  className="friend-photo"
+                  alt="friend photo"
+                />
+                <span className="findFriends-friendName">
+                  {friendRequest.name}
+                </span>
+              </div>
 
-          <div className="flex friend-requests-btn-container">
-            <button className="flex align-center findFriend-add-btn">
-              Accept{" "}
-              <CheckIcon style={{ paddingLeft: "2px", fontSize: "1.5rem" }} />
-            </button>
-            <button className="flex align-center findFriend-decline-btn">
-              Decline{" "}
-              <CloseIcon style={{ paddingLeft: "2px", fontSize: "1.5rem" }} />
-            </button>
-          </div>
-        </div>
+              <div className="flex friend-requests-btn-container">
+                <button
+                  className="flex align-center findFriend-add-btn"
+                  onClick={() => acceptFriendReqeuest(friendRequest._id)}
+                >
+                  Accept{" "}
+                  <CheckIcon
+                    style={{ paddingLeft: "2px", fontSize: "1.5rem" }}
+                  />
+                </button>
+                <button
+                  className="flex align-center findFriend-decline-btn"
+                  onClick={() => declineFriendRequest(friendRequest._id)}
+                >
+                  Decline{" "}
+                  <CloseIcon
+                    style={{ paddingLeft: "2px", fontSize: "1.5rem" }}
+                  />
+                </button>
+              </div>
+            </div>
+          ))}
       </div>
     </div>
   )

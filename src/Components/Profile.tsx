@@ -20,11 +20,41 @@ import { useSelector } from "react-redux"
 import axios from "axios"
 import { useParams } from "react-router-dom"
 
+interface NewPostType {
+  _id: string
+  description: string
+  image: string | null
+  likes: []
+  comments: []
+  userId: string
+  username: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+interface UserType {
+  _id: string
+  name: string
+  email: string
+  profilePic: string | null
+  coverPic: string | null
+  posts: string[]
+  comments: string[]
+  friends: string[]
+  friendRequestsSent: string[]
+  friendRequests: string[]
+  createdAt: string
+  updatedAt: string
+  __v: number
+  userAllPosts: NewPostType[]
+}
+
 function Profile() {
   const isAdmin = true
   const [open, setOpen] = useState(false)
   const [postTabVisible, setPostTabVisible] = useState(true)
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<UserType | null>(null)
   const { userId } = useParams()
 
   // let user = useSelector((state: any) => state.user.adminUser)

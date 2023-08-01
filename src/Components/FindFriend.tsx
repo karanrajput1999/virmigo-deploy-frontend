@@ -21,10 +21,29 @@ interface NewPostType {
   updatedAt: string
   __v: number
 }
+interface UserType {
+  _id: string
+  name: string
+  email: string
+  profilePic: string | null
+  coverPic: string | null
+  posts: string[]
+  comments: string[]
+  friends: string[]
+  friendRequestsSent: string[]
+  friendRequests: string[]
+  createdAt: string
+  updatedAt: string
+  __v: number
+  userAllPosts: NewPostType[]
+}
 
 function FindFriend() {
   const [openFriendRequestTab, setOpenFriendRequestTab] = useState(false)
-  const [allUsers, setAllUsers] = useState(null)
+  const [allUsers, setAllUsers] = useState<UserType[] | null | undefined>(null)
+  const [friendRequests, setFriendRequests] = useState<
+    UserType[] | null | undefined
+  >(null)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -35,12 +54,24 @@ function FindFriend() {
     axios
       .get("http://localhost:3000/findfriends", { withCredentials: true })
       .then((res) => {
+        console.log("inside find friend", res.data)
+
+        dispatch(getUser(res.data.loggedInUser))
         setAllUsers(res.data.allUsers)
+        setFriendRequests(res.data.allFriendRequests)
       })
       .catch((error) => {
         console.log("error while making get request to get allUsers", error)
       })
   }, [])
+
+  const acceptFriendRequest = (senderId: string) => {
+    const remainingRequests = friendRequests?.filter(
+      (sender) => sender._id !== senderId,
+    )
+
+    setFriendRequests(remainingRequests)
+  }
 
   return (
     <div className="flex find-friend-container">
@@ -92,7 +123,11 @@ function FindFriend() {
           <Paper className="findFriends-paper" elevation={2}>
             <SearchFriend visible={openFriendRequestTab} allUsers={allUsers} />
 
-            <FriendRequests visible={openFriendRequestTab} />
+            <FriendRequests
+              visible={openFriendRequestTab}
+              friendRequests={friendRequests}
+              acceptFriendRequest={acceptFriendRequest}
+            />
           </Paper>
         </div>
       </div>

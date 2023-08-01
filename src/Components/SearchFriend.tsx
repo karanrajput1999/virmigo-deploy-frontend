@@ -35,7 +35,7 @@ interface UserType {
 }
 interface SearchFriendType {
   visible: boolean
-  allUsers: UserType[]
+  allUsers: UserType[] | null
 }
 
 function sendFriendRequest(receiverId: string) {
