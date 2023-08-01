@@ -22,59 +22,25 @@ interface NewPostType {
   __v: number
 }
 
-interface UserType {
-  _id: string
-  name: string
-  email: string
-  profilePic: string | null
-  coverPic: string | null
-  posts: string[]
-  comments: string[]
-  friends: string[]
-  friendRequestsSent: string[]
-  friendRequests: string[]
-  createdAt: string
-  updatedAt: string
-  __v: number
-  userAllPosts: NewPostType[]
-}
-
 function FindFriend() {
   const [openFriendRequestTab, setOpenFriendRequestTab] = useState(false)
-  // const [posts, setPosts] = useState<NewPostType[]>([])
-  const [allUsers, setAllUsers] = useState<UserType[] | null>(null)
-  const [friendRequests, setFriendRequests] = useState<
-    UserType[] | null | undefined
-  >(null)
+  const [allUsers, setAllUsers] = useState(null)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
+  allUsers
   let user = useSelector((state: any) => state.user.adminUser)
 
   useEffect(() => {
     axios
       .get("http://localhost:3000/findfriends", { withCredentials: true })
       .then((res) => {
-        if (res.data) {
-          // setPosts(res.data.userWithAllPosts[0].userAllPosts)
-          setAllUsers(res.data.allUsers)
-          setFriendRequests(res.data.allFriendRequests)
-          dispatch(getUser(res.data.loggedInUser))
-          navigate("/findfriends")
-        } else {
-          navigate("/login")
-        }
+        setAllUsers(res.data.allUsers)
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        console.log("error while making get request to get allUsers", error)
+      })
   }, [])
-
-  const addFriend = (newFriend: string) => {
-    const remainingFriendRequests = friendRequests?.filter((friendRequest) => {
-      return friendRequest._id !== newFriend
-    })
-    setFriendRequests(remainingFriendRequests)
-  }
 
   return (
     <div className="flex find-friend-container">
@@ -126,11 +92,7 @@ function FindFriend() {
           <Paper className="findFriends-paper" elevation={2}>
             <SearchFriend visible={openFriendRequestTab} allUsers={allUsers} />
 
-            <FriendRequests
-              visible={openFriendRequestTab}
-              friendRequests={friendRequests}
-              addFriend={addFriend}
-            />
+            <FriendRequests visible={openFriendRequestTab} />
           </Paper>
         </div>
       </div>

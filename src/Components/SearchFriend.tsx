@@ -38,21 +38,22 @@ interface SearchFriendType {
   allUsers: UserType[]
 }
 
+function sendFriendRequest(receiverId: string) {
+  axios
+    .post(
+      "http://localhost:3000/findfriends",
+      { receiverId },
+      { withCredentials: true },
+    )
+    .then((res) => {
+      console.log("after sending a friend request", res.data)
+    })
+    .catch((error) => {
+      console.log("error while sending friend request", error)
+    })
+}
+
 function SearchFriend({ visible, allUsers }: SearchFriendType) {
-  // const [friendId, setFriendId] = useState(null)
-
-  async function sendFriendRequest(friendId: string) {
-    axios
-      .post(
-        "http://localhost:3000/findfriends",
-        { friendId },
-        { withCredentials: true },
-      )
-      .then((res) => {
-        console.log(res.data)
-      })
-  }
-
   return (
     <div style={{ display: visible ? "none" : "block" }}>
       {" "}
