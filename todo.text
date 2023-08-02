@@ -8,8 +8,6 @@ friends tab in user profile                 (done)
 preview of photo while posting              (done) bug: doesn't select the same image if previously it was deleted
 notifications page                          (done)
 register/login validation                   (done)
-
-
-
 Horizontal scrolling bug
 
+doesn't show error for wrong password on frontend while logging in

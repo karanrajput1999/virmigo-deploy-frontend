@@ -44,6 +44,9 @@ function FindFriend() {
   const [friendRequests, setFriendRequests] = useState<
     UserType[] | null | undefined
   >(null)
+  const [friendRequestsSent, setFriendRequestsSent] = useState<
+    UserType[] | null | undefined
+  >(null)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -59,6 +62,7 @@ function FindFriend() {
         dispatch(getUser(res.data.loggedInUser))
         setAllUsers(res.data.allUsers)
         setFriendRequests(res.data.allFriendRequests)
+        setFriendRequestsSent(res.data.allFriendRequestsSent)
       })
       .catch((error) => {
         console.log("error while making get request to get allUsers", error)
@@ -121,7 +125,11 @@ function FindFriend() {
       <div className="findFriends-container">
         <div className="findFriends-container-wrapper">
           <Paper className="findFriends-paper" elevation={2}>
-            <SearchFriend visible={openFriendRequestTab} allUsers={allUsers} />
+            <SearchFriend
+              visible={openFriendRequestTab}
+              allUsers={allUsers}
+              friendRequestsSent={friendRequestsSent}
+            />
 
             <FriendRequests
               visible={openFriendRequestTab}

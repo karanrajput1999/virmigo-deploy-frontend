@@ -36,6 +36,7 @@ interface UserType {
 interface SearchFriendType {
   visible: boolean
   allUsers: UserType[] | null
+  friendRequestsSent: UserType[] | null
 }
 
 function sendFriendRequest(receiverId: string) {
@@ -53,7 +54,35 @@ function sendFriendRequest(receiverId: string) {
     })
 }
 
-function SearchFriend({ visible, allUsers }: SearchFriendType) {
+function cancelFriendRequest(receiverId: string) {
+  axios
+    .post(
+      "http://localhost:3000/findfriends",
+      { cancelRequestId: receiverId },
+      { withCredentials: true },
+    )
+    .then((res) => {
+      console.log("after sending a friend request", res.data)
+    })
+    .catch((error) => {
+      console.log("error while sending friend request", error)
+    })
+}
+
+function SearchFriend({
+  visible,
+  allUsers,
+  friendRequestsSent,
+}: SearchFriendType) {
+  const friendRequestedUser = friendRequestsSent?.map((friendRequest) => {
+    return friendRequest._id
+  })
+
+  console.log(
+    "Id of users whom we have sent the friend request from search friend",
+    friendRequestedUser,
+  )
+
   return (
     <div style={{ display: visible ? "none" : "block" }}>
       {" "}
@@ -89,9 +118,17 @@ function SearchFriend({ visible, allUsers }: SearchFriendType) {
               </div>
               <button
                 className="flex align-center findFriend-add-btn"
-                onClick={() => sendFriendRequest(user._id)}
+                onClick={() => {
+                  if (friendRequestedUser?.includes(user._id)) {
+                    cancelFriendRequest(user._id)
+                  } else {
+                    sendFriendRequest(user._id)
+                  }
+                }}
               >
-                Add Friend{" "}
+                {friendRequestedUser?.includes(user._id)
+                  ? "Cancle Request"
+                  : "Add Friend"}
                 <PersonAddIcon
                   style={{ paddingLeft: "5px", fontSize: "1.5rem" }}
                 />
