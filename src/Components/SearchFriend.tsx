@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import userIcon from "../assets/user-icon.png"
 import PersonAddIcon from "@mui/icons-material/PersonAdd"
 import { Paper } from "@mui/material"
-import { Link } from "react-router-dom"
+import { Link, useAsyncError } from "react-router-dom"
 import axios from "axios"
 
 interface NewPostType {
@@ -39,49 +39,57 @@ interface SearchFriendType {
   friendRequestsSent: UserType[] | null
 }
 
-function sendFriendRequest(receiverId: string) {
-  axios
-    .post(
-      "http://localhost:3000/findfriends",
-      { receiverId },
-      { withCredentials: true },
-    )
-    .then((res) => {
-      console.log("after sending a friend request", res.data)
-    })
-    .catch((error) => {
-      console.log("error while sending friend request", error)
-    })
-}
-
-function cancelFriendRequest(receiverId: string) {
-  axios
-    .post(
-      "http://localhost:3000/findfriends",
-      { cancelRequestId: receiverId },
-      { withCredentials: true },
-    )
-    .then((res) => {
-      console.log("after sending a friend request", res.data)
-    })
-    .catch((error) => {
-      console.log("error while sending friend request", error)
-    })
-}
-
 function SearchFriend({
   visible,
   allUsers,
   friendRequestsSent,
 }: SearchFriendType) {
-  const friendRequestedUser = friendRequestsSent?.map((friendRequest) => {
-    return friendRequest._id
-  })
+  const [friendRequestedUser, setFriendRequestedUser] = useState<string[]>([])
 
-  console.log(
-    "Id of users whom we have sent the friend request from search friend",
-    friendRequestedUser,
-  )
+  useEffect(() => {
+    if (friendRequestsSent) {
+      const requestedUser = friendRequestsSent?.map((friendRequest) => {
+        return friendRequest._id
+      })
+      setFriendRequestedUser(requestedUser)
+    }
+  }, [friendRequestsSent])
+
+  function sendFriendRequest(receiverId: string) {
+    axios
+      .post(
+        "http://localhost:3000/findfriends",
+        { receiverId },
+        { withCredentials: true },
+      )
+      .then((res) => {
+        setFriendRequestedUser([...friendRequestedUser, receiverId])
+        console.log("after sending a friend request", res.data)
+      })
+      .catch((error) => {
+        console.log("error while sending friend request", error)
+      })
+  }
+
+  function cancelFriendRequest(receiverId: string) {
+    axios
+      .post(
+        "http://localhost:3000/findfriends",
+        { cancelRequestId: receiverId },
+        { withCredentials: true },
+      )
+      .then((res) => {
+        setFriendRequestedUser(
+          friendRequestedUser.filter(
+            (friendRequest) => friendRequest !== receiverId,
+          ),
+        )
+        console.log("after sending a friend request", res.data)
+      })
+      .catch((error) => {
+        console.log("error while sending friend request", error)
+      })
+  }
 
   return (
     <div style={{ display: visible ? "none" : "block" }}>
@@ -129,6 +137,7 @@ function SearchFriend({
                 {friendRequestedUser?.includes(user._id)
                   ? "Cancle Request"
                   : "Add Friend"}
+
                 <PersonAddIcon
                   style={{ paddingLeft: "5px", fontSize: "1.5rem" }}
                 />

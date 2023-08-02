@@ -73,7 +73,6 @@ function FindFriend() {
     const remainingRequests = friendRequests?.filter(
       (sender) => sender._id !== senderId,
     )
-
     setFriendRequests(remainingRequests)
   }
 
