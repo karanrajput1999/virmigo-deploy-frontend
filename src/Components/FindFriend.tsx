@@ -40,12 +40,10 @@ interface UserType {
 
 function FindFriend() {
   const [openFriendRequestTab, setOpenFriendRequestTab] = useState(false)
-  const [allUsers, setAllUsers] = useState<UserType[] | null | undefined>(null)
-  const [friendRequests, setFriendRequests] = useState<
-    UserType[] | null | undefined
-  >(null)
+  const [allUsers, setAllUsers] = useState<UserType[] | null>(null)
+  const [friendRequests, setFriendRequests] = useState<UserType[] | null>(null)
   const [friendRequestsSent, setFriendRequestsSent] = useState<
-    UserType[] | null | undefined
+    UserType[] | null
   >(null)
 
   const dispatch = useDispatch()
@@ -70,9 +68,8 @@ function FindFriend() {
   }, [])
 
   const acceptFriendRequest = (senderId: string) => {
-    const remainingRequests = friendRequests?.filter(
-      (sender) => sender._id !== senderId,
-    )
+    const remainingRequests =
+      friendRequests?.filter((sender) => sender._id !== senderId) || []
     setFriendRequests(remainingRequests)
   }
 

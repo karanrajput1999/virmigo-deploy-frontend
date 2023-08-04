@@ -3,7 +3,12 @@
 .your-friends-container {
   flex: 1;
   margin-top: 20px;
-  // background-color: brown;
+  overflow: auto;
+}
+
+.friends-container {
+  height: 350px;
+  overflow: auto;
 }
 
 .title-container {
@@ -58,4 +63,18 @@
   #your-friends-container {
     display: none;
   }
+}
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #5600ac;
+  // border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4a0094;
 }

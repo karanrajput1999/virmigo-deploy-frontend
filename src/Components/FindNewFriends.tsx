@@ -1,10 +1,37 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import Paper from "@mui/material/Paper"
 import Box from "@mui/material/Box"
 import userIcon from "../assets/user-icon.png"
 import PersonAddIcon from "@mui/icons-material/PersonAdd"
+import axios from "axios"
+
+interface UserType {
+  _id: string
+  name: string
+  email: string
+  profilePic: string | null
+  coverPic: string | null
+  posts: string[]
+  comments: string[]
+  friends: string[]
+  friendRequestsSent: string[]
+  friendRequests: string[]
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
 
 function FindNewFriends() {
+  const [allUsers, setAllUsers] = useState<UserType[] | null>(null)
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/", { withCredentials: true })
+      .then((res) => {
+        setAllUsers(res.data.allUsers)
+      })
+  }, [])
+
   return (
     <div className="mx find-new-friends-Container">
       <div>
@@ -23,36 +50,22 @@ function FindNewFriends() {
           </div>
 
           <div className="flow friends-container">
-            <div className="flex align-center space-between friend">
-              <div className="flex align-center  friend-left">
-                <img src={userIcon} className="icon" alt="user-icon" />
-                <span className="friends-name">Himanshu Sharma</span>
-              </div>
+            {allUsers &&
+              allUsers.map((user) => (
+                <div
+                  className="flex align-center space-between friend"
+                  key={user._id}
+                >
+                  <div className="flex align-center  friend-left">
+                    <img src={userIcon} className="icon" alt="user-icon" />
+                    <span className="friends-name">{user.name}</span>
+                  </div>
 
-              <button className="flex align-center find-new-friends-add-btn">
-                Add <PersonAddIcon style={{ paddingLeft: "5px" }} />
-              </button>
-            </div>
-            <div className="flex align-center space-between friend">
-              <div className="flex align-center  friend-left">
-                <img src={userIcon} className="icon" alt="user-icon" />
-                <span className="friends-name">Vinay Pandit</span>
-              </div>
-
-              <button className="flex align-center find-new-friends-add-btn">
-                Add <PersonAddIcon style={{ paddingLeft: "5px" }} />
-              </button>
-            </div>
-            <div className="flex align-center space-between friend">
-              <div className="flex align-center  friend-left">
-                <img src={userIcon} className="icon" alt="user-icon" />
-                <span className="friends-name">Sonu Verma</span>
-              </div>
-
-              <button className="flex align-center find-new-friends-add-btn">
-                Add <PersonAddIcon style={{ paddingLeft: "5px" }} />
-              </button>
-            </div>
+                  <button className="flex align-center find-new-friends-add-btn">
+                    Add <PersonAddIcon style={{ paddingLeft: "5px" }} />
+                  </button>
+                </div>
+              ))}
           </div>
         </Paper>
       </div>

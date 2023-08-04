@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import axios from "axios"
 import userIcon from "../assets/user-icon.png"
 import userCover from "../assets/profile-cover.jpg"
 import PersonAddIcon from "@mui/icons-material/PersonAdd"
@@ -6,7 +7,6 @@ import Paper from "@mui/material/Paper"
 import Post from "./Post"
 import EditIcon from "@mui/icons-material/Edit"
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove"
-// partition
 import Button from "@mui/material/Button"
 import TextField from "@mui/material/TextField"
 import Dialog from "@mui/material/Dialog"
@@ -16,8 +16,6 @@ import DialogContentText from "@mui/material/DialogContentText"
 import DialogTitle from "@mui/material/DialogTitle"
 import CloseIcon from "@mui/icons-material/Close"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"
-import { useSelector } from "react-redux"
-import axios from "axios"
 import { useParams } from "react-router-dom"
 
 interface NewPostType {
@@ -51,13 +49,13 @@ interface UserType {
 }
 
 function Profile() {
-  const isAdmin = true
   const [open, setOpen] = useState(false)
   const [postTabVisible, setPostTabVisible] = useState(true)
   const [user, setUser] = useState<UserType | null>(null)
+  const [loggedInuser, setLoggedInUser] = useState<UserType | null>(null)
   const { userId } = useParams()
 
-  // let user = useSelector((state: any) => state.user.adminUser)
+  console.log("lets see if we got this now ", loggedInuser)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -68,11 +66,17 @@ function Profile() {
   }
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/user/${userId}`).then((res) => {
-      console.log("got this user through url", res.data)
-      setUser(res.data)
-    })
-  }, [])
+    axios
+      .get(`http://localhost:3000/user/${userId}`, { withCredentials: true })
+      .then((res) => {
+        console.log(res.data)
+        setLoggedInUser(res.data.loggedInUser)
+        setUser(res.data.userProfile)
+      })
+      .catch((error) => {
+        console.log("erorr while fetching profile", error.message)
+      })
+  }, [userId])
 
   return (
     <div className="profile-container">
@@ -89,7 +93,7 @@ function Profile() {
                 <span className="profile-friends">170 Friends</span>
               </div>
               <div className="profile-addfriend">
-                {isAdmin ? (
+                {loggedInuser?._id === userId ? (
                   <>
                     <button
                       className="flex align-center content-center editProfile-btn"
