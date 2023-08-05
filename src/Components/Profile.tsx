@@ -53,10 +53,10 @@ function Profile() {
   const [postTabVisible, setPostTabVisible] = useState(true)
   const [user, setUser] = useState<UserType | null>(null)
   const [loggedInuser, setLoggedInUser] = useState<UserType | null>(null)
+  const [friends, setFriends] = useState<string[] | null>(null)
   const { userId } = useParams()
 
-  console.log("lets see if we got this now ", loggedInuser)
-
+  console.log("lets see if we got this now ", friends)
   const handleClickOpen = () => {
     setOpen(true)
   }
@@ -72,11 +72,19 @@ function Profile() {
         console.log(res.data)
         setLoggedInUser(res.data.loggedInUser)
         setUser(res.data.userProfile)
+        friendIds(res.data.userAllFriends)
       })
       .catch((error) => {
         console.log("erorr while fetching profile", error.message)
       })
   }, [userId])
+
+  function friendIds(userFriend: UserType[]) {
+    const userIds = userFriend.map((user: UserType) => {
+      return user._id
+    })
+    setFriends(userIds)
+  }
 
   return (
     <div className="profile-container">
@@ -180,6 +188,13 @@ function Profile() {
                       </DialogActions>
                     </Dialog>
                   </>
+                ) : user && friends?.includes(user._id) ? (
+                  <button className="flex align-center content-center unfriendProfile-btn">
+                    Unfriend
+                    <PersonRemoveIcon
+                      style={{ paddingLeft: "5px", fontSize: "2rem" }}
+                    />
+                  </button>
                 ) : (
                   <button className="flex align-center content-center addfriend-btn">
                     Add Friend
