@@ -53,8 +53,9 @@ function Profile() {
   const [postTabVisible, setPostTabVisible] = useState(true)
   const [user, setUser] = useState<UserType | null>(null)
   const [loggedInuser, setLoggedInUser] = useState<UserType | null>(null)
-  const [friends, setFriends] = useState<string[] | null>(null)
+  const [friends, setFriends] = useState<string[] | null | undefined>(null)
   const { userId } = useParams()
+  const [friendRequestedUser, setFriendRequestedUser] = useState<string[]>([])
 
   console.log("lets see if we got this now ", friends)
   const handleClickOpen = () => {
@@ -73,6 +74,7 @@ function Profile() {
         setLoggedInUser(res.data.loggedInUser)
         setUser(res.data.userProfile)
         friendIds(res.data.userAllFriends)
+        getFriendRequestedUserId(res.data.allFriendRequestsSent)
       })
       .catch((error) => {
         console.log("erorr while fetching profile", error.message)
@@ -84,6 +86,65 @@ function Profile() {
       return user._id
     })
     setFriends(userIds)
+  }
+
+  function unfriend(unfriendId: string) {
+    axios
+      .post(
+        `http://localhost:3000/user/${userId}`,
+        { unfriendId },
+        { withCredentials: true },
+      )
+      .then((res) => {
+        console.log("your friends here", res.data)
+        setFriends(friends?.filter((friendId) => friendId !== unfriendId))
+      })
+  }
+
+  function getFriendRequestedUserId(friendRequestedUser: UserType[]) {
+    const requestedUsers = friendRequestedUser.map((user) => {
+      return user._id
+    })
+    setFriendRequestedUser(requestedUsers)
+  }
+
+  function sendFriendRequest(friendRequestReceiverId: string) {
+    axios
+      .post(
+        `http://localhost:3000/user/${userId}`,
+        { friendRequestReceiverId },
+        { withCredentials: true },
+      )
+      .then((res) => {
+        setFriendRequestedUser([
+          ...friendRequestedUser,
+          friendRequestReceiverId,
+        ])
+        console.log("after sending a friend request", res.data)
+      })
+      .catch((error) => {
+        console.log("error while sending friend request", error)
+      })
+  }
+
+  function cancelFriendRequest(receiverId: string) {
+    axios
+      .post(
+        `http://localhost:3000/user/${userId}`,
+        { cancelRequestId: receiverId },
+        { withCredentials: true },
+      )
+      .then((res) => {
+        setFriendRequestedUser(
+          friendRequestedUser.filter(
+            (friendRequest) => friendRequest !== receiverId,
+          ),
+        )
+        console.log("after sending a friend request", res.data)
+      })
+      .catch((error) => {
+        console.log("error while sending friend request", error)
+      })
   }
 
   return (
@@ -189,15 +250,30 @@ function Profile() {
                     </Dialog>
                   </>
                 ) : user && friends?.includes(user._id) ? (
-                  <button className="flex align-center content-center unfriendProfile-btn">
+                  <button
+                    className="flex align-center content-center unfriendProfile-btn"
+                    onClick={() => unfriend(user._id)}
+                  >
                     Unfriend
                     <PersonRemoveIcon
                       style={{ paddingLeft: "5px", fontSize: "2rem" }}
                     />
                   </button>
                 ) : (
-                  <button className="flex align-center content-center addfriend-btn">
-                    Add Friend
+                  <button
+                    className="flex align-center content-center addfriend-btn"
+                    onClick={() => {
+                      if (friendRequestedUser?.includes(user?._id)) {
+                        cancelFriendRequest(user?._id)
+                      } else {
+                        sendFriendRequest(user?._id)
+                      }
+                    }}
+                  >
+                    {friendRequestedUser.includes(user?._id)
+                      ? "Cancel Request"
+                      : "Add Friend"}
+
                     <PersonAddIcon
                       style={{ paddingLeft: "5px", fontSize: "2rem" }}
                     />
@@ -241,7 +317,7 @@ function Profile() {
               <Paper
                 elevation={2}
                 className="profile-info-paper"
-                style={{ height: "20rem", width: "300px" }}
+                style={{ height: "10rem", width: "300px" }}
               >
                 <div className="profile-info-title">
                   <span className="profile-info-title-text">Information</span>

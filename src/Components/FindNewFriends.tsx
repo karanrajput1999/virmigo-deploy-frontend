@@ -4,6 +4,7 @@ import Box from "@mui/material/Box"
 import userIcon from "../assets/user-icon.png"
 import PersonAddIcon from "@mui/icons-material/PersonAdd"
 import axios from "axios"
+import { Link } from "react-router-dom"
 
 interface UserType {
   _id: string
@@ -107,7 +108,9 @@ function FindNewFriends() {
                 >
                   <div className="flex align-center  friend-left">
                     <img src={userIcon} className="icon" alt="user-icon" />
-                    <span className="friends-name">{user.name}</span>
+                    <Link className="friends-name" to={`/user/${user._id}`}>
+                      {user.name}
+                    </Link>
                   </div>
 
                   <button
