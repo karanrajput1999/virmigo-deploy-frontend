@@ -70,7 +70,7 @@ const validationSchema = Yup.object({
     .max(25, "Name can not be more than 25 chars!"),
   email: Yup.string().email("Invalid email format!"),
   bio: Yup.string()
-    .min(10, "Bio must be atleast 10 chars long!")
+    .min(3, "Bio must be atleast 3 chars long!")
     .max(100, "Bio can not be more than 100 chars!"),
   state: Yup.string()
     .min(3, "State/Country name must be atleast 3 chars long!")
@@ -101,7 +101,6 @@ function Profile() {
     axios
       .get(`http://localhost:3000/user/${userId}`, { withCredentials: true })
       .then((res) => {
-        console.log(res.data)
         setLoggedInUser(res.data.loggedInUser)
         setUser(res.data.userProfile)
         friendIds(res.data.userAllFriends)
@@ -191,7 +190,18 @@ function Profile() {
   const formik = useFormik<formValues>({
     initialValues,
     onSubmit: (values: formValues) => {
-      console.log(values)
+      axios
+        .patch(
+          `http://localhost:3000/user/${userId}`,
+          { ...values },
+          { withCredentials: true },
+        )
+        .then((res) => {
+          console.log("patch request while updating profile info", res.data)
+        })
+        .catch((error) => {
+          console.log("error while updating profile", error)
+        })
     },
     validationSchema,
   })
@@ -405,7 +415,7 @@ function Profile() {
                 </div>
 
                 <div className="profile-info-text">
-                  <div className="profile-info-live">
+                  <div className="profile-info-container profile-info-live">
                     <span className="profile-info-live-title information-title">
                       Lives in -{" "}
                     </span>
@@ -413,7 +423,7 @@ function Profile() {
                       Washington D.C, United States of America 🚩
                     </span>
                   </div>
-                  <div className="profile-info-bio">
+                  <div className="profile-info-container profile-info-bio">
                     <span className="profile-info-bio-title information-title">
                       Bio -{" "}
                     </span>

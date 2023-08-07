@@ -37,7 +37,6 @@ function FindNewFriends() {
     axios
       .get("http://localhost:3000/findfriends", { withCredentials: true })
       .then((res) => {
-        console.log("received friend request data", res.data)
         getFriendRequestedUserId(res.data.allFriendRequestsSent)
         setAllUsers(res.data.allUsers)
       })
@@ -52,7 +51,6 @@ function FindNewFriends() {
       )
       .then((res) => {
         setFriendRequestedUser([...friendRequestedUser, receiverId])
-        console.log("after sending a friend request", res.data)
       })
       .catch((error) => {
         console.log("error while sending friend request", error)
