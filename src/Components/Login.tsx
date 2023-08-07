@@ -17,8 +17,6 @@ const initialValues = {
   password: "",
 }
 
-// const onSubmit =
-
 const validationSchema = Yup.object({
   email: Yup.string()
     .email("Invalid email format!")

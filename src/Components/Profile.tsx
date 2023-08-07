@@ -7,18 +7,18 @@ import Paper from "@mui/material/Paper"
 import Post from "./Post"
 import EditIcon from "@mui/icons-material/Edit"
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove"
-import Button from "@mui/material/Button"
 import TextField from "@mui/material/TextField"
 import Dialog from "@mui/material/Dialog"
 import DialogActions from "@mui/material/DialogActions"
 import DialogContent from "@mui/material/DialogContent"
-import DialogContentText from "@mui/material/DialogContentText"
 import DialogTitle from "@mui/material/DialogTitle"
 import CloseIcon from "@mui/icons-material/Close"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 import { useParams } from "react-router-dom"
 import { getUser } from "../app/features/userSlice"
 import { useDispatch } from "react-redux"
+import { useFormik } from "formik"
+import * as Yup from "yup"
 
 interface NewPostType {
   _id: string
@@ -49,6 +49,33 @@ interface UserType {
   __v: number
   userAllPosts: NewPostType[]
 }
+
+interface formValues {
+  name: string
+  email: string
+  bio: string
+  state: string
+}
+
+const initialValues = {
+  name: "",
+  email: "",
+  bio: "",
+  state: "",
+}
+
+const validationSchema = Yup.object({
+  name: Yup.string()
+    .min(3, "Name must be atleast 3 chars long!")
+    .max(25, "Name can not be more than 25 chars!"),
+  email: Yup.string().email("Invalid email format!"),
+  bio: Yup.string()
+    .min(10, "Bio must be atleast 10 chars long!")
+    .max(100, "Bio can not be more than 100 chars!"),
+  state: Yup.string()
+    .min(3, "State/Country name must be atleast 3 chars long!")
+    .max(30, "State/Country name can not be more than 100 chars!"),
+})
 
 function Profile() {
   const [open, setOpen] = useState(false)
@@ -161,6 +188,14 @@ function Profile() {
       })
   }
 
+  const formik = useFormik<formValues>({
+    initialValues,
+    onSubmit: (values: formValues) => {
+      console.log(values)
+    },
+    validationSchema,
+  })
+
   return (
     <div className="profile-container">
       <div className="flex content-center flex-column profile-header-container">
@@ -188,79 +223,107 @@ function Profile() {
                       />
                     </button>
                     <Dialog open={open} onClose={handleClose}>
-                      <DialogTitle
-                        className="updateProfile-title"
-                        style={{
-                          fontSize: "2rem",
-                          fontWeight: "700",
-                          textAlign: "center",
-                        }}
-                      >
-                        Update profile details!
-                      </DialogTitle>
-                      <DialogContent>
-                        {/* <DialogContentText>
-                          To subscribe to this website, please enter your email
-                          address here. We will send updates occasionally.
-                        </DialogContentText> */}
-                        <TextField
-                          autoFocus
-                          margin="dense"
-                          id="name"
-                          label="Name"
-                          type="text"
-                          fullWidth
-                          size="small"
-                          variant="outlined"
-                        />
-                        <TextField
-                          margin="dense"
-                          id="email"
-                          label="Email Address"
-                          type="email"
-                          fullWidth
-                          size="small"
-                          variant="outlined"
-                        />
-                        <TextField
-                          margin="dense"
-                          id="bio"
-                          label="Bio"
-                          type="text"
-                          fullWidth
-                          size="small"
-                          variant="outlined"
-                        />
-                        <TextField
-                          margin="dense"
-                          id="name"
-                          label="State / Country"
-                          type="text"
-                          fullWidth
-                          size="small"
-                          variant="outlined"
-                        />
-                      </DialogContent>
-                      <DialogActions>
-                        <button
-                          className="flex align-center content-center updateProfile-btn"
-                          onClick={handleClose}
+                      <form onSubmit={formik.handleSubmit}>
+                        <DialogTitle
+                          className="updateProfile-title"
+                          style={{
+                            fontSize: "2rem",
+                            fontWeight: "700",
+                            textAlign: "center",
+                          }}
                         >
-                          Update Profile
-                          <CheckCircleIcon
-                            style={{ paddingLeft: "5px", fontSize: "2rem" }}
+                          Update profile details!
+                        </DialogTitle>
+                        <DialogContent>
+                          <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            {...formik.getFieldProps("name")}
+                            name="name"
+                            label="Name"
+                            type="text"
+                            fullWidth
+                            size="small"
+                            variant="outlined"
                           />
-                        </button>
-                        <button
-                          className="flex align-center content-center cancleUpdateProfile-btn"
-                          onClick={handleClose}
-                        >
-                          Cancel
-                          <CloseIcon
-                            style={{ paddingLeft: "5px", fontSize: "2rem" }}
+                          <div className="error-container">
+                            {formik.touched.name && formik.errors.name ? (
+                              <span> {formik.errors.name}</span>
+                            ) : null}
+                          </div>
+                          <TextField
+                            margin="dense"
+                            id="email"
+                            {...formik.getFieldProps("email")}
+                            name="email"
+                            label="Email Address"
+                            type="email"
+                            fullWidth
+                            size="small"
+                            variant="outlined"
                           />
-                        </button>
-                      </DialogActions>
+                          <div className="error-container">
+                            {formik.touched.email && formik.errors.email ? (
+                              <span> {formik.errors.email}</span>
+                            ) : null}
+                          </div>
+                          <TextField
+                            margin="dense"
+                            id="bio"
+                            {...formik.getFieldProps("bio")}
+                            name="bio"
+                            label="Bio"
+                            type="text"
+                            fullWidth
+                            size="small"
+                            variant="outlined"
+                          />
+                          <div className="error-container">
+                            {formik.touched.bio && formik.errors.bio ? (
+                              <span> {formik.errors.bio}</span>
+                            ) : null}
+                          </div>
+                          <TextField
+                            margin="dense"
+                            id="state"
+                            {...formik.getFieldProps("state")}
+                            name="state"
+                            label="State / Country"
+                            type="text"
+                            fullWidth
+                            size="small"
+                            variant="outlined"
+                          />
+                          <div className="error-container">
+                            {formik.touched.state && formik.errors.state ? (
+                              <span> {formik.errors.state}</span>
+                            ) : null}
+                          </div>
+                        </DialogContent>
+                        <DialogActions>
+                          <button
+                            type="submit"
+                            className="flex align-center content-center updateProfile-btn"
+
+                            // onClick={handleClose}
+                          >
+                            Update Profile
+                            <CheckCircleIcon
+                              style={{ paddingLeft: "5px", fontSize: "2rem" }}
+                            />
+                          </button>
+                          <button
+                            className="flex align-center content-center cancleUpdateProfile-btn"
+                            onClick={handleClose}
+                          >
+                            Cancel
+                            <CloseIcon
+                              style={{ paddingLeft: "5px", fontSize: "2rem" }}
+                            />
+                          </button>
+                        </DialogActions>
+                      </form>
                     </Dialog>
                   </>
                 ) : user && friends?.includes(user._id) ? (
@@ -331,7 +394,11 @@ function Profile() {
               <Paper
                 elevation={2}
                 className="profile-info-paper"
-                style={{ height: "10rem", width: "300px" }}
+                style={{
+                  minHeight: "10rem",
+                  width: "300px",
+                  paddingBottom: "1rem",
+                }}
               >
                 <div className="profile-info-title">
                   <span className="profile-info-title-text">Information</span>
@@ -343,7 +410,7 @@ function Profile() {
                       Lives in -{" "}
                     </span>
                     <span className="profile-info-live-text">
-                      Lahore, India 🚩
+                      Washington D.C, United States of America 🚩
                     </span>
                   </div>
                   <div className="profile-info-bio">
@@ -351,7 +418,8 @@ function Profile() {
                       Bio -{" "}
                     </span>
                     <span className="profile-info-bio-text">
-                      This is some bio text 😎
+                      This is some bio text this is some more extended text to
+                      see how far it goes boom boom 😎
                     </span>
                   </div>
                 </div>
