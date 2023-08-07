@@ -72,13 +72,20 @@ function PostForm({ user, addNewPost }: PostFormType) {
       console.log("user id while  posting a post", user)
 
       axios
-        .post("http://localhost:3000/", {
-          ...value,
-          userId: user._id,
-          username: user.name,
-        })
+        .post(
+          "http://localhost:3000/",
+          {
+            ...value,
+            userId: user._id,
+            username: user.name,
+          },
+          { withCredentials: true },
+        )
         .then((res) => {
           addNewPost(res.data)
+        })
+        .catch((error) => {
+          console.log("error while posting a post from postForm", error)
         })
     },
   })

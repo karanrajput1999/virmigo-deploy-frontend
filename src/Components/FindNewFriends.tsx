@@ -35,7 +35,7 @@ function FindNewFriends() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/", { withCredentials: true })
+      .get("http://localhost:3000/findfriends", { withCredentials: true })
       .then((res) => {
         console.log("received friend request data", res.data)
         getFriendRequestedUserId(res.data.allFriendRequestsSent)
@@ -43,18 +43,15 @@ function FindNewFriends() {
       })
   }, [])
 
-  function sendFriendRequest(friendRequestReceiverId: string) {
+  function sendFriendRequest(receiverId: string) {
     axios
       .post(
-        "http://localhost:3000/",
-        { friendRequestReceiverId },
+        "http://localhost:3000/findfriends",
+        { receiverId },
         { withCredentials: true },
       )
       .then((res) => {
-        setFriendRequestedUser([
-          ...friendRequestedUser,
-          friendRequestReceiverId,
-        ])
+        setFriendRequestedUser([...friendRequestedUser, receiverId])
         console.log("after sending a friend request", res.data)
       })
       .catch((error) => {
@@ -65,7 +62,7 @@ function FindNewFriends() {
   function cancelFriendRequest(receiverId: string) {
     axios
       .post(
-        "http://localhost:3000/",
+        "http://localhost:3000/findfriends",
         { cancelRequestId: receiverId },
         { withCredentials: true },
       )

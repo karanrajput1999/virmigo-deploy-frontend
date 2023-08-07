@@ -17,6 +17,8 @@ import DialogTitle from "@mui/material/DialogTitle"
 import CloseIcon from "@mui/icons-material/Close"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 import { useParams } from "react-router-dom"
+import { getUser } from "../app/features/userSlice"
+import { useDispatch } from "react-redux"
 
 interface NewPostType {
   _id: string
@@ -56,8 +58,8 @@ function Profile() {
   const [friends, setFriends] = useState<string[] | null | undefined>(null)
   const { userId } = useParams()
   const [friendRequestedUser, setFriendRequestedUser] = useState<string[]>([])
+  const [posts, setPosts] = useState<NewPostType[]>([])
 
-  console.log("lets see if we got this now ", friends)
   const handleClickOpen = () => {
     setOpen(true)
   }
@@ -65,6 +67,8 @@ function Profile() {
   const handleClose = () => {
     setOpen(false)
   }
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     axios
@@ -80,6 +84,16 @@ function Profile() {
         console.log("erorr while fetching profile", error.message)
       })
   }, [userId])
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/", { withCredentials: true })
+      .then((res) => {
+        setPosts(res.data.userWithAllPosts[0].userAllPosts)
+        dispatch(getUser(res.data.userWithAllPosts[0]))
+      })
+      .catch((error) => console.log(error))
+  }, [])
 
   function friendIds(userFriend: UserType[]) {
     const userIds = userFriend.map((user: UserType) => {
@@ -351,7 +365,7 @@ function Profile() {
                 <span>Posts</span>
               </div>
               <div className="profile-posts-post-container">
-                <Post />
+                <Post posts={posts} />
               </div>
             </div>
           </div>
