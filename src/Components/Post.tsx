@@ -130,7 +130,11 @@ function Post({ posts }: PostPropType) {
               </div>
 
               {/* Comments section */}
-              <CommentsSection openCommentsSection={openCommentsSection} />
+              <CommentsSection
+                openCommentsSection={openCommentsSection}
+                postId={post._id}
+                comments={post.postAllComments}
+              />
             </Paper>
           </div>
         ))}

@@ -18,6 +18,7 @@ interface NewPostType {
   updatedAt: string
   __v: number
 }
+
 function Feed() {
   // Post. tsx below
   const [posts, setPosts] = useState<NewPostType[]>([])
@@ -31,7 +32,8 @@ function Feed() {
       .get("http://localhost:3000/", { withCredentials: true })
       .then((res) => {
         if (res.data) {
-          setPosts(res.data.userWithAllPosts[0].userAllPosts)
+          // setPosts(res.data.userWithAllPosts[0].userAllPosts)
+          setPosts(res.data.userWithAllPostsCopy[0].userAllPosts)
           dispatch(getUser(res.data.userWithAllPosts[0]))
 
           navigate("/")
