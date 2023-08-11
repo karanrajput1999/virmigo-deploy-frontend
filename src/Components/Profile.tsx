@@ -14,7 +14,7 @@ import DialogContent from "@mui/material/DialogContent"
 import DialogTitle from "@mui/material/DialogTitle"
 import CloseIcon from "@mui/icons-material/Close"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { getUser } from "../app/features/userSlice"
 import { useDispatch } from "react-redux"
 import { useFormik } from "formik"
@@ -37,13 +37,13 @@ interface UserType {
   _id: string
   name: string
   email: string
+  bio: string
+  livesIn: string
   profilePic: string | null
   coverPic: string | null
   posts: string[]
   comments: string[]
   friends: string[]
-  friendRequestsSent: string[]
-  friendRequests: string[]
   createdAt: string
   updatedAt: string
   __v: number
@@ -82,7 +82,8 @@ function Profile() {
   const [postTabVisible, setPostTabVisible] = useState(true)
   const [user, setUser] = useState<UserType | null>(null)
   const [loggedInuser, setLoggedInUser] = useState<UserType | null>(null)
-  const [friends, setFriends] = useState<string[] | null | undefined>(null)
+  const [friendsId, setFriendsId] = useState<string[] | null | undefined>(null)
+  const [friends, setFriends] = useState<UserType[] | null | undefined>(null)
   const { userId } = useParams()
   const [friendRequestedUser, setFriendRequestedUser] = useState<string[]>([])
   const [posts, setPosts] = useState<NewPostType[]>([])
@@ -102,6 +103,7 @@ function Profile() {
       .get(`http://localhost:3000/user/${userId}`, { withCredentials: true })
       .then((res) => {
         setLoggedInUser(res.data.loggedInUser)
+        setFriends(res.data.userAllFriends)
         setUser(res.data.userProfile)
         friendIds(res.data.userAllFriends)
         getFriendRequestedUserId(res.data.allFriendRequestsSent)
@@ -125,7 +127,7 @@ function Profile() {
     const userIds = userFriend.map((user: UserType) => {
       return user._id
     })
-    setFriends(userIds)
+    setFriendsId(userIds)
   }
 
   function unfriend(unfriendId: string) {
@@ -137,7 +139,7 @@ function Profile() {
       )
       .then((res) => {
         console.log("your friends here", res.data)
-        setFriends(friends?.filter((friendId) => friendId !== unfriendId))
+        setFriendsId(friendsId?.filter((friendId) => friendId !== unfriendId))
       })
   }
 
@@ -218,7 +220,11 @@ function Profile() {
               <img src={userIcon} alt="" className="profile-user-pic" />
               <div className="flex flex-column profile-username-container">
                 <span className="profile-username">{user?.name}</span>
-                <span className="profile-friends">170 Friends</span>
+                <span className="profile-friends">
+                  {user?.friends.length > 0
+                    ? `${user?.friends.length} Friends`
+                    : ""}
+                </span>
               </div>
               <div className="profile-addfriend">
                 {loggedInuser?._id === userId ? (
@@ -336,7 +342,7 @@ function Profile() {
                       </form>
                     </Dialog>
                   </>
-                ) : user && friends?.includes(user._id) ? (
+                ) : user && friendsId?.includes(user._id) ? (
                   <button
                     className="flex align-center content-center unfriendProfile-btn"
                     onClick={() => unfriend(user._id)}
@@ -420,7 +426,8 @@ function Profile() {
                       Lives in -{" "}
                     </span>
                     <span className="profile-info-live-text">
-                      Washington D.C, United States of America 🚩
+                      {/* Washington D.C, United States of America 🚩 */}
+                      {user?.livesIn ? user?.livesIn : "Update your profile"}
                     </span>
                   </div>
                   <div className="profile-info-container profile-info-bio">
@@ -428,8 +435,9 @@ function Profile() {
                       Bio -{" "}
                     </span>
                     <span className="profile-info-bio-text">
-                      This is some bio text this is some more extended text to
-                      see how far it goes boom boom 😎
+                      {/* This is some bio text this is some more extended text to
+                      see how far it goes boom boom 😎 */}
+                      {user?.bio ? user?.bio : "Update your profile"}
                     </span>
                   </div>
                 </div>
@@ -460,7 +468,23 @@ function Profile() {
             <div style={{ marginTop: "2rem" }}>
               <div className="flex flex-column profile-body-friends-container">
                 {/* first friend */}
-                <div className="flex align-center profile-body-friend">
+                {friends &&
+                  friends.map((friend) => (
+                    <div className="flex align-center profile-body-friend">
+                      <img
+                        src={userIcon}
+                        alt="friend"
+                        className="profile-body-icon"
+                      />
+                      <Link
+                        className="profile-body-friend-name"
+                        to={`/user/${friend._id}`}
+                      >
+                        {friend.name}
+                      </Link>
+                    </div>
+                  ))}
+                {/* <div className="flex align-center profile-body-friend">
                   <img
                     src={userIcon}
                     alt="friend"
@@ -469,36 +493,36 @@ function Profile() {
                   <span className="profile-body-friend-name">
                     Anshu Upadhyay
                   </span>
-                </div>
+                </div> */}
                 {/* second friend */}
-                <div className="flex align-center profile-body-friend">
+                {/* <div className="flex align-center profile-body-friend">
                   <img
                     src={userIcon}
                     alt="friend"
                     className="profile-body-icon"
                   />
                   <span className="profile-body-friend-name">Vinay Pandit</span>
-                </div>
+                </div> */}
                 {/* third friend */}
-                <div className="flex align-center profile-body-friend">
+                {/* <div className="flex align-center profile-body-friend">
                   <img
                     src={userIcon}
                     alt="friend"
                     className="profile-body-icon"
                   />
                   <span className="profile-body-friend-name">Hardik Patel</span>
-                </div>
+                </div> */}
                 {/* fourth friend */}
-                <div className="flex align-center profile-body-friend">
+                {/* <div className="flex align-center profile-body-friend">
                   <img
                     src={userIcon}
                     alt="friend"
                     className="profile-body-icon"
                   />
                   <span className="profile-body-friend-name">Sonu Verma</span>
-                </div>
+                </div> */}
                 {/* fifth friend */}
-                <div className="flex align-center profile-body-friend">
+                {/* <div className="flex align-center profile-body-friend">
                   <img
                     src={userIcon}
                     alt="friend"
@@ -507,7 +531,7 @@ function Profile() {
                   <span className="profile-body-friend-name">
                     Himanshu Sharma
                   </span>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

@@ -29,7 +29,7 @@ const initialValues = {
 const validationSchema = Yup.object({
   commentText: Yup.string()
     .min(3, "Comment can not less than 3 chars! ")
-    .max(50, "Comment can not be more than 50 chars!")
+    .max(300, "Comment can not be more than 300 chars!")
     .required("Write something!"),
 })
 
@@ -38,8 +38,6 @@ function CommentsSection({
   postId,
   comments,
 }: CommentsSectionType) {
-  console.log("comments from comment.tsx", comments)
-
   const formik = useFormik({
     initialValues,
     onSubmit: (values: formValues) => {

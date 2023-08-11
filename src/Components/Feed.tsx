@@ -32,8 +32,9 @@ function Feed() {
       .get("http://localhost:3000/", { withCredentials: true })
       .then((res) => {
         if (res.data) {
-          // setPosts(res.data.userWithAllPosts[0].userAllPosts)
-          setPosts(res.data.userWithAllPostsCopy[0].userAllPosts)
+          console.log("user all posts testing", res.data.userWithAllPosts[0])
+
+          setPosts(res.data.userWithAllPosts[0].allPostsCombined)
           dispatch(getUser(res.data.userWithAllPosts[0]))
 
           navigate("/")

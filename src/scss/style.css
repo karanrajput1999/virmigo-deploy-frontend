@@ -553,6 +553,16 @@ li:hover::after {
   padding-inline: 0.5rem;
 }
 
+.profile-info-container {
+  margin-bottom: 0.3rem;
+}
+
+.profile-info-bio-text,
+.profile-info-live-text {
+  font-weight: 500;
+  color: #343434;
+}
+
 .information-title {
   font-weight: 700;
 }
@@ -1002,7 +1012,7 @@ input:focus {
 .user-comment-container {
   background-color: #ededed;
   border-radius: 0.5rem;
-  padding: 0.2rem 0.5rem;
+  padding: 0.2rem 0.5rem 0.4rem 0.5rem;
 }
 
 .comment-text {
