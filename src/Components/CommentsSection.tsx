@@ -1,15 +1,42 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import SendIcon from "@mui/icons-material/Send"
 import userIcon from "../assets/user-icon.png"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import axios from "axios"
 
+interface NewPostType {
+  _id: string
+  description: string
+  image: string | null
+  likes: []
+  comments: []
+  userId: string
+  username: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+interface UserType {
+  _id: string
+  name: string
+  email: string
+  profilePic: string | null
+  coverPic: string | null
+  posts: string[]
+  comments: string[]
+  friends: string[]
+  createdAt: string
+  userAllPosts: NewPostType[]
+}
+
 interface CommentType {
   _id: string
   commenterId: string
   postId: string
   commentText: string
+  commentOwner: UserType[]
 }
 
 interface CommentsSectionType {
@@ -38,6 +65,19 @@ function CommentsSection({
   postId,
   comments,
 }: CommentsSectionType) {
+  const [latestComments, setLatestComments] = useState<CommentType[] | null>(
+    null,
+  )
+
+  useEffect(() => {
+    setLatestComments(comments)
+  }, [comments])
+
+  function updateLatestComment(latestComment: CommentType[]) {
+    setLatestComments(latestComment)
+  }
+  console.log("latest comment", latestComments)
+
   const formik = useFormik({
     initialValues,
     onSubmit: (values: formValues) => {
@@ -51,6 +91,7 @@ function CommentsSection({
           { withCredentials: true },
         )
         .then((res) => {
+          updateLatestComment([...latestComments, res.data.comment])
           console.log("while commenting", res.data)
         })
     },
@@ -100,8 +141,8 @@ function CommentsSection({
         <div className="comments-container">
           <span className="comments-title">Comments:</span>
           <div className="comments-wrapper">
-            {comments &&
-              comments.map((comment) => (
+            {latestComments &&
+              latestComments.map((comment) => (
                 <div className="flex comment" key={comment._id}>
                   <img
                     src={userIcon}
@@ -117,37 +158,6 @@ function CommentsSection({
                   </div>
                 </div>
               ))}
-
-            {/* <div className="flex comment">
-              <img
-                src={userIcon}
-                className="post-user-icon"
-                alt="user-photo"
-                style={{ marginRight: ".5rem" }}
-              />
-              <div className="flex flex-column user-comment-container">
-                <span className="comment-user-name">Karan Nayak</span>
-                <span className="comment-text">
-                  Yo Anshu ! What is up my man?
-                </span>
-              </div>
-            </div> */}
-            {/****************************  second comment ***********************/}
-            {/* <div className="flex comment">
-              <img
-                src={userIcon}
-                className="post-user-icon"
-                alt="user-photo"
-                style={{ marginRight: ".5rem" }}
-              />
-              <div className="flex flex-column user-comment-container">
-                <span className="comment-user-name">Anshu Upadhyay</span>
-                <span className="comment-text">
-                  Ae laude ke baal apna kaam kr na, kanpur ki public bole to
-                  taplik.
-                </span>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>
