@@ -36,9 +36,23 @@ interface PostPropType {
 function Post({ posts, deletePost }: PostPropType) {
   const [openDelete, setOpenDelete] = useState(false)
   const [openCommentsSection, setOpenCommentsSection] = useState(false)
-
+  const [liked, setLiked] = useState<boolean>(false)
   const user = useSelector((state: any) => state.user.adminUser)
-  console.log("current user while deleting post", user?._id)
+
+  function likePost(likedPostId: string) {
+    axios
+      .post(
+        "http://localhost:3000/",
+        { likedPostId },
+        { withCredentials: true },
+      )
+      .then((res) => {
+        setLiked(!liked)
+      })
+      .catch((error) => {
+        console.log("error while liking the post", error)
+      })
+  }
 
   return (
     <div className="flex flex-column align-center post-container">
@@ -129,10 +143,17 @@ function Post({ posts, deletePost }: PostPropType) {
                   <IconButton
                     className="like-container"
                     style={{ padding: "0" }}
+                    onClick={() => likePost(post._id)}
                   >
-                    <ThumbUpOffAltIcon
-                      style={{ color: "#5600ac", fontSize: "2rem" }}
-                    />
+                    {liked ? (
+                      <ThumbUpAltIcon
+                        style={{ color: "#5600ac", fontSize: "2rem" }}
+                      />
+                    ) : (
+                      <ThumbUpOffAltIcon
+                        style={{ color: "#5600ac", fontSize: "2rem" }}
+                      />
+                    )}
                   </IconButton>
                   <IconButton
                     className="comment-container"

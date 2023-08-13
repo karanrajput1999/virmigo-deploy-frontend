@@ -11,10 +11,10 @@ register/login validation                   (done)
 Horizontal scrolling bug
 
 doesn't show error for wrong password on frontend while logging in
-shows logged in users friend on profile page not the actual user's friends
+shows logged in users friend on profile page not the actual user's friends (done)
 
-comments functionality
+comments functionality (done)
 notification functionality
 like functionality
-post delete functionality
+post delete functionality (done)
 images inside post
