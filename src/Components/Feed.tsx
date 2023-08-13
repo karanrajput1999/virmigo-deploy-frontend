@@ -49,10 +49,22 @@ function Feed() {
     setPosts([newPost, ...posts])
   }
 
+  function deletePost(deletePostId: string) {
+    axios
+      .delete("http://localhost:3000/", {
+        data: { deletePostId },
+        withCredentials: true,
+      })
+      .then((res) => {
+        const remainingPosts = posts.filter((post) => post._id !== deletePostId)
+        setPosts([...remainingPosts])
+      })
+  }
+
   return (
     <div className="flex flex-column content-center feed-container">
       <PostForm addNewPost={addNewPost} user={user} />
-      <Post posts={posts} />
+      <Post posts={posts} deletePost={deletePost} />
     </div>
   )
 }

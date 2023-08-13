@@ -12,6 +12,8 @@ import { IconButton } from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
 import CommentsSection from "./CommentsSection"
 import { Link } from "react-router-dom"
+import axios from "axios"
+import { useSelector } from "react-redux"
 
 interface NewPostType {
   _id: string
@@ -28,11 +30,15 @@ interface NewPostType {
 
 interface PostPropType {
   posts: NewPostType[]
+  deletePost: (deletePost: string) => void
 }
 
-function Post({ posts }: PostPropType) {
+function Post({ posts, deletePost }: PostPropType) {
   const [openDelete, setOpenDelete] = useState(false)
   const [openCommentsSection, setOpenCommentsSection] = useState(false)
+
+  const user = useSelector((state: any) => state.user.adminUser)
+  console.log("current user while deleting post", user?._id)
 
   return (
     <div className="flex flex-column align-center post-container">
@@ -58,33 +64,44 @@ function Post({ posts }: PostPropType) {
                     <span className="post-time">2 min ago</span>
                   </div>
                 </div>
-                <div className="post-actions" style={{ position: "relative" }}>
-                  <IconButton onClick={() => setOpenDelete(!openDelete)}>
-                    <MoreVertIcon />
-                  </IconButton>
 
-                  <Paper
-                    elevation={4}
-                    className="content-center align-center"
-                    style={{
-                      width: "100px",
-                      height: "40px",
-                      // backgroundColor: "green",
-                      position: "absolute",
-                      right: "1rem",
-                      top: "2.1rem",
-                      cursor: "pointer",
-                      borderRadius: "3px",
-                      userSelect: "none",
-                      display: openDelete ? "flex" : "none",
-                    }}
+                {user?._id === post.userId ? (
+                  <div
+                    className="post-actions"
+                    style={{ position: "relative" }}
                   >
-                    <div className="flex align-center">
-                      <DeleteIcon style={{ color: "red" }} />{" "}
-                      <span style={{ paddingLeft: ".5rem" }}>Delete</span>
-                    </div>
-                  </Paper>
-                </div>
+                    <IconButton onClick={() => setOpenDelete(!openDelete)}>
+                      <MoreVertIcon />
+                    </IconButton>
+
+                    <Paper
+                      elevation={4}
+                      className="content-center align-center"
+                      style={{
+                        width: "100px",
+                        height: "40px",
+                        position: "absolute",
+                        right: "1rem",
+                        top: "2.1rem",
+                        cursor: "pointer",
+                        borderRadius: "3px",
+                        userSelect: "none",
+                        display: openDelete ? "flex" : "none",
+                      }}
+                    >
+                      <div
+                        className="flex align-center"
+                        style={{ padding: ".4rem" }}
+                        onClick={() => {
+                          deletePost(post._id)
+                        }}
+                      >
+                        <DeleteIcon style={{ color: "red" }} />{" "}
+                        <span style={{ paddingLeft: ".5rem" }}>Delete</span>
+                      </div>
+                    </Paper>
+                  </div>
+                ) : null}
               </div>
 
               <div className="post-caption-container">
@@ -138,96 +155,6 @@ function Post({ posts }: PostPropType) {
             </Paper>
           </div>
         ))}
-
-      {/******************************************************************************************************************/}
-      {/************************************************** second post below ********************************************/}
-      {/******************************************************************************************************************/}
-      <div style={{ width: "90%", height: "100%" }}>
-        <Paper
-          className="container flex content-center flex-column"
-          elevation={2}
-          style={{ paddingInline: "1.5rem", paddingBottom: "1rem" }}
-        >
-          <div className="flex align-center space-between post-user-info-container">
-            <div className="flex align-center post-user-info">
-              <img src={userIcon} className="post-user-icon" alt="user-photo" />
-              <div className="flex flex-column post-username-container">
-                <span className="post-username">Anshu Upadhyay</span>
-                <span className="post-time">2 min ago</span>
-              </div>
-            </div>
-            <div className="post-actions" style={{ position: "relative" }}>
-              <IconButton onClick={() => setOpenDelete(!openDelete)}>
-                <MoreVertIcon />
-              </IconButton>
-
-              <Paper
-                elevation={4}
-                className="content-center align-center"
-                style={{
-                  width: "100px",
-                  height: "40px",
-                  // backgroundColor: "green",
-                  position: "absolute",
-                  right: "1rem",
-                  top: "2.1rem",
-                  cursor: "pointer",
-                  borderRadius: "3px",
-                  userSelect: "none",
-                  display: openDelete ? "flex" : "none",
-                }}
-              >
-                <div className="flex align-center">
-                  <DeleteIcon style={{ color: "red" }} />{" "}
-                  <span style={{ paddingLeft: ".5rem" }}>Delete</span>
-                </div>
-              </Paper>
-            </div>
-          </div>
-
-          <div className="post-caption-container">
-            <span className="post-caption">This is some less text post</span>
-          </div>
-
-          <div className="post-media-container">
-            <img src={postImg2} alt="" />
-          </div>
-
-          <div className=" post-interaction-container">
-            <div className="flex align-center post-reactors-info-container">
-              <ThumbUpAltIcon
-                style={{ color: "#5600ac", fontSize: "1.3rem" }}
-              />
-
-              <div className="post-reactors-container">
-                <span className="post-reactors">
-                  Brock Lesnar and 40 others
-                </span>
-              </div>
-            </div>
-
-            <div className="flex align-center space-between post-reaction-container">
-              <IconButton className="like-container" style={{ padding: "0" }}>
-                <ThumbUpOffAltIcon
-                  style={{ color: "#5600ac", fontSize: "2rem" }}
-                />
-              </IconButton>
-              <IconButton
-                className="comment-container"
-                onClick={() => setOpenCommentsSection(!openCommentsSection)}
-                style={{ padding: "0" }}
-              >
-                <ModeCommentIcon
-                  style={{ color: "#5600ac", fontSize: "1.8rem" }}
-                />
-              </IconButton>
-            </div>
-          </div>
-
-          {/* Comments section */}
-          <CommentsSection openCommentsSection={openCommentsSection} />
-        </Paper>
-      </div>
     </div>
   )
 }
