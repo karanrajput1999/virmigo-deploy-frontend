@@ -102,10 +102,12 @@ function Profile() {
     axios
       .get(`http://localhost:3000/user/${userId}`, { withCredentials: true })
       .then((res) => {
+        console.log("user all friends ->", res.data.loggedInUser.friends)
+
         setLoggedInUser(res.data.loggedInUser)
         setFriends(res.data.userAllFriends)
         setUser(res.data.userProfile)
-        friendIds(res.data.userAllFriends)
+        setFriendsId(res.data.loggedInUser.friends)
         getFriendRequestedUserId(res.data.allFriendRequestsSent)
       })
       .catch((error) => {
@@ -123,12 +125,12 @@ function Profile() {
       .catch((error) => console.log(error))
   }, [])
 
-  function friendIds(userFriend: UserType[]) {
-    const userIds = userFriend.map((user: UserType) => {
-      return user._id
-    })
-    setFriendsId(userIds)
-  }
+  // function friendIds(userFriend: UserType[]) {
+  //   const userIds = userFriend.map((user: UserType) => {
+  //     return user._id
+  //   })
+  //   setFriendsId(userIds)
+  // }
 
   function unfriend(unfriendId: string) {
     axios
@@ -470,7 +472,10 @@ function Profile() {
                 {/* first friend */}
                 {friends &&
                   friends.map((friend) => (
-                    <div className="flex align-center profile-body-friend">
+                    <div
+                      className="flex align-center profile-body-friend"
+                      key={friend._id}
+                    >
                       <img
                         src={userIcon}
                         alt="friend"

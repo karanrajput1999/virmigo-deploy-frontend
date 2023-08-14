@@ -76,7 +76,6 @@ function CommentsSection({
   function updateLatestComment(latestComment: CommentType[]) {
     setLatestComments(latestComment)
   }
-  console.log("latest comment", latestComments)
 
   const formik = useFormik({
     initialValues,

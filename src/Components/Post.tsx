@@ -29,11 +29,11 @@ interface NewPostType {
 }
 
 interface PostPropType {
-  posts: NewPostType[]
+  post: NewPostType
   deletePost: (deletePost: string) => void
 }
 
-function Post({ posts, deletePost }: PostPropType) {
+function Post({ post, deletePost }: PostPropType) {
   const [openDelete, setOpenDelete] = useState(false)
   const [openCommentsSection, setOpenCommentsSection] = useState(false)
   const [liked, setLiked] = useState<boolean>(false)
@@ -56,126 +56,127 @@ function Post({ posts, deletePost }: PostPropType) {
 
   return (
     <div className="flex flex-column align-center post-container">
-      {posts &&
-        posts.map((post: any) => (
-          <div style={{ width: "90%", height: "100%" }} key={post._id}>
-            <Paper
-              className="container flex content-center flex-column"
-              elevation={2}
-              style={{ paddingInline: "1.5rem", paddingBottom: "1rem" }}
-            >
-              <div className="flex align-center space-between post-user-info-container">
-                <div className="flex align-center post-user-info">
-                  <img
-                    src={userIcon}
-                    className="post-user-icon"
-                    alt="user-photo"
-                  />
-                  <div className="flex flex-column post-username-container">
-                    <Link className="post-username" to={`/user/${post.userId}`}>
-                      {post.username}
-                    </Link>
-                    <span className="post-time">2 min ago</span>
-                  </div>
-                </div>
+      <div style={{ width: "90%", height: "100%" }}>
+        <Paper
+          className="container flex content-center flex-column"
+          elevation={2}
+          style={{ paddingInline: "1.5rem", paddingBottom: "1rem" }}
+        >
+          <div className="flex align-center space-between post-user-info-container">
+            <div className="flex align-center post-user-info">
+              <img src={userIcon} className="post-user-icon" alt="user-photo" />
+              <div className="flex flex-column post-username-container">
+                <Link className="post-username" to={`/user/${post.userId}`}>
+                  {post.username}
+                </Link>
+                <span className="post-time">2 min ago</span>
+              </div>
+            </div>
 
-                {user?._id === post.userId ? (
+            {user?._id === post.userId ? (
+              <div className="post-actions" style={{ position: "relative" }}>
+                <IconButton onClick={() => setOpenDelete(!openDelete)}>
+                  <MoreVertIcon />
+                </IconButton>
+
+                <Paper
+                  elevation={4}
+                  className="content-center align-center"
+                  style={{
+                    width: "100px",
+                    height: "40px",
+                    position: "absolute",
+                    right: "1rem",
+                    top: "2.1rem",
+                    cursor: "pointer",
+                    borderRadius: "3px",
+                    userSelect: "none",
+                    display: openDelete ? "flex" : "none",
+                  }}
+                >
                   <div
-                    className="post-actions"
-                    style={{ position: "relative" }}
+                    className="flex align-center"
+                    style={{ padding: ".4rem" }}
+                    onClick={() => {
+                      deletePost(post._id)
+                    }}
                   >
-                    <IconButton onClick={() => setOpenDelete(!openDelete)}>
-                      <MoreVertIcon />
-                    </IconButton>
-
-                    <Paper
-                      elevation={4}
-                      className="content-center align-center"
-                      style={{
-                        width: "100px",
-                        height: "40px",
-                        position: "absolute",
-                        right: "1rem",
-                        top: "2.1rem",
-                        cursor: "pointer",
-                        borderRadius: "3px",
-                        userSelect: "none",
-                        display: openDelete ? "flex" : "none",
-                      }}
-                    >
-                      <div
-                        className="flex align-center"
-                        style={{ padding: ".4rem" }}
-                        onClick={() => {
-                          deletePost(post._id)
-                        }}
-                      >
-                        <DeleteIcon style={{ color: "red" }} />{" "}
-                        <span style={{ paddingLeft: ".5rem" }}>Delete</span>
-                      </div>
-                    </Paper>
+                    <DeleteIcon style={{ color: "red" }} />{" "}
+                    <span style={{ paddingLeft: ".5rem" }}>Delete</span>
                   </div>
-                ) : null}
+                </Paper>
               </div>
-
-              <div className="post-caption-container">
-                <span className="post-caption">{post.description}</span>
-              </div>
-
-              <div className="post-media-container">
-                <img src={postImg} alt="" />
-              </div>
-
-              <div className=" post-interaction-container">
-                <div className="flex align-center post-reactors-info-container">
-                  <ThumbUpAltIcon
-                    style={{ color: "#5600ac", fontSize: "1.3rem" }}
-                  />
-
-                  <div className="post-reactors-container">
-                    <span className="post-reactors">
-                      Brock Lesnar and 40 others
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex align-center space-between post-reaction-container">
-                  <IconButton
-                    className="like-container"
-                    style={{ padding: "0" }}
-                    onClick={() => likePost(post._id)}
-                  >
-                    {liked ? (
-                      <ThumbUpAltIcon
-                        style={{ color: "#5600ac", fontSize: "2rem" }}
-                      />
-                    ) : (
-                      <ThumbUpOffAltIcon
-                        style={{ color: "#5600ac", fontSize: "2rem" }}
-                      />
-                    )}
-                  </IconButton>
-                  <IconButton
-                    className="comment-container"
-                    onClick={() => setOpenCommentsSection(!openCommentsSection)}
-                    style={{ padding: "0" }}
-                  >
-                    <ModeCommentIcon
-                      style={{ color: "#5600ac", fontSize: "1.8rem" }}
-                    />
-                  </IconButton>
-                </div>
-              </div>
-
-              {/* Comments section */}
-              <CommentsSection
-                openCommentsSection={openCommentsSection}
-                postId={post._id}
-                comments={post.postComments}
-              />
-            </Paper>
+            ) : null}
           </div>
-        ))}
+
+          <div className="post-caption-container">
+            <span className="post-caption">{post.description}</span>
+          </div>
+
+          <div className="post-media-container">
+            <img src={postImg} alt="" />
+          </div>
+
+          <div className=" post-interaction-container">
+            <div className="flex align-center post-reactors-info-container">
+              <ThumbUpAltIcon
+                style={{ color: "#5600ac", fontSize: "1.3rem" }}
+              />
+
+              <div className="post-reactors-container">
+                {/* <span className="post-reactors">
+                      Brock Lesnar and 40 others
+                    </span> */}
+                <span className="post-reactors">
+                  {post.likedUsers.length === 0
+                    ? "Become first one to like"
+                    : post.likedUsers.length === 1
+                    ? `Liked by ${post.likedUsers[0].name}`
+                    : post.likedUsers.length === 2
+                    ? `Liked by ${post.likedUsers[0].name} and ${post.likedUsers[1].name}`
+                    : `Liked by ${post.likedUsers[0].name} and ${
+                        post.likedUsers[1].name
+                      } and ${post.likedUsers.length - 2} others`}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex align-center space-between post-reaction-container">
+              <IconButton
+                className="like-container"
+                style={{ padding: "0" }}
+                onClick={() => likePost(post._id)}
+              >
+                {post.likes.includes(user._id) || liked ? (
+                  <ThumbUpAltIcon
+                    style={{ color: "#5600ac", fontSize: "2rem" }}
+                  />
+                ) : (
+                  <ThumbUpOffAltIcon
+                    style={{ color: "#5600ac", fontSize: "2rem" }}
+                  />
+                )}
+              </IconButton>
+              <IconButton
+                className="comment-container"
+                onClick={() => setOpenCommentsSection(!openCommentsSection)}
+                style={{ padding: "0" }}
+              >
+                <ModeCommentIcon
+                  style={{ color: "#5600ac", fontSize: "1.8rem" }}
+                />
+              </IconButton>
+            </div>
+          </div>
+
+          {/* Comments section */}
+          <CommentsSection
+            openCommentsSection={openCommentsSection}
+            postId={post._id}
+            comments={post.postComments}
+          />
+        </Paper>
+      </div>
     </div>
   )
 }

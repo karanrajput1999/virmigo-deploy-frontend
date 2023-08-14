@@ -64,7 +64,11 @@ function Feed() {
   return (
     <div className="flex flex-column content-center feed-container">
       <PostForm addNewPost={addNewPost} user={user} />
-      <Post posts={posts} deletePost={deletePost} />
+
+      {posts &&
+        posts.map((post: any) => (
+          <Post post={post} deletePost={deletePost} key={post._id} />
+        ))}
     </div>
   )
 }
