@@ -6,6 +6,23 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { getUser } from "../app/features/userSlice"
 
+interface UserType {
+  _id: string
+  name: string
+  email: string
+  bio: string
+  livesIn: string
+  profilePic: string | null
+  coverPic: string | null
+  posts: string[]
+  comments: string[]
+  friends: string[]
+  createdAt: string
+  updatedAt: string
+  __v: number
+  userAllPosts: NewPostType[]
+}
+
 interface NewPostType {
   _id: string
   description: string
@@ -13,6 +30,7 @@ interface NewPostType {
   likes: []
   comments: []
   userId: string
+  likedUsers: UserType[]
   username: string
   createdAt: string
   updatedAt: string

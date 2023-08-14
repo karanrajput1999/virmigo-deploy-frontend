@@ -119,7 +119,9 @@ function Profile() {
     axios
       .get("http://localhost:3000/", { withCredentials: true })
       .then((res) => {
-        setPosts(res.data.userWithAllPosts[0].userAllPosts)
+        console.log("propfile post data testing", res.data)
+
+        setPosts(res.data.userAllPosts[0].userPosts)
         dispatch(getUser(res.data.userWithAllPosts[0]))
       })
       .catch((error) => console.log(error))
@@ -188,6 +190,18 @@ function Profile() {
       })
       .catch((error) => {
         console.log("error while sending friend request", error)
+      })
+  }
+
+  function deletePost(deletePostId: string) {
+    axios
+      .delete("http://localhost:3000/", {
+        data: { deletePostId },
+        withCredentials: true,
+      })
+      .then((res) => {
+        const remainingPosts = posts.filter((post) => post._id !== deletePostId)
+        setPosts([...remainingPosts])
       })
   }
 
@@ -453,7 +467,10 @@ function Profile() {
                 <span>Posts</span>
               </div>
               <div className="profile-posts-post-container">
-                <Post posts={posts} />
+                {posts &&
+                  posts.map((post: any) => (
+                    <Post post={post} deletePost={deletePost} key={post._id} />
+                  ))}
               </div>
             </div>
           </div>

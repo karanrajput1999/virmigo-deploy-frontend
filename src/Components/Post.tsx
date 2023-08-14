@@ -15,6 +15,23 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 import { useSelector } from "react-redux"
 
+interface UserType {
+  _id: string
+  name: string
+  email: string
+  bio: string
+  livesIn: string
+  profilePic: string | null
+  coverPic: string | null
+  posts: string[]
+  comments: string[]
+  friends: string[]
+  createdAt: string
+  updatedAt: string
+  __v: number
+  userAllPosts: NewPostType[]
+}
+
 interface NewPostType {
   _id: string
   description: string
@@ -23,6 +40,7 @@ interface NewPostType {
   comments: []
   userId: string
   username: string
+  likedUsers: UserType[]
   createdAt: string
   updatedAt: string
   __v: number
@@ -54,6 +72,8 @@ function Post({ post, deletePost }: PostPropType) {
       })
   }
 
+  console.log("rendering post ->", post)
+
   return (
     <div className="flex flex-column align-center post-container">
       <div style={{ width: "90%", height: "100%" }}>
@@ -66,14 +86,14 @@ function Post({ post, deletePost }: PostPropType) {
             <div className="flex align-center post-user-info">
               <img src={userIcon} className="post-user-icon" alt="user-photo" />
               <div className="flex flex-column post-username-container">
-                <Link className="post-username" to={`/user/${post.userId}`}>
-                  {post.username}
+                <Link className="post-username" to={`/user/${post?.userId}`}>
+                  {post?.username}
                 </Link>
                 <span className="post-time">2 min ago</span>
               </div>
             </div>
 
-            {user?._id === post.userId ? (
+            {user?._id === post?.userId ? (
               <div className="post-actions" style={{ position: "relative" }}>
                 <IconButton onClick={() => setOpenDelete(!openDelete)}>
                   <MoreVertIcon />
@@ -110,7 +130,7 @@ function Post({ post, deletePost }: PostPropType) {
           </div>
 
           <div className="post-caption-container">
-            <span className="post-caption">{post.description}</span>
+            <span className="post-caption">{post?.description}</span>
           </div>
 
           <div className="post-media-container">
@@ -128,15 +148,15 @@ function Post({ post, deletePost }: PostPropType) {
                       Brock Lesnar and 40 others
                     </span> */}
                 <span className="post-reactors">
-                  {post.likedUsers.length === 0
+                  {post?.likedUsers?.length === 0
                     ? "Become first one to like"
-                    : post.likedUsers.length === 1
-                    ? `Liked by ${post.likedUsers[0].name}`
-                    : post.likedUsers.length === 2
-                    ? `Liked by ${post.likedUsers[0].name} and ${post.likedUsers[1].name}`
-                    : `Liked by ${post.likedUsers[0].name} and ${
-                        post.likedUsers[1].name
-                      } and ${post.likedUsers.length - 2} others`}
+                    : post?.likedUsers?.length === 1
+                    ? `Liked by ${post?.likedUsers[0]?.name}`
+                    : post?.likedUsers?.length === 2
+                    ? `Liked by ${post?.likedUsers[0]?.name} and ${post?.likedUsers[1]?.name}`
+                    : `Liked by ${post?.likedUsers[0]?.name} and ${
+                        post?.likedUsers[1]?.name
+                      } and ${post?.likedUsers.length - 2} others`}
                 </span>
               </div>
             </div>
@@ -145,9 +165,9 @@ function Post({ post, deletePost }: PostPropType) {
               <IconButton
                 className="like-container"
                 style={{ padding: "0" }}
-                onClick={() => likePost(post._id)}
+                onClick={() => likePost(post?._id)}
               >
-                {post.likes.includes(user._id) || liked ? (
+                {post?.likes.includes(user._id) || liked ? (
                   <ThumbUpAltIcon
                     style={{ color: "#5600ac", fontSize: "2rem" }}
                   />
@@ -172,8 +192,8 @@ function Post({ post, deletePost }: PostPropType) {
           {/* Comments section */}
           <CommentsSection
             openCommentsSection={openCommentsSection}
-            postId={post._id}
-            comments={post.postComments}
+            postId={post?._id}
+            comments={post?.postComments}
           />
         </Paper>
       </div>
