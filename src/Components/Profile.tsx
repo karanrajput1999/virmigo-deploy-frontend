@@ -102,30 +102,32 @@ function Profile() {
     axios
       .get(`http://localhost:3000/user/${userId}`, { withCredentials: true })
       .then((res) => {
-        console.log("user all friends ->", res.data.loggedInUser.friends)
+        console.log("checking user profile bug ->", res.data.userAllPosts[0])
 
+        setPosts(res.data.userAllPosts[0].userPosts)
         setLoggedInUser(res.data.loggedInUser)
         setFriends(res.data.userAllFriends)
         setUser(res.data.userProfile)
         setFriendsId(res.data.loggedInUser.friends)
         getFriendRequestedUserId(res.data.allFriendRequestsSent)
+        dispatch(getUser(res.data.loggedInUser))
       })
       .catch((error) => {
         console.log("erorr while fetching profile", error.message)
       })
   }, [userId])
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/", { withCredentials: true })
-      .then((res) => {
-        console.log("propfile post data testing", res.data)
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:3000/", { withCredentials: true })
+  //     .then((res) => {
+  //       console.log("propfile post data testing", res.data)
 
-        setPosts(res.data.userAllPosts[0].userPosts)
-        dispatch(getUser(res.data.userWithAllPosts[0]))
-      })
-      .catch((error) => console.log(error))
-  }, [])
+  //       setPosts(res.data.userAllPosts[0].userPosts)
+  //       dispatch(getUser(res.data.userWithAllPosts[0]))
+  //     })
+  //     .catch((error) => console.log(error))
+  // }, [])
 
   // function friendIds(userFriend: UserType[]) {
   //   const userIds = userFriend.map((user: UserType) => {
