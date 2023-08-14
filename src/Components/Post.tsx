@@ -49,13 +49,41 @@ interface NewPostType {
 interface PostPropType {
   post: NewPostType
   deletePost: (deletePost: string) => void
+  likedUsers: UserType[]
+  likedUsersId: string[]
 }
 
-function Post({ post, deletePost }: PostPropType) {
+function Post({ post, deletePost, likedUsers, likedUsersId }: PostPropType) {
   const [openDelete, setOpenDelete] = useState(false)
   const [openCommentsSection, setOpenCommentsSection] = useState(false)
   const [liked, setLiked] = useState<boolean>(false)
+  const [likedUsersList, setLikedUsersList] = useState<UserType[] | null>(null)
+  const [likedUsersIdList, setLikedUsersIdList] = useState<string[] | null>(
+    null,
+  )
   const user = useSelector((state: any) => state.user.adminUser)
+
+  useEffect(() => {
+    console.log("useEffect called")
+
+    setLikedUsersList(likedUsers)
+    setLikedUsersIdList(likedUsersId)
+  }, [likedUsers, likedUsersId])
+
+  function updateUnlike(user) {
+    const updatedLikes = likedUsersList?.filter(
+      (likedUser) => user._id !== likedUser._id,
+    )
+    const updatedLikedUsersId = likedUsersIdList?.filter(
+      (likedUserId) => likedUserId !== user?._id,
+    )
+    setLikedUsersIdList(updatedLikedUsersId)
+    setLikedUsersList(updatedLikes)
+  }
+  function udpateLike(user) {
+    setLikedUsersIdList([...likedUsersIdList, user._id])
+    setLikedUsersList([...likedUsersList, user])
+  }
 
   function likePost(likedPostId: string) {
     axios
@@ -71,8 +99,6 @@ function Post({ post, deletePost }: PostPropType) {
         console.log("error while liking the post", error)
       })
   }
-
-  console.log("rendering post ->", post)
 
   return (
     <div className="flex flex-column align-center post-container">
@@ -147,36 +173,71 @@ function Post({ post, deletePost }: PostPropType) {
                 {/* <span className="post-reactors">
                       Brock Lesnar and 40 others
                     </span> */}
-                <span className="post-reactors">
-                  {post?.likedUsers?.length === 0
+                {/* <span className="post-reactors">
+                  {post.likedUsers?.length === 0
                     ? "Become first one to like"
-                    : post?.likedUsers?.length === 1
-                    ? `Liked by ${post?.likedUsers[0]?.name}`
-                    : post?.likedUsers?.length === 2
-                    ? `Liked by ${post?.likedUsers[0]?.name} and ${post?.likedUsers[1]?.name}`
-                    : `Liked by ${post?.likedUsers[0]?.name} and ${
-                        post?.likedUsers[1]?.name
-                      } and ${post?.likedUsers.length - 2} others`}
+                    : post.likedUsers?.length === 1
+                    ? `Liked by ${post.likedUsers[0]?.name}`
+                    : post.likedUsers?.length === 2
+                    ? `Liked by ${post.likedUsers[0]?.name} and ${post.likedUsers[1]?.name}`
+                    : `Liked by ${post.likedUsers[0]?.name} and ${
+                        post.likedUsers[1]?.name
+                      } and ${post.likedUsers?.length - 2} others`}
+                </span> */}
+                <span className="post-reactors">
+                  {likedUsersList && likedUsersList?.length === 0
+                    ? "Become first one to like"
+                    : likedUsersList?.length === 1
+                    ? `Liked by ${likedUsersList[0]?.name}`
+                    : likedUsersList?.length === 2
+                    ? `Liked by ${
+                        likedUsersList && likedUsersList[0]?.name
+                      } and ${likedUsersList[1]?.name}`
+                    : likedUsersList?.length === 3
+                    ? `Liked by ${likedUsersList && likedUsersList[0]?.name}, ${
+                        likedUsersList[1]?.name
+                      } and ${likedUsersList[2]?.name}`
+                    : `Liked by ${
+                        likedUsersList && likedUsersList[0]?.name
+                      } and ${likedUsersList && likedUsersList[1]?.name} and ${
+                        likedUsersList && likedUsersList?.length - 2
+                      } others`}
                 </span>
               </div>
             </div>
 
             <div className="flex align-center space-between post-reaction-container">
-              <IconButton
-                className="like-container"
-                style={{ padding: "0" }}
-                onClick={() => likePost(post?._id)}
-              >
-                {post?.likes.includes(user._id) || liked ? (
-                  <ThumbUpAltIcon
-                    style={{ color: "#5600ac", fontSize: "2rem" }}
-                  />
-                ) : (
-                  <ThumbUpOffAltIcon
-                    style={{ color: "#5600ac", fontSize: "2rem" }}
-                  />
-                )}
-              </IconButton>
+              <div className="flex align-center">
+                <IconButton
+                  className="like-container"
+                  style={{ padding: "0" }}
+                  onClick={() => {
+                    if (likedUsersIdList.includes(user._id)) {
+                      updateUnlike(user)
+                      likePost(post?._id)
+                    } else {
+                      udpateLike(user)
+                      likePost(post?._id)
+                    }
+                  }}
+                >
+                  {likedUsersIdList?.includes(user._id) ? (
+                    <ThumbUpAltIcon
+                      style={{ color: "#5600ac", fontSize: "2rem" }}
+                    />
+                  ) : (
+                    <ThumbUpOffAltIcon
+                      style={{ color: "#5600ac", fontSize: "2rem" }}
+                    />
+                  )}
+                </IconButton>
+                {likedUsersIdList?.includes(user._id) ? (
+                  <span style={{ marginLeft: ".5rem", color: "#5600ac" }}>
+                    {" "}
+                    Liked !
+                  </span>
+                ) : null}
+              </div>
               <IconButton
                 className="comment-container"
                 onClick={() => setOpenCommentsSection(!openCommentsSection)}

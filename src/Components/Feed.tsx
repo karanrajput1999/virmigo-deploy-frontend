@@ -38,7 +38,6 @@ interface NewPostType {
 }
 
 function Feed() {
-  // Post. tsx below
   const [posts, setPosts] = useState<NewPostType[]>([])
 
   let user = useSelector((state: any) => state.user.adminUser)
@@ -50,8 +49,6 @@ function Feed() {
       .get("http://localhost:3000/", { withCredentials: true })
       .then((res) => {
         if (res.data) {
-          console.log("user all posts testing", res.data.userWithAllPosts[0])
-
           setPosts(res.data.userWithAllPosts[0].allPostsCombined)
           dispatch(getUser(res.data.userWithAllPosts[0]))
 
@@ -83,10 +80,15 @@ function Feed() {
     <div className="flex flex-column content-center feed-container">
       <PostForm addNewPost={addNewPost} user={user} />
 
-      {posts &&
-        posts.map((post: any) => (
-          <Post post={post} deletePost={deletePost} key={post._id} />
-        ))}
+      {posts.map((post: any) => (
+        <Post
+          post={post}
+          deletePost={deletePost}
+          likedUsers={post?.likedUsers}
+          likedUsersId={post?.likes}
+          key={post?._id}
+        />
+      ))}
     </div>
   )
 }

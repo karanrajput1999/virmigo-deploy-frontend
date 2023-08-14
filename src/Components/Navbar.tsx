@@ -27,12 +27,8 @@ function Navbar() {
   let user = useSelector((state: any) => state.user.adminUser)
 
   function userProfile() {
-    axios.get(`http://localhost:3000/user/${user._id}`).then((res) => {
-      console.log("profile rendered")
-    })
+    axios.get(`http://localhost:3000/user/${user._id}`).then((res) => {})
   }
-
-  console.log("reading user while going to profile", user)
 
   function logout() {
     axios
