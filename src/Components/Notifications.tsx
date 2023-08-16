@@ -1,9 +1,32 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Paper } from "@mui/material"
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive"
 import userIcon from "../assets/user-icon.png"
+import { useSelector, useDispatch } from "react-redux"
+import { getUser } from "../app/features/userSlice"
+import axios from "axios"
 
 function Notifications() {
+  const [notifications, setNotifications] = useState(null)
+
+  const user = useSelector((state: any) => state.user.adminUser)
+  console.log(user)
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/notifications", { withCredentials: true })
+      .then((res) => {
+        console.log("notifications data", res.data.notifications)
+        setNotifications(res.data.notifications)
+        dispatch(getUser(res.data.loggedInUser))
+      })
+      .catch((error) => {
+        console.log("error while fetching notifications", error)
+      })
+  }, [])
+
   return (
     <div className="flex align-center content-center notifications-container">
       <div className="notifications-wrapper">
@@ -20,7 +43,29 @@ function Notifications() {
               />
             </span>
           </div>
-          {/******************************  first notification ************************/}
+          {notifications &&
+            notifications.map((notification) => (
+              <div
+                className="flex align-center notification-container"
+                key={notification._id}
+              >
+                <span className="flex align-center notification-text">
+                  <span className="flex align-center notification-user">
+                    <img
+                      src={userIcon}
+                      className="notification-user-icon"
+                      alt="user-photo"
+                    />
+                    {notification.notificationSender[0].name}&nbsp;
+                  </span>
+                  {notification.status === 1
+                    ? "Sent you a friend request"
+                    : null}
+                  .
+                </span>
+              </div>
+            ))}
+          {/* 
           <div className="flex align-center notification-container">
             <span className="flex align-center notification-text">
               <span className="flex align-center notification-user">
@@ -33,9 +78,23 @@ function Notifications() {
               </span>
               liked your post.
             </span>
-          </div>
+          </div> */}
+          {/******************************  first notification ************************/}
+          {/* <div className="flex align-center notification-container">
+            <span className="flex align-center notification-text">
+              <span className="flex align-center notification-user">
+                <img
+                  src={userIcon}
+                  className="notification-user-icon"
+                  alt="user-photo"
+                />
+                John Doe&nbsp;
+              </span>
+              liked your post.
+            </span>
+          </div> */}
           {/******************************  second notification ************************/}
-          <div className="flex align-center notification-container">
+          {/* <div className="flex align-center notification-container">
             <span className="flex align-center notification-text">
               <span className="flex align-center notification-user">
                 <img
@@ -47,9 +106,9 @@ function Notifications() {
               </span>
               accepted your friend request.
             </span>
-          </div>
+          </div> */}
           {/******************************  third notification ************************/}
-          <div className="flex align-center notification-container">
+          {/* <div className="flex align-center notification-container">
             <span className="flex align-center notification-text">
               <span className="flex align-center notification-user">
                 <img
@@ -61,7 +120,7 @@ function Notifications() {
               </span>
               commented on your post.
             </span>
-          </div>
+          </div> */}
         </Paper>
       </div>
     </div>
