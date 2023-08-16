@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { getUser } from "../app/features/userSlice"
+import nopost from "../assets/nopost.svg"
 
 interface UserType {
   _id: string
@@ -49,6 +50,11 @@ function Feed() {
       .get("http://localhost:3000/", { withCredentials: true })
       .then((res) => {
         if (res.data) {
+          console.log(
+            "data in feed",
+            res.data.userWithAllPosts[0].allPostsCombined,
+          )
+
           setPosts(res.data.userWithAllPosts[0].allPostsCombined)
           dispatch(getUser(res.data.userWithAllPosts[0]))
 
@@ -60,8 +66,14 @@ function Feed() {
       .catch((error) => console.log(error))
   }, [])
 
+  console.log("posts testing", posts)
+
   const addNewPost = (newPost: NewPostType) => {
-    setPosts([newPost, ...posts])
+    console.log("new post structure", newPost)
+
+    /* added postComments and likedUsers because the structure of post object is different than the 
+    backend and if I don't match the structure then like message (Become first one to like) shows undefined */
+    setPosts([{ ...newPost, postComments: [], likedUsers: [] }, ...posts])
   }
 
   function deletePost(deletePostId: string) {
@@ -80,15 +92,25 @@ function Feed() {
     <div className="flex flex-column content-center feed-container">
       <PostForm addNewPost={addNewPost} user={user} />
 
-      {posts.map((post: any) => (
-        <Post
-          post={post}
-          deletePost={deletePost}
-          likedUsers={post?.likedUsers}
-          likedUsersId={post?.likes}
-          key={post?._id}
-        />
-      ))}
+      {posts.length === 0 ? (
+        <div className="flex flex-column align-center nopost-img-container">
+          <h1 style={{ color: "#5600ac" }}>New to Virmigo ?</h1>
+          <span style={{ color: "#636363" }}>
+            Share some posts or make some friends.
+          </span>
+          <img src={nopost} alt="" className="nopost-img" />
+        </div>
+      ) : (
+        posts.map((post: any) => (
+          <Post
+            post={post}
+            deletePost={deletePost}
+            likedUsers={post?.likedUsers}
+            likedUsersId={post?.likes}
+            key={post?._id}
+          />
+        ))
+      )}
     </div>
   )
 }
