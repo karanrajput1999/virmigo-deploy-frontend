@@ -70,62 +70,6 @@ function Notifications() {
                 </span>
               </div>
             ))}
-          {/* 
-          <div className="flex align-center notification-container">
-            <span className="flex align-center notification-text">
-              <span className="flex align-center notification-user">
-                <img
-                  src={userIcon}
-                  className="notification-user-icon"
-                  alt="user-photo"
-                />
-                John Doe&nbsp;
-              </span>
-              liked your post.
-            </span>
-          </div> */}
-          {/******************************  first notification ************************/}
-          {/* <div className="flex align-center notification-container">
-            <span className="flex align-center notification-text">
-              <span className="flex align-center notification-user">
-                <img
-                  src={userIcon}
-                  className="notification-user-icon"
-                  alt="user-photo"
-                />
-                John Doe&nbsp;
-              </span>
-              liked your post.
-            </span>
-          </div> */}
-          {/******************************  second notification ************************/}
-          {/* <div className="flex align-center notification-container">
-            <span className="flex align-center notification-text">
-              <span className="flex align-center notification-user">
-                <img
-                  src={userIcon}
-                  className="notification-user-icon"
-                  alt="user-photo"
-                />
-                Anshu Upadhyay&nbsp;
-              </span>
-              accepted your friend request.
-            </span>
-          </div> */}
-          {/******************************  third notification ************************/}
-          {/* <div className="flex align-center notification-container">
-            <span className="flex align-center notification-text">
-              <span className="flex align-center notification-user">
-                <img
-                  src={userIcon}
-                  className="notification-user-icon"
-                  alt="user-photo"
-                />
-                Hardik Patel&nbsp;
-              </span>
-              commented on your post.
-            </span>
-          </div> */}
         </Paper>
       </div>
     </div>

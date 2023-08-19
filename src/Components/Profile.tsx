@@ -217,6 +217,7 @@ function Profile() {
           { withCredentials: true },
         )
         .then((res) => {
+          window.location.reload()
           console.log("patch request while updating profile info", res.data)
         })
         .catch((error) => {
@@ -339,8 +340,7 @@ function Profile() {
                           <button
                             type="submit"
                             className="flex align-center content-center updateProfile-btn"
-
-                            // onClick={handleClose}
+                            onClick={handleClose}
                           >
                             Update Profile
                             <CheckCircleIcon
