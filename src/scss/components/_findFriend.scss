@@ -103,6 +103,16 @@
   margin-top: 0.5rem;
 }
 
+.friend-requests-count {
+  height: 25px;
+  width: 25px;
+  background-color: red;
+  color: white;
+  margin-left: 1rem;
+  border-radius: 50%;
+  font-size: 0.9rem;
+}
+
 @media (max-width: "900px") {
   .find-friend-container {
     flex-direction: column;

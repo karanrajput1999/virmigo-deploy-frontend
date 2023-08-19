@@ -113,6 +113,12 @@ function FindFriend() {
                   }}
                 />
                 <span className="make-friends-tab-title">Friend Requests</span>
+
+                {friendRequests && friendRequests.length !== 0 ? (
+                  <div className="friend-requests-count flex align-center content-center">
+                    {friendRequests.length}
+                  </div>
+                ) : null}
               </div>
             </div>
           </Paper>
