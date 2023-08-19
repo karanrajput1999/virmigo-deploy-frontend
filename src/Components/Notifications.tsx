@@ -59,9 +59,12 @@ function Notifications() {
                     {notification.notificationSender[0].name}&nbsp;
                   </span>
                   {notification.status === 1
-                    ? "Sent you a friend request"
+                    ? "sent you a friend request."
+                    : notification.status === 2
+                    ? "accepted you a friend request."
+                    : notification.status === 3
+                    ? "liked your post"
                     : null}
-                  .
                 </span>
               </div>
             ))}
