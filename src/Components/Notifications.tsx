@@ -63,7 +63,9 @@ function Notifications() {
                     : notification.status === 2
                     ? "accepted you a friend request."
                     : notification.status === 3
-                    ? "liked your post"
+                    ? "liked your post."
+                    : notification.status === 4
+                    ? "commented on your post."
                     : null}
                 </span>
               </div>
