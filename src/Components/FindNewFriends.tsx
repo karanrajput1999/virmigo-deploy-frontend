@@ -27,7 +27,7 @@ function FindNewFriends() {
   const [friendRequestedUser, setFriendRequestedUser] = useState<string[]>([])
 
   function getFriendRequestedUserId(friendRequestedUser: UserType[]) {
-    const requestedUsers = friendRequestedUser.map((user) => {
+    const requestedUsers = friendRequestedUser?.map((user) => {
       return user._id
     })
     setFriendRequestedUser(requestedUsers)

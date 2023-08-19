@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import axios from "axios"
@@ -25,6 +25,8 @@ const validationSchema = Yup.object({
 })
 
 function Login() {
+  const [authenticationError, setAuthenticationError] = useState("")
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -56,6 +58,7 @@ function Login() {
         })
         .catch((error) => {
           console.log("error while loging in from frontend", error)
+          setAuthenticationError(error.response.data)
         })
     },
     validationSchema,
@@ -66,6 +69,13 @@ function Login() {
       <div className="flex content-center  login-title-container">
         <span className="login-title">Virmigo</span>
       </div>
+
+      {authenticationError && (
+        <span style={{ textAlign: "center", color: "red" }}>
+          {authenticationError}
+        </span>
+      )}
+
       <form onSubmit={formik.handleSubmit}>
         <div className="flex content-center login-input-field-container">
           <div className="flex flex-column">

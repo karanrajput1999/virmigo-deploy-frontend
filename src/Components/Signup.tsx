@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import axios from "axios"
@@ -39,6 +39,8 @@ const validationSchema = Yup.object({
 })
 
 function Signup() {
+  const [authenticationError, setAuthenticationError] = useState("")
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -46,8 +48,6 @@ function Signup() {
     axios
       .get("http://localhost:3000/signup", { withCredentials: true })
       .then((res) => {
-        console.log("get reqeust to signup", res)
-
         if (res.data) {
           dispatch(getUser(res.data))
           navigate("/")
@@ -71,7 +71,10 @@ function Signup() {
 
           navigate("/")
         })
-        .catch((err) => console.log("error while making signup rqst", err))
+        .catch((err) => {
+          console.log("error while making signup rqst", err.response.data),
+            setAuthenticationError(err.response.data)
+        })
     },
     validationSchema,
   })
@@ -82,6 +85,12 @@ function Signup() {
         <span className="signup-title">Virmigo</span>
       </div>
 
+      {authenticationError && (
+        <span style={{ textAlign: "center", color: "red" }}>
+          {authenticationError}
+        </span>
+      )}
+      <span></span>
       <form onSubmit={formik.handleSubmit}>
         <div className="flex flex-column align-center input-field-container">
           <div className="flex flex-column">
