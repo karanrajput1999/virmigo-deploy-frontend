@@ -53,6 +53,11 @@ function Login() {
       axios
         .post("http://localhost:3000/login", values, { withCredentials: true })
         .then((res) => {
+          console.log(
+            "checking cover pic and profile pic after loging in",
+            res.data,
+          )
+
           dispatch(getUser(res.data))
           navigate("/")
         })

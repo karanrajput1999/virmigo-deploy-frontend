@@ -5,7 +5,7 @@
   min-height: 610px;
   border: 1px solid #5600ac;
   border-radius: 10px;
-  label {
+  .text-label {
     font-size: 1.1rem;
     font-weight: 700;
     color: #5600ac;
@@ -62,13 +62,13 @@
 
 .pic-btn {
   padding: 0.4rem 0.6rem;
-  font-size: 0.7rem;
-  font-weight: 600;
   background-color: colors.$primary;
   border: none;
   border-radius: 5px;
-  color: white;
   cursor: pointer;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 600;
 }
 
 .join-btn {

@@ -110,7 +110,11 @@ function Post({ post, deletePost, likedUsers, likedUsersId }: PostPropType) {
         >
           <div className="flex align-center space-between post-user-info-container">
             <div className="flex align-center post-user-info">
-              <img src={userIcon} className="post-user-icon" alt="user-photo" />
+              <img
+                src={user?.profilePic || userIcon}
+                className="post-user-icon"
+                alt="user-photo"
+              />
               <div className="flex flex-column post-username-container">
                 <Link className="post-username" to={`/user/${post?.userId}`}>
                   {post?.username}

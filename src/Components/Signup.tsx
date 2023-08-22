@@ -5,10 +5,13 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { getUser } from "../app/features/userSlice"
+import FormData from "form-data"
 
 interface formValues {
   name: string
   email: string
+  // profilePic: any
+  // coverPic: any
   password: string
   confirmPassword: string
 }
@@ -16,6 +19,8 @@ interface formValues {
 const initialValues = {
   name: "",
   email: "",
+  // profilePic: "",
+  // coverPic: "",
   password: "",
   confirmPassword: "",
 }
@@ -39,6 +44,8 @@ const validationSchema = Yup.object({
 })
 
 function Signup() {
+  const [profilePic, setProfilePic] = useState(null)
+  const [coverPic, setCoverPic] = useState(null)
   const [authenticationError, setAuthenticationError] = useState("")
 
   const navigate = useNavigate()
@@ -61,9 +68,27 @@ function Signup() {
   const formik = useFormik<formValues>({
     initialValues,
     onSubmit: (values: formValues) => {
-      console.log(values)
+      const formData = new FormData()
+      console.log("original form data", formData)
+
+      formData.append("name", values.name)
+      formData.append("email", values.email)
+      formData.append("password", values.password)
+      formData.append("confirmPassword", values.confirmPassword)
+
+      if (profilePic) {
+        formData.append("profilePic", profilePic)
+      }
+      if (coverPic) {
+        formData.append("coverPic", coverPic)
+      }
+
       axios
-        .post("http://localhost:3000/signup", values)
+        .post("http://localhost:3000/signup", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((res) => {
           console.log("singup response", res.data)
 
@@ -72,7 +97,7 @@ function Signup() {
           navigate("/")
         })
         .catch((err) => {
-          console.log("error while making signup rqst", err.response.data),
+          console.log("error while making signup rqst", err),
             setAuthenticationError(err.response.data)
         })
     },
@@ -85,16 +110,18 @@ function Signup() {
         <span className="signup-title">Virmigo</span>
       </div>
 
-      {authenticationError && (
+      {authenticationError && authenticationError.message && (
         <span style={{ textAlign: "center", color: "red" }}>
-          {authenticationError}
+          {authenticationError.message}
         </span>
       )}
-      <span></span>
-      <form onSubmit={formik.handleSubmit}>
+      {/* <span></span> */}
+      <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
         <div className="flex flex-column align-center input-field-container">
           <div className="flex flex-column">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name" className="text-label">
+              Name
+            </label>
 
             <input
               type="text"
@@ -112,7 +139,9 @@ function Signup() {
         </div>
         <div className="flex flex-column align-center input-field-container">
           <div className="flex flex-column">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email" className="text-label">
+              Email
+            </label>
             <input
               type="email"
               id="email"
@@ -129,7 +158,9 @@ function Signup() {
         </div>
         <div className="flex flex-column align-center input-field-container">
           <div className="flex flex-column">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password" className="text-label">
+              Password
+            </label>
             <input
               type="password"
               id="password"
@@ -146,7 +177,9 @@ function Signup() {
         </div>
         <div className="flex flex-column align-center input-field-container">
           <div className="flex flex-column">
-            <label htmlFor="cofirmPassword">Confirm Password</label>
+            <label htmlFor="cofirmPassword" className="text-label">
+              Confirm Password
+            </label>
             <input
               type="password"
               id="confirmPassword"
@@ -167,8 +200,27 @@ function Signup() {
             <span>* Profile pic and cover pic are optional.</span>
           </div>
           <div className="flex content-center pic-btn-wrapper">
-            <button className="pic-btn">Choose profile pic</button>
-            <button className="pic-btn">Choose cover pic</button>
+            <label className="pic-btn" htmlFor="profile-pic">
+              Choose Profile Pic
+            </label>
+            <input
+              type="file"
+              id="profile-pic"
+              name="profilePic"
+              style={{ display: "none" }}
+              onChange={(event) => setProfilePic(event.target.files[0])}
+            />
+
+            <label className="pic-btn" htmlFor="cover-pic">
+              Choose Cover Pic
+            </label>
+            <input
+              type="file"
+              id="cover-pic"
+              name="coverPic"
+              style={{ display: "none" }}
+              onChange={(event) => setCoverPic(event.target.files[0])}
+            />
           </div>
         </div>
 

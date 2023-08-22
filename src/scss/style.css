@@ -345,6 +345,15 @@ li:hover::after {
   gap: 3rem;
 }
 
+.nopost-img-container {
+  width: 100%;
+}
+
+.nopost-img {
+  height: 25rem;
+  width: 25rem;
+}
+
 .post-user-info-container {
   width: 100%;
   margin-top: 0.8rem;
@@ -390,7 +399,6 @@ li:hover::after {
 .post-reactors-container {
   margin-left: 0.5rem;
   font-size: 0.9rem;
-  font-weight: 600;
 }
 
 .profile-container {
@@ -774,6 +782,16 @@ li:hover::after {
   margin-top: 0.5rem;
 }
 
+.friend-requests-count {
+  height: 25px;
+  width: 25px;
+  background-color: red;
+  color: white;
+  margin-left: 1rem;
+  border-radius: 50%;
+  font-size: 0.9rem;
+}
+
 @media (max-width: 900px) {
   .find-friend-container {
     flex-direction: column;
@@ -804,7 +822,7 @@ li:hover::after {
   border: 1px solid #5600ac;
   border-radius: 10px;
 }
-.signup-container label {
+.signup-container .text-label {
   font-size: 1.1rem;
   font-weight: 700;
   color: #5600ac;
@@ -857,13 +875,13 @@ li:hover::after {
 
 .pic-btn {
   padding: 0.4rem 0.6rem;
-  font-size: 0.7rem;
-  font-weight: 600;
   background-color: #5600ac;
   border: none;
   border-radius: 5px;
-  color: white;
   cursor: pointer;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 600;
 }
 
 .join-btn {
@@ -1005,7 +1023,7 @@ input:focus {
 }
 
 .comment-user-name {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 700;
 }
 

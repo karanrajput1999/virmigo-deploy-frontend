@@ -233,10 +233,17 @@ function Profile() {
         <div className="mx-auto profile-header-wrapper">
           <div>
             <div className="profile-cover">
-              <img className="cover-img" src={userCover} alt="" />
+              <img
+                className="cover-img"
+                src={user?.coverPic || userCover}
+                alt=""
+              />
             </div>
             <div className="flex profile-user-info">
-              <img src={userIcon} alt="" className="profile-user-pic" />
+              <div className="profile-user-pic">
+                <img src={user?.profilePic || userIcon} alt="" />
+              </div>
+
               <div className="flex flex-column profile-username-container">
                 <span className="profile-username">{user?.name}</span>
                 <span className="profile-friends">
@@ -471,7 +478,13 @@ function Profile() {
               <div className="profile-posts-post-container">
                 {posts &&
                   posts.map((post: any) => (
-                    <Post post={post} deletePost={deletePost} key={post._id} />
+                    <Post
+                      post={post}
+                      deletePost={deletePost}
+                      likedUsers={post?.likedUsers}
+                      likedUsersId={post?.likes}
+                      key={post?._id}
+                    />
                   ))}
               </div>
             </div>
