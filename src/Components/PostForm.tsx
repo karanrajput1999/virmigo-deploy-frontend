@@ -55,6 +55,7 @@ const initialValues = {
 
 function PostForm({ user, addNewPost }: PostFormType) {
   const [previewImg, setPreviewImg] = useState<string>("")
+  const [postImage, setPostImage] = useState(null)
 
   // const dispatch = useDispatch()
   // const navigate = useNavigate()
@@ -63,23 +64,59 @@ function PostForm({ user, addNewPost }: PostFormType) {
   //   return state.user.adminUser
   // })
 
+  // showing image's preview
+  function previewPost(e: ChangeEvent<HTMLInputElement>): void {
+    const previewPic = e.target.files?.[0]
+    if (previewPic) {
+      const reader = new FileReader()
+      reader.onload = () => {
+        setPreviewImg(reader.result as string)
+      }
+      reader.readAsDataURL(previewPic)
+    } else {
+      setPreviewImg("")
+    }
+  }
+
+  function setPost(event) {
+    setPostImage(event.target.files[0])
+
+    previewPost(event)
+  }
+
   const formik = useFormik<PostType>({
     initialValues,
-    onSubmit: (value: FormikValues) => {
-      if (!value.description) {
+    onSubmit: (values: FormikValues) => {
+      if (!values.description && !postImage) {
         return
       }
-      console.log("user id while  posting a post", user)
+
+      const formData = new FormData()
+
+      formData.append("description", values.description)
+      formData.append("userId", user._id)
+      formData.append("username", user.name)
+
+      if (postImage) {
+        formData.append("postImage", postImage)
+      }
+      console.log("values from post form", values)
 
       axios
         .post(
           "http://localhost:3000/",
+          // {
+          //   ...values,
+          //   userId: user._id,
+          //   username: user.name,
+          // },
+          formData,
           {
-            ...value,
-            userId: user._id,
-            username: user.name,
+            withCredentials: true,
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           },
-          { withCredentials: true },
         )
         .then((res) => {
           addNewPost(res.data)
@@ -104,20 +141,6 @@ function PostForm({ user, addNewPost }: PostFormType) {
   //     .catch((error) => console.log(error))
   // }, [])
 
-  // showing image's preview
-  function previewPost(e: ChangeEvent<HTMLInputElement>): void {
-    const previewPic = e.target.files?.[0]
-    if (previewPic) {
-      const reader = new FileReader()
-      reader.onload = () => {
-        setPreviewImg(reader.result as string)
-      }
-      reader.readAsDataURL(previewPic)
-    } else {
-      setPreviewImg("")
-    }
-  }
-
   return (
     <div className="flex content-center post-form-container">
       <div style={{ width: "90%", height: "100%" }}>
@@ -125,9 +148,17 @@ function PostForm({ user, addNewPost }: PostFormType) {
           <form
             className="container flex align-center flex-column"
             onSubmit={formik.handleSubmit}
+            encType="multipart/form-data"
           >
             <div className="flex align-center post-input-section">
-              <img src={userIcon} alt="user-photo" className="user-icon" />
+              <div className="user-icon-container">
+                <img
+                  src={user?.profilePic || userIcon}
+                  alt="user-photo"
+                  className="user-icon"
+                />
+              </div>
+
               <input
                 type="text"
                 {...formik.getFieldProps("description")}
@@ -162,8 +193,9 @@ function PostForm({ user, addNewPost }: PostFormType) {
                 <input
                   type="file"
                   id="media-icon"
+                  name="postImage"
                   style={{ display: "none" }}
-                  onChange={previewPost}
+                  onChange={setPost}
                 />
 
                 <GifBoxIcon

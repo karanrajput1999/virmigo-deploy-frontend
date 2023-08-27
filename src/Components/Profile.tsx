@@ -231,11 +231,12 @@ function Profile() {
     <div className="profile-container">
       <div className="flex content-center flex-column profile-header-container">
         <div className="mx-auto profile-header-wrapper">
-          <div>
+          <div className="profile-header">
             <div className="profile-cover">
               <img
                 className="cover-img"
-                src={user?.coverPic || userCover}
+                // src={user?.coverPic || userCover}
+                src="https://img.freepik.com/premium-vector/amazing-virtual-world-digital-art-graphics-science-technology-future-virtual-reality-glasses-metaverse-colorful-planets-space-fantasy-concept-vector-illustrationgenerative-ai_748571-1002.jpg"
                 alt=""
               />
             </div>

@@ -14,9 +14,15 @@
   margin-top: 0.8rem;
 }
 
-.post-user-icon {
+.post-user-icon-container {
   height: 40px;
   width: 40px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.post-user-icon {
+  width: 100%;
 }
 .post-username-container {
   margin-left: 0.8rem;

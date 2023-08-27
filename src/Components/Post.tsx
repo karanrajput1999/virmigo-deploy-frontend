@@ -110,11 +110,14 @@ function Post({ post, deletePost, likedUsers, likedUsersId }: PostPropType) {
         >
           <div className="flex align-center space-between post-user-info-container">
             <div className="flex align-center post-user-info">
-              <img
-                src={user?.profilePic || userIcon}
-                className="post-user-icon"
-                alt="user-photo"
-              />
+              <div className="post-user-icon-container">
+                <img
+                  src={user?.profilePic || userIcon}
+                  className="post-user-icon"
+                  alt="user-photo"
+                />
+              </div>
+
               <div className="flex flex-column post-username-container">
                 <Link className="post-username" to={`/user/${post?.userId}`}>
                   {post?.username}
@@ -160,12 +163,17 @@ function Post({ post, deletePost, likedUsers, likedUsersId }: PostPropType) {
           </div>
 
           <div className="post-caption-container">
-            <span className="post-caption">{post?.description}</span>
+            <span className="post-caption">
+              {post?.description ? post?.description : null}
+            </span>
           </div>
 
-          <div className="post-media-container">
-            <img src={postImg} alt="" />
-          </div>
+          {post?.image ? (
+            <div className="post-media-container">
+              {/* <img src={postImg} alt="" /> */}
+              <img src={post?.image} alt="" />
+            </div>
+          ) : null}
 
           <div className=" post-interaction-container">
             <div className="flex align-center post-reactors-info-container">
