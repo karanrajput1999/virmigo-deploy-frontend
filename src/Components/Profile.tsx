@@ -235,8 +235,8 @@ function Profile() {
             <div className="profile-cover">
               <img
                 className="cover-img"
-                // src={user?.coverPic || userCover}
-                src="https://img.freepik.com/premium-vector/amazing-virtual-world-digital-art-graphics-science-technology-future-virtual-reality-glasses-metaverse-colorful-planets-space-fantasy-concept-vector-illustrationgenerative-ai_748571-1002.jpg"
+                src={user?.coverPic || userCover}
+                // src="https://img.freepik.com/premium-vector/amazing-virtual-world-digital-art-graphics-science-technology-future-virtual-reality-glasses-metaverse-colorful-planets-space-fantasy-concept-vector-illustrationgenerative-ai_748571-1002.jpg"
                 alt=""
               />
             </div>
