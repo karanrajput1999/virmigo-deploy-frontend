@@ -24,7 +24,7 @@ interface UserType {
   userAllPosts: NewPostType[]
 }
 
-interface NewPostType {
+interface PostType {
   _id: string
   description: string
   image: string | null
@@ -38,8 +38,13 @@ interface NewPostType {
   __v: number
 }
 
+// interface NewPostType {
+//   newPost: PostType
+//   newPostLoading: boolean
+// }
+
 function Feed() {
-  const [posts, setPosts] = useState<NewPostType[]>([])
+  const [posts, setPosts] = useState<PostType[]>([])
 
   let user = useSelector((state: any) => state.user.adminUser)
   const dispatch = useDispatch()
@@ -50,11 +55,6 @@ function Feed() {
       .get("http://localhost:3000/", { withCredentials: true })
       .then((res) => {
         if (res.data) {
-          console.log(
-            "data in feed",
-            res.data.userWithAllPosts[0].allPostsCombined,
-          )
-
           setPosts(res.data.userWithAllPosts[0].allPostsCombined)
           dispatch(getUser(res.data.userWithAllPosts[0]))
 
@@ -66,13 +66,12 @@ function Feed() {
       .catch((error) => console.log(error))
   }, [])
 
-  console.log("posts testing", posts)
-
   const addNewPost = (newPost: NewPostType) => {
-    console.log("new post structure", newPost)
+    console.log("new post ", newPost)
 
     /* added postComments and likedUsers because the structure of post object is different than the 
     backend and if I don't match the structure then like message (Become first one to like) shows undefined */
+
     setPosts([{ ...newPost, postComments: [], likedUsers: [] }, ...posts])
   }
 

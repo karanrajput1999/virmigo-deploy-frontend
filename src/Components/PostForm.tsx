@@ -9,6 +9,7 @@ import { FormikValues, useFormik } from "formik"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { getUser } from "../app/features/userSlice"
+import CircularProgress from "@mui/material/CircularProgress"
 
 interface PostType {
   description: string
@@ -56,6 +57,7 @@ const initialValues = {
 function PostForm({ user, addNewPost }: PostFormType) {
   const [previewImg, setPreviewImg] = useState<string>("")
   const [postImage, setPostImage] = useState(null)
+  const [newPostLoading, setNewPostLoading] = useState(false)
 
   // const dispatch = useDispatch()
   // const navigate = useNavigate()
@@ -101,7 +103,7 @@ function PostForm({ user, addNewPost }: PostFormType) {
         formData.append("postImage", postImage)
       }
       console.log("values from post form", values)
-
+      setNewPostLoading(true)
       axios
         .post(
           "http://localhost:3000/",
@@ -119,9 +121,11 @@ function PostForm({ user, addNewPost }: PostFormType) {
           },
         )
         .then((res) => {
+          setNewPostLoading(false)
           addNewPost(res.data)
         })
         .catch((error) => {
+          setNewPostLoading(false)
           console.log("error while posting a post from postForm", error)
         })
     },
@@ -142,82 +146,89 @@ function PostForm({ user, addNewPost }: PostFormType) {
   // }, [])
 
   return (
-    <div className="flex content-center post-form-container">
-      <div style={{ width: "90%", height: "100%" }}>
-        <Paper elevation={2} style={{ paddingBlock: ".5rem" }}>
-          <form
-            className="container flex align-center flex-column"
-            onSubmit={formik.handleSubmit}
-            encType="multipart/form-data"
-          >
-            <div className="flex align-center post-input-section">
-              <div className="user-icon-container">
-                <img
-                  src={user?.profilePic || userIcon}
-                  alt="user-photo"
-                  className="user-icon"
-                />
-              </div>
-
-              <input
-                type="text"
-                {...formik.getFieldProps("description")}
-                id="description"
-                name="description"
-                className="post-input"
-                placeholder="Share your thoughts..."
-              />
-            </div>
-
-            {/* preview post image */}
-            {previewImg && (
-              <div className="post-preview">
-                <button
-                  style={{ float: "right" }}
-                  onClick={() => setPreviewImg("")}
-                >
-                  Delete photo
-                </button>
-                <img src={previewImg} alt="preview image" />
-              </div>
-            )}
-            <div className="flex align-center space-between post-action-section">
-              <div className="post-media-container">
-                <label htmlFor="media-icon">
-                  <PermMediaIcon
-                    className="media-icon"
-                    name="media-icon"
-                    style={{ color: "#5600ac", cursor: "pointer" }}
+    <>
+      <div className="flex content-center post-form-container">
+        <div style={{ width: "90%", height: "100%" }}>
+          <Paper elevation={2} style={{ paddingBlock: ".5rem" }}>
+            <form
+              className="container flex align-center flex-column"
+              onSubmit={formik.handleSubmit}
+              encType="multipart/form-data"
+            >
+              <div className="flex align-center post-input-section">
+                <div className="user-icon-container">
+                  <img
+                    src={user?.profilePic || userIcon}
+                    alt="user-photo"
+                    className="user-icon"
                   />
-                </label>
-                <input
-                  type="file"
-                  id="media-icon"
-                  name="postImage"
-                  style={{ display: "none" }}
-                  onChange={setPost}
-                />
+                </div>
 
-                <GifBoxIcon
+                <input
+                  type="text"
+                  {...formik.getFieldProps("description")}
+                  id="description"
+                  name="description"
+                  className="post-input"
+                  placeholder="Share your thoughts..."
+                />
+              </div>
+
+              {/* preview post image */}
+              {previewImg && (
+                <div className="post-preview">
+                  <button
+                    style={{ float: "right" }}
+                    onClick={() => setPreviewImg("")}
+                  >
+                    Delete photo
+                  </button>
+                  <img src={previewImg} alt="preview image" />
+                </div>
+              )}
+              <div className="flex align-center space-between post-action-section">
+                <div className="post-media-container">
+                  <label htmlFor="media-icon">
+                    <PermMediaIcon
+                      className="media-icon"
+                      name="media-icon"
+                      style={{ color: "#5600ac", cursor: "pointer" }}
+                    />
+                  </label>
+                  <input
+                    type="file"
+                    id="media-icon"
+                    name="postImage"
+                    style={{ display: "none" }}
+                    onChange={setPost}
+                  />
+
+                  {/* <GifBoxIcon
                   className="media-icon"
                   style={{ color: "#5600ac", cursor: "pointer" }}
-                />
+                /> */}
+                </div>
+                <div className="post-button-container">
+                  <button type="submit" className="flex align-center post-btn">
+                    Share it!{" "}
+                    <SendIcon
+                      style={{
+                        paddingLeft: "5px",
+                      }}
+                    />
+                  </button>
+                </div>
               </div>
-              <div className="post-button-container">
-                <button type="submit" className="flex align-center post-btn">
-                  Share it!{" "}
-                  <SendIcon
-                    style={{
-                      paddingLeft: "5px",
-                    }}
-                  />
-                </button>
-              </div>
-            </div>
-          </form>
-        </Paper>
+            </form>
+          </Paper>
+        </div>
       </div>
-    </div>
+      {newPostLoading ? (
+        <div style={{ textAlign: "center" }}>
+          <CircularProgress style={{ color: "#5600ac" }} />
+        </div>
+      ) : null}
+    </>
   )
 }
 
