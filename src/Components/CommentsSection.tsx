@@ -13,6 +13,7 @@ interface NewPostType {
   comments: []
   userId: string
   username: string
+  userProfilePic: string | null
   createdAt: string
   updatedAt: string
   __v: number
@@ -64,6 +65,7 @@ function CommentsSection({
   openCommentsSection,
   postId,
   comments,
+  user,
 }: CommentsSectionType) {
   const [latestComments, setLatestComments] = useState<CommentType[] | null>(
     null,
@@ -80,6 +82,7 @@ function CommentsSection({
   const formik = useFormik({
     initialValues,
     onSubmit: (values: formValues) => {
+      resetCommentInputValue()
       axios
         .post(
           "http://localhost:3000/",
@@ -97,6 +100,11 @@ function CommentsSection({
     validationSchema,
   })
 
+  function resetCommentInputValue() {
+    formik.setFieldValue("commentText", "")
+    // to get rid of formik error for touched field
+    formik.setTouched({}, false)
+  }
   return (
     <div
       className="comments-section-container"
@@ -108,23 +116,29 @@ function CommentsSection({
           className="flex flex-column content-center comments-section-form-container"
         >
           <div className="flex comments-section-user">
-            <img
-              src={userIcon}
-              className="post-user-icon"
-              alt="user-photo"
-              style={{ marginRight: ".5rem" }}
-            />
-            <input
-              type="text"
-              id="commentText"
-              {...formik.getFieldProps("name")}
-              name="commentText"
-              style={{ width: "100%", paddingInline: "1rem" }}
-              placeholder="Write a comment..."
-            />
-            <div className="error-container">
+            <div className="comment-user-icon">
+              <img
+                // src={userIcon}
+                src={user.profilePic || userIcon}
+                alt="user-photo"
+                style={{ marginRight: ".5rem" }}
+              />
+            </div>
+
+            <div style={{ width: "98%", paddingLeft: "1rem" }}>
+              <input
+                type="text"
+                id="commentText"
+                {...formik.getFieldProps("commentText")}
+                name="commentText"
+                style={{ width: "100%", paddingInline: "1rem", height: "40px" }}
+                placeholder="Write a comment..."
+              />
+
               {formik.touched.commentText && formik.errors.commentText ? (
-                <span> {formik.errors.commentText}</span>
+                <div className="error-container">
+                  <span> {formik.errors.commentText}</span>
+                </div>
               ) : null}
             </div>
           </div>
@@ -143,12 +157,13 @@ function CommentsSection({
             {latestComments &&
               latestComments.map((comment) => (
                 <div className="flex comment" key={comment._id}>
-                  <img
-                    src={userIcon}
-                    className="post-user-icon"
-                    alt="user-photo"
-                    style={{ marginRight: ".5rem" }}
-                  />
+                  <div className="comment-user-icon">
+                    <img
+                      src={comment.commentOwner[0].profilePic || userIcon}
+                      alt="user-photo"
+                      style={{ marginRight: ".5rem" }}
+                    />
+                  </div>
                   <div className="flex flex-column user-comment-container">
                     <span className="comment-user-name">
                       {comment.commentOwner[0].name}

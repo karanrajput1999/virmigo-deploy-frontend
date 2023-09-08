@@ -17,6 +17,7 @@ interface NewPostType {
   comments: []
   userId: string
   username: string
+  userProfilePic: string | null
   createdAt: string
   updatedAt: string
   __v: number

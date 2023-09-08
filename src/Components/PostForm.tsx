@@ -23,6 +23,7 @@ interface NewPostType {
   comments: []
   userId: string
   username: string
+  userProfilePic: string | null
   createdAt: string
   updatedAt: string
   __v: number
@@ -98,12 +99,15 @@ function PostForm({ user, addNewPost }: PostFormType) {
       formData.append("description", values.description)
       formData.append("userId", user._id)
       formData.append("username", user.name)
+      formData.append("userProfilePic", user.profilePic)
 
       if (postImage) {
         formData.append("postImage", postImage)
       }
       console.log("values from post form", values)
+      deletePostPreview()
       setNewPostLoading(true)
+
       axios
         .post(
           "http://localhost:3000/",
@@ -122,6 +126,7 @@ function PostForm({ user, addNewPost }: PostFormType) {
         )
         .then((res) => {
           setNewPostLoading(false)
+          resetFormInputValue()
           addNewPost(res.data)
         })
         .catch((error) => {
@@ -131,6 +136,12 @@ function PostForm({ user, addNewPost }: PostFormType) {
     },
   })
 
+  function resetFormInputValue() {
+    formik.setFieldValue("description", "")
+  }
+  function deletePostPreview() {
+    setPreviewImg("")
+  }
   // useEffect(() => {
   //   axios
   //     .get("http://localhost:3000/", { withCredentials: true })
@@ -179,7 +190,7 @@ function PostForm({ user, addNewPost }: PostFormType) {
                 <div className="post-preview">
                   <button
                     style={{ float: "right" }}
-                    onClick={() => setPreviewImg("")}
+                    onClick={deletePostPreview}
                   >
                     Delete photo
                   </button>

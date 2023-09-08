@@ -33,6 +33,7 @@ interface PostType {
   userId: string
   likedUsers: UserType[]
   username: string
+  userProfilePic: string | null
   createdAt: string
   updatedAt: string
   __v: number

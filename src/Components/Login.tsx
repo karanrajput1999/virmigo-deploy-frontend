@@ -24,7 +24,7 @@ const validationSchema = Yup.object({
   password: Yup.string().required("Password is required!"),
 })
 
-function Login() {
+function Login({ setHasLoggedInUser }) {
   const [authenticationError, setAuthenticationError] = useState("")
 
   const navigate = useNavigate()
@@ -57,7 +57,7 @@ function Login() {
             "checking cover pic and profile pic after loging in",
             res.data,
           )
-
+          setHasLoggedInUser(true)
           dispatch(getUser(res.data))
           navigate("/")
         })
@@ -121,6 +121,16 @@ function Login() {
           </button>
         </div>
       </form>
+
+      <span
+        style={{
+          textAlign: "center",
+          marginBottom: "1rem",
+          fontWeight: "bold",
+        }}
+      >
+        Not a member ? <a href="/signup">Signup</a>{" "}
+      </span>
     </div>
   )
 }

@@ -14,6 +14,7 @@ import CommentsSection from "./CommentsSection"
 import { Link } from "react-router-dom"
 import axios from "axios"
 import { useSelector } from "react-redux"
+import moment from "moment"
 
 interface UserType {
   _id: string
@@ -40,6 +41,7 @@ interface NewPostType {
   comments: []
   userId: string
   username: string
+  userProfilePic: string | null
   likedUsers: UserType[]
   createdAt: string
   updatedAt: string
@@ -64,8 +66,6 @@ function Post({ post, deletePost, likedUsers, likedUsersId }: PostPropType) {
   const user = useSelector((state: any) => state.user.adminUser)
 
   useEffect(() => {
-    console.log("useEffect called")
-
     setLikedUsersList(likedUsers)
     setLikedUsersIdList(likedUsersId)
   }, [likedUsers, likedUsersId])
@@ -112,7 +112,7 @@ function Post({ post, deletePost, likedUsers, likedUsersId }: PostPropType) {
             <div className="flex align-center post-user-info">
               <div className="post-user-icon-container">
                 <img
-                  src={user?.profilePic || userIcon}
+                  src={post?.userProfilePic || userIcon}
                   className="post-user-icon"
                   alt="user-photo"
                 />
@@ -122,7 +122,10 @@ function Post({ post, deletePost, likedUsers, likedUsersId }: PostPropType) {
                 <Link className="post-username" to={`/user/${post?.userId}`}>
                   {post?.username}
                 </Link>
-                <span className="post-time">2 min ago</span>
+                {/* <span className="post-time">2 min ago</span> */}
+                <span className="post-time">
+                  {moment(post.createdAt).fromNow()}
+                </span>
               </div>
             </div>
 
@@ -162,11 +165,11 @@ function Post({ post, deletePost, likedUsers, likedUsersId }: PostPropType) {
             ) : null}
           </div>
 
-          <div className="post-caption-container">
-            <span className="post-caption">
-              {post?.description ? post?.description : null}
-            </span>
-          </div>
+          {post?.description ? (
+            <div className="post-caption-container">
+              <span className="post-caption">{post?.description}</span>
+            </div>
+          ) : null}
 
           {post?.image ? (
             <div className="post-media-container">
@@ -267,6 +270,7 @@ function Post({ post, deletePost, likedUsers, likedUsersId }: PostPropType) {
             openCommentsSection={openCommentsSection}
             postId={post?._id}
             comments={post?.postComments}
+            user={user}
           />
         </Paper>
       </div>

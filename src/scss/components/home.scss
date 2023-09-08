@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap");
+
+.main-container {
+  width: 100%;
+}
+
+.nav-container {
+  height: 50px;
+  width: 90%;
+  //   background-color: red;
+}
+
+.logo-text {
+  font-size: 1.8rem;
+  color: #5600ac;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+}
+
+.nav-btn-container {
+  gap: 0.5rem;
+}
+
+.nav-btn {
+  //   width: 5rem;
+  //   height: 1.8rem;
+  font-size: 0.7rem;
+  padding: 0.3rem 1.5rem;
+  background-color: #5600ac;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  border-radius: 0.4rem;
+}
+
+.nav-btn.login {
+  background-color: #fff;
+  color: #5600ac;
+  border: 2px solid #5600ac;
+}
+
+.nav-btn.hero-btn {
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+}
+
+.hero-container {
+  margin-top: 9rem;
+}
+
+.heading-container {
+  margin-bottom: 2rem;
+}
+.hero-heading {
+  font-size: 2.5rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  color: #5600ac;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.hero-sub-heading {
+  font-size: 1rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.body-btn-container {
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-direction: column;
+}
+
+@media (min-width: "445px") {
+  .hero-heading {
+    font-size: 3rem;
+  }
+  .hero-sub-heading {
+    font-size: 1.3rem;
+  }
+
+  .body-btn-container {
+    flex-direction: row;
+    margin-top: 1rem;
+  }
+}
+@media (min-width: "550px") {
+  .hero-heading {
+    font-size: 5rem;
+  }
+  .hero-sub-heading {
+    font-size: 1.5rem;
+  }
+
+  .nav-btn.hero-btn {
+    padding: 1rem 2rem;
+    font-size: 1.3rem;
+  }
+
+  .body-btn-container {
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+
+  .hero-container {
+    margin-top: 11rem;
+  }
+}
+
+@media (min-width: "768px") {
+  .nav-container {
+    height: 100px;
+  }
+  .logo-text {
+    font-size: 3.5rem;
+  }
+  .nav-btn-container {
+    gap: 1rem;
+  }
+  .nav-btn {
+    // width: 9rem;
+    // height: 3.2rem;
+    font-size: 1.3rem;
+    padding: 0.7rem 2.8rem;
+  }
+}

@@ -30,7 +30,11 @@ function Notifications() {
   return (
     <div className="flex align-center content-center notifications-container">
       <div className="notifications-wrapper">
-        <Paper className="notification-paper" elevation={2}>
+        <Paper
+          className="notification-paper"
+          elevation={2}
+          style={{ overflowY: "auto" }}
+        >
           <div className="flex align-center notifications-title-container">
             <span className="flex align-center notification-title">
               Notifications{" "}
@@ -51,11 +55,24 @@ function Notifications() {
               >
                 <span className="flex align-center notification-text">
                   <span className="flex align-center notification-user">
-                    <img
-                      src={userIcon}
-                      className="notification-user-icon"
-                      alt="user-photo"
-                    />
+                    <span
+                      style={{
+                        height: "30px",
+                        width: "30px",
+                        borderRadius: "50%",
+                        overflow: "hidden",
+                        marginRight: ".5rem",
+                      }}
+                    >
+                      <img
+                        src={
+                          notification.notificationSender[0].profilePic ||
+                          userIcon
+                        }
+                        className="notification-user-icon"
+                        alt="user-photo"
+                      />
+                    </span>
                     {notification.notificationSender[0].name}&nbsp;
                   </span>
                   {notification.status === 1

@@ -43,6 +43,18 @@ input {
   background-color: #ededed;
   border-radius: 0.5rem;
   padding: 0.2rem 0.5rem 0.4rem 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.comment-user-icon {
+  height: 40px;
+  width: 40px;
+
+  border-radius: 50%;
+  overflow: hidden;
+  img {
+    width: 100%;
+  }
 }
 
 .comment-text {

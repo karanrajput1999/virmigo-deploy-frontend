@@ -14,6 +14,7 @@ interface NewPostType {
   comments: []
   userId: string
   username: string
+  userProfilePic: string | null
   createdAt: string
   updatedAt: string
   __v: number
@@ -94,11 +95,20 @@ function FriendRequests({
               key={friendRequest._id}
             >
               <div className="flex align-center">
-                <img
-                  src={userIcon}
-                  className="friend-photo"
-                  alt="friend photo"
-                />
+                <div
+                  style={{
+                    height: "30px",
+                    width: "30px",
+                    borderRadius: "50%",
+                    overflow: "hidden",
+                  }}
+                >
+                  <img
+                    src={friendRequest.profilePic || userIcon}
+                    className="friend-photo"
+                    alt="friend photo"
+                  />
+                </div>
                 <span className="findFriends-friendName">
                   {friendRequest.name}
                 </span>

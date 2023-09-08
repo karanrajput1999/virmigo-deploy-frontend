@@ -13,6 +13,7 @@ interface NewPostType {
   comments: []
   userId: string
   username: string
+  userProfilePic: string | null
   createdAt: string
   updatedAt: string
   __v: number
@@ -97,13 +98,13 @@ function SearchFriend({
       <div className="findFriends-header">
         <span className="findFriends-title">Find Friends</span>
       </div>
-      <div className="findFriends-searchbar-container">
+      {/* <div className="findFriends-searchbar-container">
         <input
           className="findFriends-input"
           type="text"
           placeholder="Search your friend's name..."
         />
-      </div>
+      </div> */}
       <div className="findFriends-friendlist-container">
         {allUsers &&
           allUsers.map((user) => (
@@ -112,11 +113,20 @@ function SearchFriend({
               key={user._id}
             >
               <div className="flex align-center">
-                <img
-                  src={userIcon}
-                  className="friend-photo"
-                  alt="friend photo"
-                />
+                <div
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    borderRadius: "50%",
+                    overflow: "hidden",
+                  }}
+                >
+                  <img
+                    src={user.profilePic || userIcon}
+                    className="friend-photo"
+                    alt="friend photo"
+                  />
+                </div>
                 <Link
                   className="findFriends-friendName"
                   to={`/user/${user._id}`}

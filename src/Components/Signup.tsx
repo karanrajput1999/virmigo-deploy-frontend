@@ -230,6 +230,15 @@ function Signup() {
           </button>
         </div>
       </form>
+      <span
+        style={{
+          textAlign: "center",
+          marginBottom: "1rem",
+          fontWeight: "bold",
+        }}
+      >
+        Already a member ? <a href="/login">Login</a>{" "}
+      </span>
     </div>
   )
 }

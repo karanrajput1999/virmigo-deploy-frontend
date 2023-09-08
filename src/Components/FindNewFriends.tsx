@@ -102,7 +102,20 @@ function FindNewFriends() {
                   key={user._id}
                 >
                   <div className="flex align-center  friend-left">
-                    <img src={userIcon} className="icon" alt="user-icon" />
+                    <div
+                      style={{
+                        height: "30px",
+                        width: "30px",
+                        borderRadius: "50%",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <img
+                        src={user.profilePic || userIcon}
+                        className="icon"
+                        alt="user-icon"
+                      />
+                    </div>
                     <Link className="friends-name" to={`/user/${user._id}`}>
                       {user.name}
                     </Link>
