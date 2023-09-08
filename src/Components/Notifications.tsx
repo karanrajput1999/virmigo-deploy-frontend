@@ -47,8 +47,22 @@ function Notifications() {
               />
             </span>
           </div>
-          {notifications &&
-            notifications.map((notification) => (
+          {notifications?.length === 0 ? (
+            <div
+              className="flex align-center content-center"
+              style={{
+                height: "90%",
+                width: "100%",
+                fontSize: "1.5rem",
+                fontWeight: "bold",
+                color: "#b5b5b5",
+              }}
+            >
+              <span>No notifications to show!</span>
+            </div>
+          ) : (
+            notifications &&
+            notifications?.map((notification) => (
               <div
                 className="flex align-center notification-container"
                 key={notification._id}
@@ -86,7 +100,8 @@ function Notifications() {
                     : null}
                 </span>
               </div>
-            ))}
+            ))
+          )}
         </Paper>
       </div>
     </div>

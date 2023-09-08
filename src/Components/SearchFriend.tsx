@@ -98,13 +98,6 @@ function SearchFriend({
       <div className="findFriends-header">
         <span className="findFriends-title">Find Friends</span>
       </div>
-      {/* <div className="findFriends-searchbar-container">
-        <input
-          className="findFriends-input"
-          type="text"
-          placeholder="Search your friend's name..."
-        />
-      </div> */}
       <div className="findFriends-friendlist-container">
         {allUsers &&
           allUsers.map((user) => (

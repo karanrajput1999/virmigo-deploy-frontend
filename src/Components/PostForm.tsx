@@ -141,6 +141,7 @@ function PostForm({ user, addNewPost }: PostFormType) {
   }
   function deletePostPreview() {
     setPreviewImg("")
+    setPostImage(null)
   }
   // useEffect(() => {
   //   axios

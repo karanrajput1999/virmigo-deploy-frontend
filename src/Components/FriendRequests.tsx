@@ -88,7 +88,21 @@ function FriendRequests({
       </div>
 
       <div className="findFriends-friendlist-container friend-requests-container">
-        {friendRequests &&
+        {friendRequests ? (
+          <div
+            className="flex align-center content-center"
+            style={{
+              height: "100%",
+              width: "100%",
+              fontSize: "1.5rem",
+              fontWeight: "bold",
+              color: "#b5b5b5",
+            }}
+          >
+            <span>No friend requests!</span>
+          </div>
+        ) : (
+          friendRequests &&
           friendRequests.map((friendRequest) => (
             <div
               className="flex align-center space-between friend-container"
@@ -135,7 +149,8 @@ function FriendRequests({
                 </button>
               </div>
             </div>
-          ))}
+          ))
+        )}
       </div>
     </div>
   )

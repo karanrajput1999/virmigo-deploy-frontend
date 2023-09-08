@@ -62,7 +62,21 @@ function YourFriends() {
           </div>
 
           <div className="flow friends-container">
-            {friends &&
+            {friends?.length === 0 ? (
+              <div
+                className="flex align-center content-center"
+                style={{
+                  height: "100%",
+                  width: "100%",
+                  fontSize: "1.3rem",
+                  fontWeight: "bold",
+                  color: "#b5b5b5",
+                }}
+              >
+                <span>No friends!</span>
+              </div>
+            ) : (
+              friends &&
               friends.map((friend: UserType) => (
                 <div
                   className="flex align-center space-between friend"
@@ -97,7 +111,8 @@ function YourFriends() {
                     Unfriend <PersonRemoveIcon style={{ paddingLeft: "5px" }} />
                   </button>
                 </div>
-              ))}
+              ))
+            )}
 
             {/* <div className="flex align-center space-between friend">
               <div className="flex align-center  friend-left">

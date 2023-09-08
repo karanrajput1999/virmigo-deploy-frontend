@@ -154,7 +154,21 @@ function CommentsSection({
         <div className="comments-container">
           <span className="comments-title">Comments:</span>
           <div className="comments-wrapper">
-            {latestComments &&
+            {latestComments?.length === 0 ? (
+              <div
+                className="flex align-center content-center"
+                style={{
+                  height: "100%",
+                  width: "100%",
+                  fontSize: "1rem",
+                  fontWeight: "bold",
+                  color: "#b5b5b5",
+                }}
+              >
+                <span>No comments yet!</span>
+              </div>
+            ) : (
+              latestComments &&
               latestComments.map((comment) => (
                 <div className="flex comment" key={comment._id}>
                   <div className="comment-user-icon">
@@ -171,7 +185,8 @@ function CommentsSection({
                     <span className="comment-text">{comment.commentText}</span>
                   </div>
                 </div>
-              ))}
+              ))
+            )}
           </div>
         </div>
       </div>

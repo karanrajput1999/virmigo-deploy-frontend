@@ -95,7 +95,21 @@ function FindNewFriends() {
           </div>
 
           <div className="flow friends-container">
-            {allUsers &&
+            {allUsers?.length === 0 ? (
+              <div
+                className="flex align-center content-center"
+                style={{
+                  height: "100%",
+                  width: "100%",
+                  fontSize: "1.5rem",
+                  fontWeight: "bold",
+                  color: "#b5b5b5",
+                }}
+              >
+                <span>No new friends!</span>
+              </div>
+            ) : (
+              allUsers &&
               allUsers.map((user) => (
                 <div
                   className="flex align-center space-between friend"
@@ -135,7 +149,8 @@ function FindNewFriends() {
                     <PersonAddIcon style={{ paddingLeft: "5px" }} />
                   </button>
                 </div>
-              ))}
+              ))
+            )}
           </div>
         </Paper>
       </div>

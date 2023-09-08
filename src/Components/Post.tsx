@@ -172,7 +172,10 @@ function Post({ post, deletePost, likedUsers, likedUsersId }: PostPropType) {
           ) : null}
 
           {post?.image ? (
-            <div className="post-media-container">
+            <div
+              className="post-media-container"
+              style={{ marginTop: ".5rem" }}
+            >
               {/* <img src={postImg} alt="" /> */}
               <img src={post?.image} alt="" />
             </div>
