@@ -5,22 +5,7 @@ import userIcon from "../assets/user-icon.png"
 import PersonAddIcon from "@mui/icons-material/PersonAdd"
 import axios from "axios"
 import { Link } from "react-router-dom"
-
-interface UserType {
-  _id: string
-  name: string
-  email: string
-  profilePic: string | null
-  coverPic: string | null
-  posts: string[]
-  comments: string[]
-  friends: string[]
-  friendRequestsSent: string[]
-  friendRequests: string[]
-  createdAt: string
-  updatedAt: string
-  __v: number
-}
+import { UserType } from "../Types/types"
 
 function FindNewFriends() {
   const [allUsers, setAllUsers] = useState<UserType[] | null>(null)
@@ -70,7 +55,6 @@ function FindNewFriends() {
             (friendRequest) => friendRequest !== receiverId,
           ),
         )
-        console.log("after sending a friend request", res.data)
       })
       .catch((error) => {
         console.log("error while sending friend request", error)
@@ -130,7 +114,11 @@ function FindNewFriends() {
                         alt="user-icon"
                       />
                     </div>
-                    <Link className="friends-name" to={`/user/${user._id}`}>
+                    <Link
+                      className="friends-name"
+                      to={`/user/${user._id}`}
+                      style={{ color: "black" }}
+                    >
                       {user.name}
                     </Link>
                   </div>

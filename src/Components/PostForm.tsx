@@ -10,40 +10,11 @@ import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { getUser } from "../app/features/userSlice"
 import CircularProgress from "@mui/material/CircularProgress"
+import { NewPostType, UserType } from "../Types/types"
+import URL from "../url"
 
 interface PostType {
   description: string
-}
-
-interface NewPostType {
-  _id: string
-  description: string
-  image: string | null
-  likes: []
-  comments: []
-  userId: string
-  username: string
-  userProfilePic: string | null
-  createdAt: string
-  updatedAt: string
-  __v: number
-}
-
-interface UserType {
-  _id: string
-  name: string
-  email: string
-  profilePic: string | null
-  coverPic: string | null
-  posts: string[]
-  comments: string[]
-  friends: string[]
-  friendRequestsSent: string[]
-  friendRequests: string[]
-  createdAt: string
-  updatedAt: string
-  __v: number
-  userAllPosts: NewPostType[]
 }
 
 interface PostFormType {
@@ -104,13 +75,12 @@ function PostForm({ user, addNewPost }: PostFormType) {
       if (postImage) {
         formData.append("postImage", postImage)
       }
-      console.log("values from post form", values)
       deletePostPreview()
       setNewPostLoading(true)
 
       axios
         .post(
-          "http://localhost:3000/",
+          URL,
           // {
           //   ...values,
           //   userId: user._id,

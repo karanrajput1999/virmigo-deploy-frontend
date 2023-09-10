@@ -60,8 +60,15 @@
 }
 
 .friend-photo {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
 }
 .findFriends-friendName {
   font-size: 1rem;

@@ -10,7 +10,6 @@ function Notifications() {
   const [notifications, setNotifications] = useState(null)
 
   const user = useSelector((state: any) => state.user.adminUser)
-  console.log(user)
 
   const dispatch = useDispatch()
 
@@ -18,7 +17,6 @@ function Notifications() {
     axios
       .get("http://localhost:3000/notifications", { withCredentials: true })
       .then((res) => {
-        console.log("notifications data", res.data.notifications)
         setNotifications(res.data.notifications)
         dispatch(getUser(res.data.loggedInUser))
       })

@@ -4,34 +4,9 @@ import userIcon from "../assets/user-icon.png"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import axios from "axios"
-
-interface NewPostType {
-  _id: string
-  description: string
-  image: string | null
-  likes: []
-  comments: []
-  userId: string
-  username: string
-  userProfilePic: string | null
-  createdAt: string
-  updatedAt: string
-  __v: number
-}
-
-interface UserType {
-  _id: string
-  name: string
-  email: string
-  profilePic: string | null
-  coverPic: string | null
-  posts: string[]
-  comments: string[]
-  friends: string[]
-  createdAt: string
-  userAllPosts: NewPostType[]
-}
-
+import { UserType } from "../Types/types"
+import URL from "../url"
+import { Link } from "react-router-dom"
 interface CommentType {
   _id: string
   commenterId: string
@@ -85,7 +60,7 @@ function CommentsSection({
       resetCommentInputValue()
       axios
         .post(
-          "http://localhost:3000/",
+          URL,
           {
             commentText: values.commentText,
             postId,
@@ -94,7 +69,6 @@ function CommentsSection({
         )
         .then((res) => {
           updateLatestComment([...latestComments, res.data.comment])
-          console.log("while commenting", res.data)
         })
     },
     validationSchema,
@@ -179,9 +153,13 @@ function CommentsSection({
                     />
                   </div>
                   <div className="flex flex-column user-comment-container">
-                    <span className="comment-user-name">
+                    <Link
+                      to={`/user/${comment.commentOwner[0]._id}`}
+                      style={{ color: "black" }}
+                      className="comment-user-name"
+                    >
                       {comment.commentOwner[0].name}
-                    </span>
+                    </Link>
                     <span className="comment-text">{comment.commentText}</span>
                   </div>
                 </div>

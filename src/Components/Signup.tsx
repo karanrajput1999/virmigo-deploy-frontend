@@ -89,8 +89,6 @@ function Signup() {
           },
         })
         .then((res) => {
-          console.log("singup response", res.data)
-
           dispatch(getUser(res.data))
 
           navigate("/")

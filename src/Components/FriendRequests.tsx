@@ -5,37 +5,7 @@ import CheckIcon from "@mui/icons-material/Check"
 import CloseIcon from "@mui/icons-material/Close"
 import { Paper } from "@mui/material"
 import axios from "axios"
-
-interface NewPostType {
-  _id: string
-  description: string
-  image: string | null
-  likes: []
-  comments: []
-  userId: string
-  username: string
-  userProfilePic: string | null
-  createdAt: string
-  updatedAt: string
-  __v: number
-}
-
-interface UserType {
-  _id: string
-  name: string
-  email: string
-  profilePic: string | null
-  coverPic: string | null
-  posts: string[]
-  comments: string[]
-  friends: string[]
-  friendRequestsSent: string[]
-  friendRequests: string[]
-  createdAt: string
-  updatedAt: string
-  __v: number
-  userAllPosts: NewPostType[]
-}
+import { UserType } from "../Types/types"
 
 interface FriendReqeustsType {
   visible: boolean
@@ -48,8 +18,6 @@ function FriendRequests({
   friendRequests,
   acceptFriendRequest,
 }: FriendReqeustsType) {
-  console.log("friend requests user inside friend request .tsx", friendRequests)
-
   function acceptFriendReqeuest(senderId: string) {
     axios
       .post(
@@ -58,7 +26,6 @@ function FriendRequests({
         { withCredentials: true },
       )
       .then((res) => {
-        console.log("accepted friend request", res.data.senderId)
         acceptFriendRequest(res.data.senderId)
       })
       .catch((error) => {
@@ -73,7 +40,6 @@ function FriendRequests({
         { withCredentials: true },
       )
       .then((res) => {
-        console.log("reject friend request", res.data.rejectSenderId)
         acceptFriendRequest(res.data.rejectSenderId)
       })
       .catch((error) => {
@@ -88,7 +54,7 @@ function FriendRequests({
       </div>
 
       <div className="findFriends-friendlist-container friend-requests-container">
-        {friendRequests ? (
+        {friendRequests?.length === 0 ? (
           <div
             className="flex align-center content-center"
             style={{

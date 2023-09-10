@@ -6,43 +6,8 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { getUser } from "../app/features/userSlice"
 import nopost from "../assets/nopost.svg"
-
-interface UserType {
-  _id: string
-  name: string
-  email: string
-  bio: string
-  livesIn: string
-  profilePic: string | null
-  coverPic: string | null
-  posts: string[]
-  comments: string[]
-  friends: string[]
-  createdAt: string
-  updatedAt: string
-  __v: number
-  userAllPosts: NewPostType[]
-}
-
-interface PostType {
-  _id: string
-  description: string
-  image: string | null
-  likes: []
-  comments: []
-  userId: string
-  likedUsers: UserType[]
-  username: string
-  userProfilePic: string | null
-  createdAt: string
-  updatedAt: string
-  __v: number
-}
-
-// interface NewPostType {
-//   newPost: PostType
-//   newPostLoading: boolean
-// }
+import { NewPostType, PostType } from "../Types/types"
+import URL from "../url"
 
 function Feed() {
   const [posts, setPosts] = useState<PostType[]>([])
@@ -53,7 +18,7 @@ function Feed() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/", { withCredentials: true })
+      .get(URL, { withCredentials: true })
       .then((res) => {
         if (res.data) {
           setPosts(res.data.userWithAllPosts[0].allPostsCombined)
@@ -68,8 +33,6 @@ function Feed() {
   }, [])
 
   const addNewPost = (newPost: NewPostType) => {
-    console.log("new post ", newPost)
-
     /* added postComments and likedUsers because the structure of post object is different than the 
     backend and if I don't match the structure then like message (Become first one to like) shows undefined */
 
@@ -78,7 +41,7 @@ function Feed() {
 
   function deletePost(deletePostId: string) {
     axios
-      .delete("http://localhost:3000/", {
+      .delete(URL, {
         data: { deletePostId },
         withCredentials: true,
       })

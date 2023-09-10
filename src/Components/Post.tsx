@@ -15,38 +15,8 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 import { useSelector } from "react-redux"
 import moment from "moment"
-
-interface UserType {
-  _id: string
-  name: string
-  email: string
-  bio: string
-  livesIn: string
-  profilePic: string | null
-  coverPic: string | null
-  posts: string[]
-  comments: string[]
-  friends: string[]
-  createdAt: string
-  updatedAt: string
-  __v: number
-  userAllPosts: NewPostType[]
-}
-
-interface NewPostType {
-  _id: string
-  description: string
-  image: string | null
-  likes: []
-  comments: []
-  userId: string
-  username: string
-  userProfilePic: string | null
-  likedUsers: UserType[]
-  createdAt: string
-  updatedAt: string
-  __v: number
-}
+import { NewPostType, UserType } from "../Types/types"
+import URL from "../url"
 
 interface PostPropType {
   post: NewPostType
@@ -87,11 +57,7 @@ function Post({ post, deletePost, likedUsers, likedUsersId }: PostPropType) {
 
   function likePost(likedPostId: string) {
     axios
-      .post(
-        "http://localhost:3000/",
-        { likedPostId },
-        { withCredentials: true },
-      )
+      .post(URL, { likedPostId }, { withCredentials: true })
       .then((res) => {
         setLiked(!liked)
       })
@@ -119,7 +85,11 @@ function Post({ post, deletePost, likedUsers, likedUsersId }: PostPropType) {
               </div>
 
               <div className="flex flex-column post-username-container">
-                <Link className="post-username" to={`/user/${post?.userId}`}>
+                <Link
+                  className="post-username"
+                  to={`/user/${post?.userId}`}
+                  style={{ color: "black" }}
+                >
                   {post?.username}
                 </Link>
                 {/* <span className="post-time">2 min ago</span> */}

@@ -5,41 +5,25 @@ import userIcon from "../assets/user-icon.png"
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove"
 import axios from "axios"
 import { Link } from "react-router-dom"
-
-interface UserType {
-  _id: string
-  name: string
-  email: string
-  profilePic: string | null
-  coverPic: string | null
-  posts: string[]
-  comments: string[]
-  friends: string[]
-  friendRequestsSent: string[]
-  friendRequests: string[]
-  createdAt: string
-  updatedAt: string
-  __v: number
-}
+import { UserType } from "../Types/types"
+import URL from "../url"
 
 function YourFriends() {
   const [friends, setFriends] = useState<UserType[] | null | undefined>(null)
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/", { withCredentials: true })
-      .then((res) => {
-        setFriends(res.data.userAllFriends)
-      })
+    axios.get(URL, { withCredentials: true }).then((res) => {
+      setFriends(res.data.userAllFriends)
+    })
   }, [])
 
   function unfriend(unfriendId: string) {
     axios
-      .post("http://localhost:3000/", { unfriendId }, { withCredentials: true })
+      .post(URL, { unfriendId }, { withCredentials: true })
       .then((res) => {
-        console.log("your friends here", res.data)
         setFriends(friends?.filter((friend) => friend._id !== unfriendId))
       })
+      .catch((err) => console.log(err))
   }
 
   return (
@@ -97,7 +81,11 @@ function YourFriends() {
                         alt="user-icon"
                       />
                     </div>
-                    <Link className="friends-name" to={`/user/${friend._id}`}>
+                    <Link
+                      className="friends-name"
+                      to={`/user/${friend._id}`}
+                      style={{ color: "black" }}
+                    >
                       {friend.name}
                     </Link>
                   </div>

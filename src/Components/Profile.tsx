@@ -19,37 +19,8 @@ import { getUser } from "../app/features/userSlice"
 import { useDispatch } from "react-redux"
 import { useFormik } from "formik"
 import * as Yup from "yup"
-
-interface NewPostType {
-  _id: string
-  description: string
-  image: string | null
-  likes: []
-  comments: []
-  userId: string
-  username: string
-  userProfilePic: string | null
-  createdAt: string
-  updatedAt: string
-  __v: number
-}
-
-interface UserType {
-  _id: string
-  name: string
-  email: string
-  bio: string
-  livesIn: string
-  profilePic: string | null
-  coverPic: string | null
-  posts: string[]
-  comments: string[]
-  friends: string[]
-  createdAt: string
-  updatedAt: string
-  __v: number
-  userAllPosts: NewPostType[]
-}
+import { NewPostType, UserType } from "../Types/types"
+import URL from "../url"
 
 interface formValues {
   name: string
@@ -101,10 +72,8 @@ function Profile() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/user/${userId}`, { withCredentials: true })
+      .get(`${URL}user/${userId}`, { withCredentials: true })
       .then((res) => {
-        console.log("checking user profile bug ->", res.data.userAllPosts[0])
-
         setPosts(res.data.userAllPosts[0].userPosts)
         setLoggedInUser(res.data.loggedInUser)
         setFriends(res.data.userAllFriends)
@@ -139,13 +108,8 @@ function Profile() {
 
   function unfriend(unfriendId: string) {
     axios
-      .post(
-        `http://localhost:3000/user/${userId}`,
-        { unfriendId },
-        { withCredentials: true },
-      )
+      .post(`${URL}user/${userId}`, { unfriendId }, { withCredentials: true })
       .then((res) => {
-        console.log("your friends here", res.data)
         setFriendsId(friendsId?.filter((friendId) => friendId !== unfriendId))
       })
   }
@@ -160,7 +124,7 @@ function Profile() {
   function sendFriendRequest(friendRequestReceiverId: string) {
     axios
       .post(
-        `http://localhost:3000/user/${userId}`,
+        `${URL}user/${userId}`,
         { friendRequestReceiverId },
         { withCredentials: true },
       )
@@ -169,7 +133,6 @@ function Profile() {
           ...friendRequestedUser,
           friendRequestReceiverId,
         ])
-        console.log("after sending a friend request", res.data)
       })
       .catch((error) => {
         console.log("error while sending friend request", error)
@@ -179,7 +142,7 @@ function Profile() {
   function cancelFriendRequest(receiverId: string) {
     axios
       .post(
-        `http://localhost:3000/user/${userId}`,
+        `${URL}user/${userId}`,
         { cancelRequestId: receiverId },
         { withCredentials: true },
       )
@@ -189,7 +152,6 @@ function Profile() {
             (friendRequest) => friendRequest !== receiverId,
           ),
         )
-        console.log("after sending a friend request", res.data)
       })
       .catch((error) => {
         console.log("error while sending friend request", error)
@@ -198,7 +160,7 @@ function Profile() {
 
   function deletePost(deletePostId: string) {
     axios
-      .delete("http://localhost:3000/", {
+      .delete(URL, {
         data: { deletePostId },
         withCredentials: true,
       })
@@ -212,14 +174,9 @@ function Profile() {
     initialValues,
     onSubmit: (values: formValues) => {
       axios
-        .patch(
-          `http://localhost:3000/user/${userId}`,
-          { ...values },
-          { withCredentials: true },
-        )
+        .patch(`${URL}user/${userId}`, { ...values }, { withCredentials: true })
         .then((res) => {
           window.location.reload()
-          console.log("patch request while updating profile info", res.data)
         })
         .catch((error) => {
           console.log("error while updating profile", error)
@@ -454,7 +411,7 @@ function Profile() {
                     </span>
                     <span className="profile-info-live-text">
                       {/* Washington D.C, United States of America 🚩 */}
-                      {user?.livesIn ? user?.livesIn : "Update your profile"}
+                      {user?.livesIn ? user?.livesIn : "Update profile details"}
                     </span>
                   </div>
                   <div className="profile-info-container profile-info-bio">
@@ -464,7 +421,7 @@ function Profile() {
                     <span className="profile-info-bio-text">
                       {/* This is some bio text this is some more extended text to
                       see how far it goes boom boom 😎 */}
-                      {user?.bio ? user?.bio : "Update your profile"}
+                      {user?.bio ? user?.bio : "Update profile details"}
                     </span>
                   </div>
                 </div>
@@ -531,6 +488,7 @@ function Profile() {
                       <Link
                         className="profile-body-friend-name"
                         to={`/user/${friend._id}`}
+                        style={{ color: "black" }}
                       >
                         {friend.name}
                       </Link>

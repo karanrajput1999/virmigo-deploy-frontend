@@ -4,36 +4,8 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd"
 import { Paper } from "@mui/material"
 import { Link, useAsyncError } from "react-router-dom"
 import axios from "axios"
+import { NewPostType, UserType } from "../Types/types"
 
-interface NewPostType {
-  _id: string
-  description: string
-  image: string | null
-  likes: []
-  comments: []
-  userId: string
-  username: string
-  userProfilePic: string | null
-  createdAt: string
-  updatedAt: string
-  __v: number
-}
-interface UserType {
-  _id: string
-  name: string
-  email: string
-  profilePic: string | null
-  coverPic: string | null
-  posts: string[]
-  comments: string[]
-  friends: string[]
-  friendRequestsSent: string[]
-  friendRequests: string[]
-  createdAt: string
-  updatedAt: string
-  __v: number
-  userAllPosts: NewPostType[]
-}
 interface SearchFriendType {
   visible: boolean
   allUsers: UserType[] | null
@@ -65,7 +37,6 @@ function SearchFriend({
       )
       .then((res) => {
         setFriendRequestedUser([...friendRequestedUser, receiverId])
-        console.log("after sending a friend request", res.data)
       })
       .catch((error) => {
         console.log("error while sending friend request", error)
@@ -85,7 +56,6 @@ function SearchFriend({
             (friendRequest) => friendRequest !== receiverId,
           ),
         )
-        console.log("after sending a friend request", res.data)
       })
       .catch((error) => {
         console.log("error while sending friend request", error)
@@ -106,23 +76,13 @@ function SearchFriend({
               key={user._id}
             >
               <div className="flex align-center">
-                <div
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    borderRadius: "50%",
-                    overflow: "hidden",
-                  }}
-                >
-                  <img
-                    src={user.profilePic || userIcon}
-                    className="friend-photo"
-                    alt="friend photo"
-                  />
+                <div className="friend-photo">
+                  <img src={user.profilePic || userIcon} alt="friend photo" />
                 </div>
                 <Link
                   className="findFriends-friendName"
                   to={`/user/${user._id}`}
+                  style={{ color: "black" }}
                 >
                   {user.name}
                 </Link>

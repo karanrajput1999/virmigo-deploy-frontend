@@ -9,15 +9,15 @@ import UserProfile from "./pages/UserProfile"
 import NotificationsPage from "./pages/NotificationsPage"
 import { Routes, Route } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
-
 import axios from "axios"
+import URL from "./url"
 
 function App() {
   const [hasLoggedInUser, setHasLoggedInUser] = useState(false)
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/", { withCredentials: true })
+      .get(URL, { withCredentials: true })
       .then((res) => {
         if (res.data) {
           setHasLoggedInUser(true)
