@@ -69,7 +69,6 @@ function Signup() {
     initialValues,
     onSubmit: (values: formValues) => {
       const formData = new FormData()
-      console.log("original form data", formData)
 
       formData.append("name", values.name)
       formData.append("email", values.email)
@@ -110,9 +109,9 @@ function Signup() {
         <span className="signup-title">Virmigo</span>
       </div>
 
-      {authenticationError && authenticationError.message && (
+      {authenticationError && (
         <span style={{ textAlign: "center", color: "red" }}>
-          {authenticationError.message}
+          {authenticationError}
         </span>
       )}
       {/* <span></span> */}

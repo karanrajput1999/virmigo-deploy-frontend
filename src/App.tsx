@@ -16,11 +16,9 @@ function App() {
   const [hasLoggedInUser, setHasLoggedInUser] = useState(false)
 
   useEffect(() => {
-    console.log("useEffect called buddy")
     axios
       .get("http://localhost:3000/", { withCredentials: true })
       .then((res) => {
-        console.log("data from new homepage", res.data)
         if (res.data) {
           setHasLoggedInUser(true)
         }

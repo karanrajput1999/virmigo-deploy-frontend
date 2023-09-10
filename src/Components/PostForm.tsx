@@ -190,6 +190,7 @@ function PostForm({ user, addNewPost }: PostFormType) {
               {previewImg && (
                 <div className="post-preview">
                   <button
+                    className="delete-photo-btn"
                     style={{ float: "right" }}
                     onClick={deletePostPreview}
                   >

@@ -53,10 +53,6 @@ function Login({ setHasLoggedInUser }) {
       axios
         .post("http://localhost:3000/login", values, { withCredentials: true })
         .then((res) => {
-          console.log(
-            "checking cover pic and profile pic after loging in",
-            res.data,
-          )
           setHasLoggedInUser(true)
           dispatch(getUser(res.data))
           navigate("/")

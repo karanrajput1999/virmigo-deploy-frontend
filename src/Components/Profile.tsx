@@ -504,7 +504,20 @@ function Profile() {
             <div style={{ marginTop: "2rem" }}>
               <div className="flex flex-column profile-body-friends-container">
                 {/* first friend */}
-                {friends &&
+                {friends?.length === 0 ? (
+                  <div
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                      fontSize: "1rem",
+                      fontWeight: "bold",
+                      color: "#b5b5b5",
+                    }}
+                  >
+                    <span>No friends!</span>
+                  </div>
+                ) : (
+                  friends &&
                   friends.map((friend) => (
                     <div
                       className="flex align-center profile-body-friend"
@@ -522,7 +535,8 @@ function Profile() {
                         {friend.name}
                       </Link>
                     </div>
-                  ))}
+                  ))
+                )}
                 {/* <div className="flex align-center profile-body-friend">
                   <img
                     src={userIcon}
