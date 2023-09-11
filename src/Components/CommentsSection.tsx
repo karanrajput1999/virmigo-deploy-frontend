@@ -4,21 +4,15 @@ import userIcon from "../assets/user-icon.png"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import axios from "axios"
-import { UserType } from "../Types/types"
 import URL from "../url"
 import { Link } from "react-router-dom"
-interface CommentType {
-  _id: string
-  commenterId: string
-  postId: string
-  commentText: string
-  commentOwner: UserType[]
-}
+import { UserType, CommentType } from "../Types/types"
 
 interface CommentsSectionType {
   openCommentsSection: boolean
   postId: string
   comments: CommentType[]
+  user: UserType
 }
 
 interface formValues {

@@ -27,6 +27,14 @@ interface UserType {
   __v: number
   userAllPosts: NewPostType[]
 }
+
+interface CommentType {
+  _id: string
+  commenterId: string
+  postId: string
+  commentText: string
+  commentOwner: UserType[]
+}
 interface PostType {
   _id: string
   description: string
@@ -39,7 +47,8 @@ interface PostType {
   userProfilePic: string | null
   createdAt: string
   updatedAt: string
+  postComments: CommentType[]
   __v: number
 }
 
-export { NewPostType, UserType, PostType }
+export { NewPostType, UserType, PostType, CommentType }
