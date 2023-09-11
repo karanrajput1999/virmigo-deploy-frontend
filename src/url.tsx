@@ -1,3 +1,3 @@
-const URL = "http://localhost:3000/"
+const URL = "virmigo-backend.vercel.app/"
 
 export default URL
