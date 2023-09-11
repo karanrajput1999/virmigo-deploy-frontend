@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { Paper } from "@mui/material"
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive"
 import userIcon from "../assets/user-icon.png"

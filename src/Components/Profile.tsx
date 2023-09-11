@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 import userIcon from "../assets/user-icon.png"
 import userCover from "../assets/profile-cover.jpg"
@@ -86,25 +86,6 @@ function Profile() {
         console.log("erorr while fetching profile", error.message)
       })
   }, [userId])
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:3000/", { withCredentials: true })
-  //     .then((res) => {
-  //       console.log("propfile post data testing", res.data)
-
-  //       setPosts(res.data.userAllPosts[0].userPosts)
-  //       dispatch(getUser(res.data.userWithAllPosts[0]))
-  //     })
-  //     .catch((error) => console.log(error))
-  // }, [])
-
-  // function friendIds(userFriend: UserType[]) {
-  //   const userIds = userFriend.map((user: UserType) => {
-  //     return user._id
-  //   })
-  //   setFriendsId(userIds)
-  // }
 
   function unfriend(unfriendId: string) {
     axios
@@ -194,7 +175,6 @@ function Profile() {
               <img
                 className="cover-img"
                 src={user?.coverPic || userCover}
-                // src="https://img.freepik.com/premium-vector/amazing-virtual-world-digital-art-graphics-science-technology-future-virtual-reality-glasses-metaverse-colorful-planets-space-fantasy-concept-vector-illustrationgenerative-ai_748571-1002.jpg"
                 alt=""
               />
             </div>
@@ -410,7 +390,6 @@ function Profile() {
                       Lives in -{" "}
                     </span>
                     <span className="profile-info-live-text">
-                      {/* Washington D.C, United States of America 🚩 */}
                       {user?.livesIn ? user?.livesIn : "Update profile details"}
                     </span>
                   </div>
@@ -419,8 +398,6 @@ function Profile() {
                       Bio -{" "}
                     </span>
                     <span className="profile-info-bio-text">
-                      {/* This is some bio text this is some more extended text to
-                      see how far it goes boom boom 😎 */}
                       {user?.bio ? user?.bio : "Update profile details"}
                     </span>
                   </div>
@@ -495,54 +472,6 @@ function Profile() {
                     </div>
                   ))
                 )}
-                {/* <div className="flex align-center profile-body-friend">
-                  <img
-                    src={userIcon}
-                    alt="friend"
-                    className="profile-body-icon"
-                  />
-                  <span className="profile-body-friend-name">
-                    Anshu Upadhyay
-                  </span>
-                </div> */}
-                {/* second friend */}
-                {/* <div className="flex align-center profile-body-friend">
-                  <img
-                    src={userIcon}
-                    alt="friend"
-                    className="profile-body-icon"
-                  />
-                  <span className="profile-body-friend-name">Vinay Pandit</span>
-                </div> */}
-                {/* third friend */}
-                {/* <div className="flex align-center profile-body-friend">
-                  <img
-                    src={userIcon}
-                    alt="friend"
-                    className="profile-body-icon"
-                  />
-                  <span className="profile-body-friend-name">Hardik Patel</span>
-                </div> */}
-                {/* fourth friend */}
-                {/* <div className="flex align-center profile-body-friend">
-                  <img
-                    src={userIcon}
-                    alt="friend"
-                    className="profile-body-icon"
-                  />
-                  <span className="profile-body-friend-name">Sonu Verma</span>
-                </div> */}
-                {/* fifth friend */}
-                {/* <div className="flex align-center profile-body-friend">
-                  <img
-                    src={userIcon}
-                    alt="friend"
-                    className="profile-body-icon"
-                  />
-                  <span className="profile-body-friend-name">
-                    Himanshu Sharma
-                  </span>
-                </div> */}
               </div>
             </div>
           </div>

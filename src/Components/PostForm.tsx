@@ -1,15 +1,10 @@
-import React, { ChangeEvent, useState, useEffect } from "react"
+import { ChangeEvent, useState, useEffect } from "react"
 import Paper from "@mui/material/Paper"
 import userIcon from "../assets/user-icon.png"
 import PermMediaIcon from "@mui/icons-material/PermMedia"
 import SendIcon from "@mui/icons-material/Send"
-import GifBoxIcon from "@mui/icons-material/GifBox"
 import axios from "axios"
 import { FormikValues, useFormik } from "formik"
-import { useSelector, useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
-import { getUser } from "../app/features/userSlice"
-import CircularProgress from "@mui/material/CircularProgress"
 import { NewPostType, UserType } from "../Types/types"
 import URL from "../url"
 
@@ -30,13 +25,6 @@ function PostForm({ user, addNewPost }: PostFormType) {
   const [previewImg, setPreviewImg] = useState<string>("")
   const [postImage, setPostImage] = useState(null)
   const [newPostLoading, setNewPostLoading] = useState(false)
-
-  // const dispatch = useDispatch()
-  // const navigate = useNavigate()
-
-  // const user = useSelector((state: any) => {
-  //   return state.user.adminUser
-  // })
 
   // showing image's preview
   function previewPost(e: ChangeEvent<HTMLInputElement>): void {
@@ -113,19 +101,6 @@ function PostForm({ user, addNewPost }: PostFormType) {
     setPreviewImg("")
     setPostImage(null)
   }
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:3000/", { withCredentials: true })
-  //     .then((res) => {
-  //       if (res.data) {
-  //         dispatch(getUser(res.data.userWithAllPosts[0]))
-  //         navigate("/")
-  //       } else {
-  //         navigate("/login")
-  //       }
-  //     })
-  //     .catch((error) => console.log(error))
-  // }, [])
 
   return (
     <>
@@ -185,11 +160,6 @@ function PostForm({ user, addNewPost }: PostFormType) {
                     style={{ display: "none" }}
                     onChange={setPost}
                   />
-
-                  {/* <GifBoxIcon
-                  className="media-icon"
-                  style={{ color: "#5600ac", cursor: "pointer" }}
-                /> */}
                 </div>
                 <div className="post-button-container">
                   <button type="submit" className="flex align-center post-btn">

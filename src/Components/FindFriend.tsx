@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { Paper } from "@mui/material"
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt"
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"

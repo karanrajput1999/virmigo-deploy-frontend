@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import userIcon from "../assets/user-icon.png"
 import PersonAddIcon from "@mui/icons-material/PersonAdd"
-import { Paper } from "@mui/material"
-import { Link, useAsyncError } from "react-router-dom"
+import { Link } from "react-router-dom"
 import axios from "axios"
-import { NewPostType, UserType } from "../Types/types"
+import { UserType } from "../Types/types"
 
 interface SearchFriendType {
   visible: boolean

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import Paper from "@mui/material/Paper"
-import Box from "@mui/material/Box"
 import userIcon from "../assets/user-icon.png"
 import PersonAddIcon from "@mui/icons-material/PersonAdd"
 import axios from "axios"

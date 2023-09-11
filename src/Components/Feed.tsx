@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import PostForm from "./PostForm"
 import Post from "./Post"
 import { useDispatch, useSelector } from "react-redux"

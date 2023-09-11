@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import Paper from "@mui/material/Paper"
-import Box from "@mui/material/Box"
 import userIcon from "../assets/user-icon.png"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
-import postImg from "../assets/post-media.jpg"
-import postImg2 from "../assets/post-media-2.jpg"
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt"
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt"
 import ModeCommentIcon from "@mui/icons-material/ModeComment"
@@ -92,7 +89,6 @@ function Post({ post, deletePost, likedUsers, likedUsersId }: PostPropType) {
                 >
                   {post?.username}
                 </Link>
-                {/* <span className="post-time">2 min ago</span> */}
                 <span className="post-time">
                   {moment(post.createdAt).fromNow()}
                 </span>
@@ -158,20 +154,6 @@ function Post({ post, deletePost, likedUsers, likedUsersId }: PostPropType) {
               />
 
               <div className="post-reactors-container">
-                {/* <span className="post-reactors">
-                      Brock Lesnar and 40 others
-                    </span> */}
-                {/* <span className="post-reactors">
-                  {post.likedUsers?.length === 0
-                    ? "Become first one to like"
-                    : post.likedUsers?.length === 1
-                    ? `Liked by ${post.likedUsers[0]?.name}`
-                    : post.likedUsers?.length === 2
-                    ? `Liked by ${post.likedUsers[0]?.name} and ${post.likedUsers[1]?.name}`
-                    : `Liked by ${post.likedUsers[0]?.name} and ${
-                        post.likedUsers[1]?.name
-                      } and ${post.likedUsers?.length - 2} others`}
-                </span> */}
                 <span className="post-reactors">
                   {likedUsersList && likedUsersList?.length === 0
                     ? "Become first one to like"

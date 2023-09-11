@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import axios from "axios"
@@ -47,6 +47,7 @@ function Signup() {
   const [profilePic, setProfilePic] = useState(null)
   const [coverPic, setCoverPic] = useState(null)
   const [authenticationError, setAuthenticationError] = useState("")
+  const [accountCreation, setAccountCreation] = useState(false)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -81,17 +82,19 @@ function Signup() {
       if (coverPic) {
         formData.append("coverPic", coverPic)
       }
-
+      setAccountCreation(true)
       axios
         .post("http://localhost:3000/signup", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          withCredentials: true,
         })
         .then((res) => {
           dispatch(getUser(res.data))
-
-          navigate("/")
+          setAccountCreation(false)
+          // navigate("/")
+          window.location.reload()
         })
         .catch((err) => {
           console.log("error while making signup rqst", err),
@@ -221,7 +224,11 @@ function Signup() {
           </div>
         </div>
 
-        <div className="flex content-center join-btn-container">
+        <div className="flex flex-column align-center join-btn-container">
+          {accountCreation ? (
+            <span>Please wait your account is being created...</span>
+          ) : null}
+
           <button type="submit" className="join-btn">
             Join Virmigo!
           </button>

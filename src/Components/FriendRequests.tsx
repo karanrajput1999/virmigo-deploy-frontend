@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from "react"
 import userIcon from "../assets/user-icon.png"
-import PersonAddIcon from "@mui/icons-material/PersonAdd"
 import CheckIcon from "@mui/icons-material/Check"
 import CloseIcon from "@mui/icons-material/Close"
-import { Paper } from "@mui/material"
 import axios from "axios"
 import { UserType } from "../Types/types"
 
