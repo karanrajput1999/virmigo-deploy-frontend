@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
 import { getUser } from "../app/features/userSlice"
+import URL from "../url"
 
 interface formValues {
   email: string
@@ -37,7 +38,7 @@ function Login({ setHasLoggedInUser }: setHasLoggedInUserType) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/login", { withCredentials: true })
+      .get(`${URL}/login`, { withCredentials: true })
       .then((res) => {
         if (res.data) {
           dispatch(getUser(res.data))
@@ -54,7 +55,7 @@ function Login({ setHasLoggedInUser }: setHasLoggedInUserType) {
     onSubmit: (values: formValues) => {
       // Handle form submission logic here
       axios
-        .post("http://localhost:3000/login", values, { withCredentials: true })
+        .post(`${URL}/login`, values, { withCredentials: true })
         .then((res) => {
           setHasLoggedInUser(true)
           dispatch(getUser(res.data))

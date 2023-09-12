@@ -4,6 +4,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd"
 import { Link } from "react-router-dom"
 import axios from "axios"
 import { UserType } from "../Types/types"
+import URL from "../url"
 
 interface SearchFriendType {
   visible: boolean
@@ -29,11 +30,7 @@ function SearchFriend({
 
   function sendFriendRequest(receiverId: string) {
     axios
-      .post(
-        "http://localhost:3000/findfriends",
-        { receiverId },
-        { withCredentials: true },
-      )
+      .post(`${URL}/findfriends`, { receiverId }, { withCredentials: true })
       .then((res) => {
         setFriendRequestedUser([...friendRequestedUser, receiverId])
       })
@@ -45,7 +42,7 @@ function SearchFriend({
   function cancelFriendRequest(receiverId: string) {
     axios
       .post(
-        "http://localhost:3000/findfriends",
+        `${URL}/findfriends`,
         { cancelRequestId: receiverId },
         { withCredentials: true },
       )

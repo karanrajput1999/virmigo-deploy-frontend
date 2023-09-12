@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { getUser } from "../app/features/userSlice"
 import FormData from "form-data"
+import URL from "../url"
 
 interface formValues {
   name: string
@@ -54,7 +55,7 @@ function Signup() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/signup", { withCredentials: true })
+      .get(`${URL}/signup`, { withCredentials: true })
       .then((res) => {
         if (res.data) {
           dispatch(getUser(res.data))
@@ -84,7 +85,7 @@ function Signup() {
       }
       setAccountCreation(true)
       axios
-        .post("http://localhost:3000/signup", formData, {
+        .post(`${URL}/signup`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

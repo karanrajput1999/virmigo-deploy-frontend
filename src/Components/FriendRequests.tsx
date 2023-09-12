@@ -3,6 +3,7 @@ import CheckIcon from "@mui/icons-material/Check"
 import CloseIcon from "@mui/icons-material/Close"
 import axios from "axios"
 import { UserType } from "../Types/types"
+import URL from "../url"
 
 interface FriendReqeustsType {
   visible: boolean
@@ -17,11 +18,7 @@ function FriendRequests({
 }: FriendReqeustsType) {
   function acceptFriendReqeuest(senderId: string) {
     axios
-      .post(
-        "http://localhost:3000/findfriends",
-        { senderId },
-        { withCredentials: true },
-      )
+      .post(`${URL}/findfriends`, { senderId }, { withCredentials: true })
       .then((res) => {
         acceptFriendRequest(res.data.senderId)
       })
@@ -31,11 +28,7 @@ function FriendRequests({
   }
   function declineFriendRequest(rejectSenderId: string) {
     axios
-      .post(
-        "http://localhost:3000/findfriends",
-        { rejectSenderId },
-        { withCredentials: true },
-      )
+      .post(`${URL}/findfriends`, { rejectSenderId }, { withCredentials: true })
       .then((res) => {
         acceptFriendRequest(res.data.rejectSenderId)
       })

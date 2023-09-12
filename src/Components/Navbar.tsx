@@ -12,6 +12,7 @@ import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import URL from "../url"
 
 const menuIcon = {
   fontSize: "35px",
@@ -26,12 +27,12 @@ function Navbar() {
   let user = useSelector((state: any) => state.user.adminUser)
 
   function userProfile() {
-    axios.get(`http://localhost:3000/user/${user._id}`).then((res) => {})
+    axios.get(`${URL}/user/${user._id}`).then((res) => {})
   }
 
   function logout() {
     axios
-      .get("http://localhost:3000/logout", { withCredentials: true })
+      .get(`${URL}logout`, { withCredentials: true })
       .then((res) => {
         navigate("/login")
       })

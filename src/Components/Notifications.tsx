@@ -5,8 +5,8 @@ import userIcon from "../assets/user-icon.png"
 import { useSelector, useDispatch } from "react-redux"
 import { getUser } from "../app/features/userSlice"
 import axios from "axios"
-
 import { UserType } from "../Types/types"
+import URL from "../url"
 
 interface notificationType {
   _id: string
@@ -24,10 +24,10 @@ function Notifications() {
   const user = useSelector((state: any) => state.user.adminUser)
 
   const dispatch = useDispatch()
-
+${}
   useEffect(() => {
     axios
-      .get("http://localhost:3000/notifications", { withCredentials: true })
+      .get(`${URL}/notifications`, { withCredentials: true })
       .then((res) => {
         setNotifications(res.data.notifications)
         dispatch(getUser(res.data.loggedInUser))

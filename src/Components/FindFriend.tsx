@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { getUser } from "../app/features/userSlice"
 import { useNavigate } from "react-router-dom"
 import { UserType } from "../Types/types"
+import URL from "../url"
 
 function FindFriend() {
   const [openFriendRequestTab, setOpenFriendRequestTab] = useState(false)
@@ -25,7 +26,7 @@ function FindFriend() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/findfriends", { withCredentials: true })
+      .get(`${URL}/findfriends`, { withCredentials: true })
       .then((res) => {
         dispatch(getUser(res.data.loggedInUser))
         setAllUsers(res.data.allUsers)

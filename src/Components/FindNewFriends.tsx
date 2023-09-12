@@ -5,6 +5,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd"
 import axios from "axios"
 import { Link } from "react-router-dom"
 import { UserType } from "../Types/types"
+import URL from "../url"
 
 function FindNewFriends() {
   const [allUsers, setAllUsers] = useState<UserType[] | null>(null)
@@ -18,21 +19,15 @@ function FindNewFriends() {
   }
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/findfriends", { withCredentials: true })
-      .then((res) => {
-        getFriendRequestedUserId(res.data.allFriendRequestsSent)
-        setAllUsers(res.data.allUsers)
-      })
+    axios.get(`${URL}/findfriends`, { withCredentials: true }).then((res) => {
+      getFriendRequestedUserId(res.data.allFriendRequestsSent)
+      setAllUsers(res.data.allUsers)
+    })
   }, [])
 
   function sendFriendRequest(receiverId: string) {
     axios
-      .post(
-        "http://localhost:3000/findfriends",
-        { receiverId },
-        { withCredentials: true },
-      )
+      .post(`${URL}/findfriends`, { receiverId }, { withCredentials: true })
       .then((res) => {
         setFriendRequestedUser([...friendRequestedUser, receiverId])
       })
@@ -44,7 +39,7 @@ function FindNewFriends() {
   function cancelFriendRequest(receiverId: string) {
     axios
       .post(
-        "http://localhost:3000/findfriends",
+        `${URL}/findfriends`,
         { cancelRequestId: receiverId },
         { withCredentials: true },
       )
