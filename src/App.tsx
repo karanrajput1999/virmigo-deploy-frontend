@@ -13,7 +13,7 @@ import axios from "axios"
 import URL from "./url"
 
 function App() {
-  const [hasLoggedInUser, setHasLoggedInUser] = useState(false)
+  const [hasLoggedInUser, setHasLoggedInUser] = useState<boolean>(false)
 
   useEffect(() => {
     axios

@@ -1,4 +1,4 @@
-interface NewPostType {
+export interface NewPostType {
   _id: string
   description: string
   image: string | null
@@ -12,7 +12,7 @@ interface NewPostType {
   updatedAt: string
   __v: number
 }
-interface UserType {
+export interface UserType {
   _id: string
   name: string
   email: string
@@ -31,14 +31,14 @@ interface UserType {
   userAllPosts: NewPostType[]
 }
 
-interface CommentType {
+export interface CommentType {
   _id: string
   commenterId: string
   postId: string
   commentText: string
   commentOwner: UserType[]
 }
-interface PostType {
+export interface PostType {
   _id: string
   description: string
   image: string | null
@@ -53,5 +53,3 @@ interface PostType {
   postComments: CommentType[]
   __v: number
 }
-
-export { NewPostType, UserType, PostType, CommentType }
