@@ -6,8 +6,20 @@ import { useSelector, useDispatch } from "react-redux"
 import { getUser } from "../app/features/userSlice"
 import axios from "axios"
 
+import { UserType } from "../Types/types"
+
+interface notificationType {
+  _id: string
+  sender: number
+  receiver: number
+  status: number
+  notificationSender: UserType[]
+}
+
 function Notifications() {
-  const [notifications, setNotifications] = useState(null)
+  const [notifications, setNotifications] = useState<notificationType[] | null>(
+    null,
+  )
 
   const user = useSelector((state: any) => state.user.adminUser)
 

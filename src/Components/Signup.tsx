@@ -44,8 +44,8 @@ const validationSchema = Yup.object({
 })
 
 function Signup() {
-  const [profilePic, setProfilePic] = useState(null)
-  const [coverPic, setCoverPic] = useState(null)
+  const [profilePic, setProfilePic] = useState<File | null>(null)
+  const [coverPic, setCoverPic] = useState<File | null>(null)
   const [authenticationError, setAuthenticationError] = useState("")
   const [accountCreation, setAccountCreation] = useState(false)
 
@@ -208,7 +208,14 @@ function Signup() {
               id="profile-pic"
               name="profilePic"
               style={{ display: "none" }}
-              onChange={(event) => setProfilePic(event.target.files[0])}
+              onChange={(event) => {
+                const selectedFile = event.target.files && event.target.files[0]
+                if (selectedFile) {
+                  setProfilePic(selectedFile)
+                }
+
+                // setProfilePic(event.target.files[0])
+              }}
             />
 
             <label className="pic-btn" htmlFor="cover-pic">
@@ -219,7 +226,14 @@ function Signup() {
               id="cover-pic"
               name="coverPic"
               style={{ display: "none" }}
-              onChange={(event) => setCoverPic(event.target.files[0])}
+              onChange={(event) => {
+                const selectedFile = event.target.files && event.target.files[0]
+                if (selectedFile) {
+                  setCoverPic(selectedFile)
+                }
+
+                // setCoverPic(event.target.files[0])
+              }}
             />
           </div>
         </div>

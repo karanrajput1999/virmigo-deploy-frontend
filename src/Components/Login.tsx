@@ -11,6 +11,9 @@ interface formValues {
   email: string
   password: string
 }
+interface setHasLoggedInUserType {
+  setHasLoggedInUser: (hasLoggedInUser: boolean) => void
+}
 
 const initialValues = {
   email: "",
@@ -24,7 +27,7 @@ const validationSchema = Yup.object({
   password: Yup.string().required("Password is required!"),
 })
 
-function Login({ setHasLoggedInUser }) {
+function Login({ setHasLoggedInUser }: setHasLoggedInUserType) {
   const [authenticationError, setAuthenticationError] = useState("")
 
   const navigate = useNavigate()

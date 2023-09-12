@@ -26,10 +26,12 @@ function Post({ post, deletePost, likedUsers, likedUsersId }: PostPropType) {
   const [openDelete, setOpenDelete] = useState(false)
   const [openCommentsSection, setOpenCommentsSection] = useState(false)
   const [liked, setLiked] = useState<boolean>(false)
-  const [likedUsersList, setLikedUsersList] = useState<UserType[] | null>(null)
-  const [likedUsersIdList, setLikedUsersIdList] = useState<string[] | null>(
-    null,
-  )
+  // const [likedUsersList, setLikedUsersList] = useState<UserType[] | null>(null)
+  const [likedUsersList, setLikedUsersList] = useState<UserType[]>([])
+  // const [likedUsersIdList, setLikedUsersIdList] = useState<string[] | null>(
+  //   null,
+  // )
+  const [likedUsersIdList, setLikedUsersIdList] = useState<string[]>([])
   const user = useSelector((state: any) => state.user.adminUser)
 
   useEffect(() => {
@@ -37,7 +39,7 @@ function Post({ post, deletePost, likedUsers, likedUsersId }: PostPropType) {
     setLikedUsersIdList(likedUsersId)
   }, [likedUsers, likedUsersId])
 
-  function updateUnlike(user) {
+  function updateUnlike(user: UserType) {
     const updatedLikes = likedUsersList?.filter(
       (likedUser) => user._id !== likedUser._id,
     )
@@ -47,7 +49,7 @@ function Post({ post, deletePost, likedUsers, likedUsersId }: PostPropType) {
     setLikedUsersIdList(updatedLikedUsersId)
     setLikedUsersList(updatedLikes)
   }
-  function udpateLike(user) {
+  function udpateLike(user: UserType) {
     setLikedUsersIdList([...likedUsersIdList, user._id])
     setLikedUsersList([...likedUsersList, user])
   }

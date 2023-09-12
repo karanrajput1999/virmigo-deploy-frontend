@@ -7,6 +7,7 @@ interface NewPostType {
   userId: string
   username: string
   userProfilePic: string | null
+  postComments: CommentType[]
   createdAt: string
   updatedAt: string
   __v: number
@@ -15,6 +16,8 @@ interface UserType {
   _id: string
   name: string
   email: string
+  livesIn: string
+  bio: string
   profilePic: string | null
   coverPic: string | null
   posts: string[]

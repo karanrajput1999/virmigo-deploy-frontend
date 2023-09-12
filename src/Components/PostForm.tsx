@@ -7,6 +7,7 @@ import axios from "axios"
 import { FormikValues, useFormik } from "formik"
 import { NewPostType, UserType } from "../Types/types"
 import URL from "../url"
+import { CircularProgress } from "@mui/material"
 
 interface PostType {
   description: string
@@ -23,7 +24,7 @@ const initialValues = {
 
 function PostForm({ user, addNewPost }: PostFormType) {
   const [previewImg, setPreviewImg] = useState<string>("")
-  const [postImage, setPostImage] = useState(null)
+  const [postImage, setPostImage] = useState<File | null>(null)
   const [newPostLoading, setNewPostLoading] = useState(false)
 
   // showing image's preview
@@ -40,8 +41,13 @@ function PostForm({ user, addNewPost }: PostFormType) {
     }
   }
 
-  function setPost(event) {
-    setPostImage(event.target.files[0])
+  function setPost(event: ChangeEvent<HTMLInputElement>) {
+    // setPostImage(event.target.files[0])
+
+    const selectedFile = event.target.files && event.target.files[0]
+    if (selectedFile) {
+      setPostImage(selectedFile)
+    }
 
     previewPost(event)
   }
@@ -58,8 +64,9 @@ function PostForm({ user, addNewPost }: PostFormType) {
       formData.append("description", values.description)
       formData.append("userId", user._id)
       formData.append("username", user.name)
-      formData.append("userProfilePic", user.profilePic)
-
+      if (user.profilePic !== null) {
+        formData.append("userProfilePic", user.profilePic)
+      }
       if (postImage) {
         formData.append("postImage", postImage)
       }

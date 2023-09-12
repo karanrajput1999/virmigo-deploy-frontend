@@ -36,9 +36,8 @@ function CommentsSection({
   comments,
   user,
 }: CommentsSectionType) {
-  const [latestComments, setLatestComments] = useState<CommentType[] | null>(
-    null,
-  )
+  // const [latestComments, setLatestComments] = useState<CommentType[] | null>(null)
+  const [latestComments, setLatestComments] = useState<CommentType[]>([])
 
   useEffect(() => {
     setLatestComments(comments)

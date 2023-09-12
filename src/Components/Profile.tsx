@@ -52,6 +52,7 @@ const validationSchema = Yup.object({
 function Profile() {
   const [open, setOpen] = useState(false)
   const [postTabVisible, setPostTabVisible] = useState(true)
+  // const [user, setUser] = useState<UserType | null>(null)
   const [user, setUser] = useState<UserType | null>(null)
   const [loggedInuser, setLoggedInUser] = useState<UserType | null>(null)
   const [friendsId, setFriendsId] = useState<string[] | null | undefined>(null)
@@ -186,7 +187,7 @@ function Profile() {
               <div className="flex flex-column profile-username-container">
                 <span className="profile-username">{user?.name}</span>
                 <span className="profile-friends">
-                  {user?.friends.length > 0
+                  {user?.friends && user?.friends.length > 0
                     ? `${user?.friends.length} Friends`
                     : ""}
                 </span>
@@ -320,14 +321,14 @@ function Profile() {
                   <button
                     className="flex align-center content-center addfriend-btn"
                     onClick={() => {
-                      if (friendRequestedUser?.includes(user?._id)) {
+                      if (user && friendRequestedUser?.includes(user?._id)) {
                         cancelFriendRequest(user?._id)
                       } else {
-                        sendFriendRequest(user?._id)
+                        user && sendFriendRequest(user?._id)
                       }
                     }}
                   >
-                    {friendRequestedUser.includes(user?._id)
+                    {user && friendRequestedUser.includes(user?._id)
                       ? "Cancel Request"
                       : "Add Friend"}
 
