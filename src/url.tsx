@@ -1,4 +1,4 @@
 // const URL = "virmigo-backend.vercel.app/"
-const URL = "virmigo.vercel.app"
+const URL = "https://virmigo.vercel.app"
 
 export default URL
