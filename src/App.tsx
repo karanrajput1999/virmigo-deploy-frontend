@@ -32,7 +32,6 @@ function App() {
         path="/"
         element={hasLoggedInUser ? <Homepage /> : <MainHomepage />}
       />
-      {/* <Route path="/home" element={<MainHomepage />} /> */}
       <Route path="/findfriends" element={<FindFriends />} />
       <Route path="/notifications" element={<NotificationsPage />} />
       <Route
@@ -40,7 +39,6 @@ function App() {
         element={<LoginPage setHasLoggedInUser={setHasLoggedInUser} />}
       />
       <Route path="/signup" element={<SignupPage />} />
-      {/* previously -  /user/:username */}
       <Route path="/user/:userId" element={<UserProfile />} />
     </Routes>
   )
