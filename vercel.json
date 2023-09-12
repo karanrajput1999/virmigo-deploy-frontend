@@ -1,5 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/(.*)", "destination": "https://virmigo.vercel.app/" }
-  ]
-}
