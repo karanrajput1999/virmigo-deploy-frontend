@@ -24,7 +24,7 @@ function Notifications() {
   const user = useSelector((state: any) => state.user.adminUser)
 
   const dispatch = useDispatch()
-${}
+
   useEffect(() => {
     axios
       .get(`${URL}/notifications`, { withCredentials: true })
