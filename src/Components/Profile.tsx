@@ -73,7 +73,7 @@ function Profile() {
 
   useEffect(() => {
     axios
-      .get(`${URL}user/${userId}`, { withCredentials: true })
+      .get(`${URL}/user/${userId}`, { withCredentials: true })
       .then((res) => {
         setPosts(res.data.userAllPosts[0].userPosts)
         setLoggedInUser(res.data.loggedInUser)
@@ -90,7 +90,7 @@ function Profile() {
 
   function unfriend(unfriendId: string) {
     axios
-      .post(`${URL}user/${userId}`, { unfriendId }, { withCredentials: true })
+      .post(`${URL}/user/${userId}`, { unfriendId }, { withCredentials: true })
       .then((res) => {
         setFriendsId(friendsId?.filter((friendId) => friendId !== unfriendId))
       })
@@ -106,7 +106,7 @@ function Profile() {
   function sendFriendRequest(friendRequestReceiverId: string) {
     axios
       .post(
-        `${URL}user/${userId}`,
+        `${URL}/user/${userId}`,
         { friendRequestReceiverId },
         { withCredentials: true },
       )
@@ -124,7 +124,7 @@ function Profile() {
   function cancelFriendRequest(receiverId: string) {
     axios
       .post(
-        `${URL}user/${userId}`,
+        `${URL}/user/${userId}`,
         { cancelRequestId: receiverId },
         { withCredentials: true },
       )
@@ -156,7 +156,11 @@ function Profile() {
     initialValues,
     onSubmit: (values: formValues) => {
       axios
-        .patch(`${URL}user/${userId}`, { ...values }, { withCredentials: true })
+        .patch(
+          `${URL}/user/${userId}`,
+          { ...values },
+          { withCredentials: true },
+        )
         .then((res) => {
           window.location.reload()
         })
