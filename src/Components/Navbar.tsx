@@ -32,7 +32,7 @@ function Navbar() {
 
   function logout() {
     axios
-      .get(`${URL}logout`, { withCredentials: true })
+      .get(`${URL}/logout`, { withCredentials: true })
       .then((res) => {
         navigate("/login")
       })
