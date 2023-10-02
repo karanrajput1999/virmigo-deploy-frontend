@@ -4,18 +4,21 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd"
 import { Link } from "react-router-dom"
 import axios from "axios"
 import { UserType } from "../Types/types"
+import Loading from "./Loading"
 import URL from "../url"
 
 interface SearchFriendType {
   visible: boolean
   allUsers: UserType[] | null
   friendRequestsSent: UserType[] | null
+  usersLoading: boolean
 }
 
 function SearchFriend({
   visible,
   allUsers,
   friendRequestsSent,
+  usersLoading,
 }: SearchFriendType) {
   const [friendRequestedUser, setFriendRequestedUser] = useState<string[]>([])
 
@@ -102,7 +105,8 @@ function SearchFriend({
                 />
               </button>
             </div>
-          ))}
+          ))}{" "}
+        {usersLoading ? <Loading /> : null}
       </div>
     </div>
   )

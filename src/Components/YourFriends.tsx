@@ -5,14 +5,18 @@ import PersonRemoveIcon from "@mui/icons-material/PersonRemove"
 import axios from "axios"
 import { Link } from "react-router-dom"
 import { UserType } from "../Types/types"
+import Loading from "./Loading"
 import URL from "../url"
 
 function YourFriends() {
   const [friends, setFriends] = useState<UserType[] | null | undefined>(null)
+  const [friendsLoading, setFriendsLoading] = useState(false)
 
   useEffect(() => {
+    setFriendsLoading(true)
     axios.get(URL, { withCredentials: true }).then((res) => {
       setFriends(res.data.userAllFriends)
+      setFriendsLoading(false)
     })
   }, [])
 
@@ -100,6 +104,8 @@ function YourFriends() {
                 </div>
               ))
             )}
+
+            {friendsLoading ? <Loading /> : null}
           </div>
         </Paper>
       </div>

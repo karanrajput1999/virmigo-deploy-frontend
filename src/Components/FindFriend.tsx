@@ -18,13 +18,12 @@ function FindFriend() {
   const [friendRequestsSent, setFriendRequestsSent] = useState<
     UserType[] | null
   >(null)
+  const [usersLoading, serUsersLoading] = useState(false)
 
   const dispatch = useDispatch()
-  const navigate = useNavigate()
-  allUsers
-  let user = useSelector((state: any) => state.user.adminUser)
 
   useEffect(() => {
+    serUsersLoading(true)
     axios
       .get(`${URL}/findfriends`, { withCredentials: true })
       .then((res) => {
@@ -32,6 +31,7 @@ function FindFriend() {
         setAllUsers(res.data.allUsers)
         setFriendRequests(res.data.allFriendRequests)
         setFriendRequestsSent(res.data.allFriendRequestsSent)
+        serUsersLoading(false)
       })
       .catch((error) => {
         console.log("error while making get request to get allUsers", error)
@@ -102,6 +102,7 @@ function FindFriend() {
               visible={openFriendRequestTab}
               allUsers={allUsers}
               friendRequestsSent={friendRequestsSent}
+              usersLoading={usersLoading}
             />
 
             <FriendRequests

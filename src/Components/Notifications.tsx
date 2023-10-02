@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { getUser } from "../app/features/userSlice"
 import axios from "axios"
 import { UserType } from "../Types/types"
+import Loading from "./Loading"
 import URL from "../url"
 
 interface notificationType {
@@ -21,16 +22,20 @@ function Notifications() {
     null,
   )
 
+  const [notificationsLoading, setNotificationsLoading] = useState(false)
+
   const user = useSelector((state: any) => state.user.adminUser)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
+    setNotificationsLoading(true)
     axios
       .get(`${URL}/notifications`, { withCredentials: true })
       .then((res) => {
         setNotifications(res.data.notifications)
         dispatch(getUser(res.data.loggedInUser))
+        setNotificationsLoading(false)
       })
       .catch((error) => {
         console.log("error while fetching notifications", error)
@@ -112,6 +117,7 @@ function Notifications() {
               </div>
             ))
           )}
+          {notificationsLoading ? <Loading /> : null}
         </Paper>
       </div>
     </div>

@@ -7,16 +7,20 @@ import { useNavigate } from "react-router-dom"
 import { getUser } from "../app/features/userSlice"
 import nopost from "../assets/nopost.svg"
 import { NewPostType, PostType } from "../Types/types"
+import { CircularProgress } from "@mui/material"
+
 import URL from "../url"
 
 function Feed() {
   const [posts, setPosts] = useState<PostType[]>([])
+  const [postsLoading, setPostsLoading] = useState(false)
 
   let user = useSelector((state: any) => state.user.adminUser)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   useEffect(() => {
+    setPostsLoading(true)
     axios
       .get(URL, { withCredentials: true })
       .then((res) => {
@@ -25,6 +29,7 @@ function Feed() {
           dispatch(getUser(res.data.userWithAllPosts[0]))
 
           navigate("/")
+          setPostsLoading(false)
         } else {
           navigate("/login")
         }
@@ -55,7 +60,19 @@ function Feed() {
     <div className="flex flex-column content-center feed-container">
       <PostForm addNewPost={addNewPost} user={user} />
 
-      {posts.length === 0 ? (
+      {postsLoading ? (
+        <div
+          style={{
+            textAlign: "center",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress style={{ color: "#5600ac" }} />
+        </div>
+      ) : posts.length === 0 ? (
         <div className="flex flex-column align-center nopost-img-container">
           <h1 style={{ color: "#5600ac" }}>New to Virmigo ?</h1>
           <span style={{ color: "#636363" }}>

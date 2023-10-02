@@ -5,11 +5,13 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd"
 import axios from "axios"
 import { Link } from "react-router-dom"
 import { UserType } from "../Types/types"
+import Loading from "./Loading"
 import URL from "../url"
 
 function FindNewFriends() {
   const [allUsers, setAllUsers] = useState<UserType[] | null>(null)
   const [friendRequestedUser, setFriendRequestedUser] = useState<string[]>([])
+  const [friendsLoading, setFriendsLoading] = useState(false)
 
   function getFriendRequestedUserId(friendRequestedUser: UserType[]) {
     const requestedUsers = friendRequestedUser?.map((user) => {
@@ -19,9 +21,11 @@ function FindNewFriends() {
   }
 
   useEffect(() => {
+    setFriendsLoading(true)
     axios.get(`${URL}/findfriends`, { withCredentials: true }).then((res) => {
       getFriendRequestedUserId(res.data.allFriendRequestsSent)
       setAllUsers(res.data.allUsers)
+      setFriendsLoading(false)
     })
   }, [])
 
@@ -133,6 +137,7 @@ function FindNewFriends() {
                 </div>
               ))
             )}
+            {friendsLoading ? <Loading /> : null}
           </div>
         </Paper>
       </div>

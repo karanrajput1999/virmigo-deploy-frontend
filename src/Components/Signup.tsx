@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { getUser } from "../app/features/userSlice"
 import FormData from "form-data"
+import { CircularProgress } from "@mui/material"
+
 import URL from "../url"
 
 interface formValues {
@@ -48,7 +50,7 @@ function Signup() {
   const [profilePic, setProfilePic] = useState<File | null>(null)
   const [coverPic, setCoverPic] = useState<File | null>(null)
   const [authenticationError, setAuthenticationError] = useState("")
-  const [accountCreation, setAccountCreation] = useState(false)
+  const [accountCreationLoading, setAccountCreationLoading] = useState(false)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -83,7 +85,7 @@ function Signup() {
       if (coverPic) {
         formData.append("coverPic", coverPic)
       }
-      setAccountCreation(true)
+      setAccountCreationLoading(true)
       axios
         .post(`${URL}/signup`, formData, {
           headers: {
@@ -93,7 +95,7 @@ function Signup() {
         })
         .then((res) => {
           dispatch(getUser(res.data))
-          setAccountCreation(false)
+          setAccountCreationLoading(false)
           // navigate("/")
           window.location.reload()
         })
@@ -240,12 +242,15 @@ function Signup() {
         </div>
 
         <div className="flex flex-column align-center join-btn-container">
-          {accountCreation ? (
-            <span>Please wait your account is being created...</span>
-          ) : null}
-
-          <button type="submit" className="join-btn">
+          <button
+            type="submit"
+            className="flex align-center join-btn"
+            disabled={accountCreationLoading ? true : false}
+          >
             Join Virmigo!
+            {accountCreationLoading ? (
+              <CircularProgress size="1.5rem" sx={{ color: "white" }} />
+            ) : null}
           </button>
         </div>
       </form>

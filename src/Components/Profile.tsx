@@ -20,6 +20,7 @@ import { useDispatch } from "react-redux"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import { NewPostType, UserType } from "../Types/types"
+import Loading from "./Loading"
 import URL from "../url"
 
 interface formValues {
@@ -60,6 +61,7 @@ function Profile() {
   const { userId } = useParams()
   const [friendRequestedUser, setFriendRequestedUser] = useState<string[]>([])
   const [posts, setPosts] = useState<NewPostType[]>([])
+  const [postsLoading, setPostsLoading] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -72,6 +74,7 @@ function Profile() {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    setPostsLoading(true)
     axios
       .get(`${URL}/user/${userId}`, { withCredentials: true })
       .then((res) => {
@@ -82,6 +85,7 @@ function Profile() {
         setFriendsId(res.data.loggedInUser.friends)
         getFriendRequestedUserId(res.data.allFriendRequestsSent)
         dispatch(getUser(res.data.loggedInUser))
+        setPostsLoading(false)
       })
       .catch((error) => {
         console.log("erorr while fetching profile", error.message)
@@ -427,6 +431,7 @@ function Profile() {
                       key={post?._id}
                     />
                   ))}
+                {postsLoading ? <Loading /> : null}
               </div>
             </div>
           </div>

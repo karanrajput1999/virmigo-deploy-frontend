@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
 import { getUser } from "../app/features/userSlice"
+import { CircularProgress } from "@mui/material"
+
 import URL from "../url"
 
 interface formValues {
@@ -30,6 +32,7 @@ const validationSchema = Yup.object({
 
 function Login({ setHasLoggedInUser }: setHasLoggedInUserType) {
   const [authenticationError, setAuthenticationError] = useState("")
+  const [userLoading, setUserLoading] = useState(false)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -54,12 +57,14 @@ function Login({ setHasLoggedInUser }: setHasLoggedInUserType) {
     initialValues,
     onSubmit: (values: formValues) => {
       // Handle form submission logic here
+      setUserLoading(true)
       axios
         .post(`${URL}/login`, values, { withCredentials: true })
         .then((res) => {
           setHasLoggedInUser(true)
           dispatch(getUser(res.data))
           navigate("/")
+          setUserLoading(false)
         })
         .catch((error) => {
           console.log("error while loging in from frontend", error)
@@ -116,8 +121,15 @@ function Login({ setHasLoggedInUser }: setHasLoggedInUserType) {
           </div>
         </div>
         <div className="flex content-center join-btn-container">
-          <button type="submit" className="join-btn">
+          <button
+            type="submit"
+            className="flex align-center join-btn"
+            disabled={userLoading ? true : false}
+          >
             Login
+            {userLoading ? (
+              <CircularProgress size="1.5rem" sx={{ color: "white" }} />
+            ) : null}
           </button>
         </div>
       </form>
